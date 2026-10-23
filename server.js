@@ -15,7 +15,13 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes
-app.use('/api/supabase', require('./routes/supabaseRoutes'));
+const supabaseRoutes = require('./routes/supabaseRoutes');
+app.use('/api/supabase', supabaseRoutes);
+app.use('/api/machines', (req, res, next) => { req.url = '/machines' + (req.url === '/' ? '' : req.url); supabaseRoutes(req, res, next); });
+app.use('/api/teng', (req, res, next) => { req.url = '/teng' + (req.url === '/' ? '' : req.url); supabaseRoutes(req, res, next); });
+app.use('/api/vision', (req, res, next) => { req.url = '/vision' + (req.url === '/' ? '' : req.url); supabaseRoutes(req, res, next); });
+app.use('/api/reports', (req, res, next) => { req.url = '/reports' + (req.url === '/' ? '' : req.url); supabaseRoutes(req, res, next); });
+app.use('/api/second-app', (req, res, next) => { req.url = '/second-app' + (req.url === '/' ? '' : req.url); supabaseRoutes(req, res, next); });
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/companies', require('./routes/companies'));
 app.use('/api/materials', require('./routes/materials'));
@@ -74,7 +80,15 @@ app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
+process.on('uncaughtException', (err) => {
+    console.error('⚠️ Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('⚠️ Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+const server = app.listen(PORT, () => {
     console.log(`🚀 Symbiosis.ai server running on port ${PORT}`);
     console.log(`📍 Visit http://localhost:${PORT}`);
 });
