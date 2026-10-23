@@ -1,0 +1,278 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   SYMBIOSIS.AI - Design System Variables
+   Industrial Operations Command & Circular Economy Platform
+   Theme: High-Tech Deep Obsidian & Electric Warm Orange
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+   color-scheme: dark;
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Color Palette
+       ───────────────────────────────────────────────────────────────────── */
+
+   /* Primary Colors - Signature Electric Warm Orange */
+   --primary-50: rgba(249, 115, 22, 0.08);
+   --primary-100: rgba(249, 115, 22, 0.15);
+   --primary-200: rgba(249, 115, 22, 0.25);
+   --primary-300: #fdba74;
+   --primary-400: #fb923c;
+   --primary-500: #f97316;
+   --primary-600: #ea580c;
+   --primary-700: #c2410c;
+   --primary-800: #9a3412;
+   --primary-900: #7c2d12;
+
+   /* Secondary Colors - Cyan / Electric Teal (Telemetry & Vision) */
+   --secondary-50: rgba(6, 182, 212, 0.08);
+   --secondary-100: rgba(6, 182, 212, 0.15);
+   --secondary-200: rgba(6, 182, 212, 0.25);
+   --secondary-300: #67e8f9;
+   --secondary-400: #22d3ee;
+   --secondary-500: #06b6d4;
+   --secondary-600: #0891b2;
+   --secondary-700: #0e7490;
+   --secondary-800: #155e75;
+   --secondary-900: #164e63;
+
+   /* Accent Colors - Amber / Warning & Drift Alerts */
+   --accent-50: rgba(245, 158, 11, 0.08);
+   --accent-100: rgba(245, 158, 11, 0.15);
+   --accent-200: rgba(245, 158, 11, 0.25);
+   --accent-300: #fcd34d;
+   --accent-400: #fbbf24;
+   --accent-500: #f59e0b;
+   --accent-600: #d97706;
+   --accent-700: #b45309;
+   --accent-800: #92400e;
+   --accent-900: #78350f;
+
+   /* Neutral Colors - Dark Theme Inverted Scale */
+   --neutral-50: #080b10;
+   --neutral-100: #111622;
+   --neutral-200: #161d2a;
+   --neutral-300: #1e293b;
+   --neutral-400: #334155;
+   --neutral-500: #64748b;
+   --neutral-600: #94a3b8;
+   --neutral-700: #cbd5e1;
+   --neutral-800: #e2e8f0;
+   --neutral-900: #ffffff;
+
+   /* Semantic Status Colors */
+   --success-light: rgba(16, 185, 129, 0.14);
+   --success: #10b981;
+   --success-dark: #059669;
+
+   --warning-light: rgba(245, 158, 11, 0.14);
+   --warning: #f59e0b;
+   --warning-dark: #d97706;
+
+   --error-light: rgba(239, 68, 68, 0.14);
+   --error: #ef4444;
+   --error-dark: #dc2626;
+
+   --info-light: rgba(6, 182, 212, 0.14);
+   --info: #06b6d4;
+   --info-dark: #0891b2;
+
+   /* Background Surfaces - Deep Graphite & Obsidian */
+   --bg-primary: #111622;        /* Cards & Panes */
+   --bg-secondary: #0b0e14;      /* Page Main Background */
+   --bg-tertiary: #161c28;       /* Input & Hover Surface */
+   --bg-dark: #080b10;           /* Sidebar & Deep Chrome */
+   --bg-surface-elevated: #182232;
+   --bg-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+   --bg-gradient-dark: linear-gradient(135deg, #111622 0%, #0b0e14 100%);
+   --bg-gradient-hero: linear-gradient(135deg, #121824 0%, #0d121c 100%);
+   --bg-card: #111622;
+   --bg-card-hover: #161e2c;
+
+   /* Backward Compatibility Aliases */
+   --primary-color: #f97316;
+   --secondary-color: #06b6d4;
+   --accent-color: #f97316;
+   --neutral-dark: #ffffff;
+   --neutral-light: #161d2a;
+   --white: #ffffff;
+   --background: #0b0e14;
+   --primary-green: #f97316;
+   --light-green: #fb923c;
+   --primary-blue: #06b6d4;
+   --light-blue: #22d3ee;
+   --background-light: #0b0e14;
+   --text-dark: #ffffff;
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Typography
+       ───────────────────────────────────────────────────────────────────── */
+
+   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+   --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+   --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+
+   /* Font Sizes */
+   --text-xs: 0.75rem;    /* 12px */
+   --text-sm: 0.875rem;   /* 14px */
+   --text-base: 1rem;     /* 16px */
+   --text-lg: 1.125rem;   /* 18px */
+   --text-xl: 1.25rem;    /* 20px */
+   --text-2xl: 1.5rem;    /* 24px */
+   --text-3xl: 1.875rem;  /* 30px */
+   --text-4xl: 2.25rem;   /* 36px */
+   --text-5xl: 3rem;      /* 48px */
+   --text-6xl: 3.75rem;   /* 60px */
+
+   /* Font Weights */
+   --font-light: 300;
+   --font-normal: 400;
+   --font-medium: 500;
+   --font-semibold: 600;
+   --font-bold: 700;
+   --font-extrabold: 800;
+
+   /* Line Heights */
+   --leading-tight: 1.25;
+   --leading-normal: 1.5;
+   --leading-relaxed: 1.75;
+
+   /* Letter Spacing */
+   --tracking-tight: -0.025em;
+   --tracking-normal: 0;
+   --tracking-wide: 0.025em;
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Spacing
+       ───────────────────────────────────────────────────────────────────── */
+
+   --space-0: 0;
+   --space-1: 0.25rem;    /* 4px */
+   --space-2: 0.5rem;     /* 8px */
+   --space-3: 0.75rem;    /* 12px */
+   --space-4: 1rem;       /* 16px */
+   --space-5: 1.25rem;    /* 20px */
+   --space-6: 1.5rem;     /* 24px */
+   --space-8: 2rem;       /* 32px */
+   --space-10: 2.5rem;    /* 40px */
+   --space-12: 3rem;      /* 48px */
+   --space-16: 4rem;      /* 64px */
+   --space-20: 5rem;      /* 80px */
+   --space-24: 6rem;      /* 96px */
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Borders & Radius
+       ───────────────────────────────────────────────────────────────────── */
+
+   --radius-xs: 4px;
+   --radius-sm: 6px;
+   --radius-md: 8px;
+   --radius-lg: 12px;
+   --radius-xl: 14px;
+   --radius-2xl: 20px;
+   --radius-full: 9999px;
+
+   --border-width: 1px;
+   --border-color: rgba(255, 255, 255, 0.08);
+   --border-color-light: rgba(255, 255, 255, 0.05);
+   --border-color-hover: rgba(249, 115, 22, 0.4);
+   --border-orange: #f97316;
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Shadows & Glows
+       ───────────────────────────────────────────────────────────────────── */
+
+   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.6);
+   --shadow-xl: 0 20px 35px rgba(0, 0, 0, 0.7);
+   --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
+   --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+   --shadow-glow: 0 0 20px rgba(249, 115, 22, 0.35);
+   --shadow-glow-orange: 0 0 20px rgba(249, 115, 22, 0.35);
+   --shadow-glow-blue: 0 0 20px rgba(6, 182, 212, 0.35);
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Transitions
+       ───────────────────────────────────────────────────────────────────── */
+
+   --transition-fast: 150ms ease;
+   --transition-base: 250ms ease;
+   --transition-slow: 350ms ease;
+   --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Scrollbar Tokens (Progressive Enhancement)
+       ───────────────────────────────────────────────────────────────────── */
+
+   --scrollbar-thumb: #222d3d;
+   --scrollbar-thumb-hover: #f97316;
+   --scrollbar-track: #0b0e14;
+
+   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+   accent-color: var(--primary-500);
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Z-Index Scale
+       ───────────────────────────────────────────────────────────────────── */
+
+   --z-dropdown: 100;
+   --z-sticky: 200;
+   --z-fixed: 300;
+   --z-modal-backdrop: 400;
+   --z-modal: 500;
+   --z-popover: 600;
+   --z-tooltip: 700;
+   --z-toast: 800;
+
+   /* ─────────────────────────────────────────────────────────────────────
+       Layout
+       ───────────────────────────────────────────────────────────────────── */
+
+   --container-sm: 640px;
+   --container-md: 768px;
+   --container-lg: 1024px;
+   --container-xl: 1280px;
+   --container-2xl: 1536px;
+
+   --sidebar-width: 270px;
+   --header-height: 72px;
+   --footer-height: 80px;
+}
+
+/* Explicit Dark Theme Selector - Synchronized */
+[data-theme="dark"],
+body {
+   --bg-primary: #111622;
+   --bg-secondary: #0b0e14;
+   --bg-tertiary: #161c28;
+   --bg-dark: #080b10;
+   --neutral-100: #111622;
+   --neutral-200: #161d2a;
+   --neutral-300: #1e293b;
+   --neutral-500: #64748b;
+   --neutral-600: #94a3b8;
+   --neutral-700: #cbd5e1;
+   --neutral-800: #e2e8f0;
+   --neutral-900: #ffffff;
+   --border-color: rgba(255, 255, 255, 0.08);
+   --border-color-light: rgba(255, 255, 255, 0.05);
+}
+
+/* Scrollbar Fallback for WebKit Browsers */
+@supports not (scrollbar-color: auto) {
+   ::-webkit-scrollbar {
+       width: 8px;
+       height: 8px;
+   }
+   ::-webkit-scrollbar-thumb {
+       background: var(--scrollbar-thumb);
+       border-radius: 4px;
+   }
+   ::-webkit-scrollbar-thumb:hover {
+       background: var(--scrollbar-thumb-hover);
+   }
+   ::-webkit-scrollbar-track {
+       background: var(--scrollbar-track);
+   }
+}

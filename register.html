@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Company - SYMBIOSIS.AI</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">SYMBIOSIS<span>.AI</span></a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="browse.html">Browse Companies</a>
+                <a href="dashboard.html">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container">
+            <h2 class="section-title text-center" style="margin-bottom: 2rem;">Register Your Company</h2>
+
+            <form id="registerForm">
+                <!-- Account Credentials -->
+                <div class="form-section">
+                    <h3>Account Login</h3>
+                    <div class="form-group">
+                        <label for="accountEmail">Account Email *</label>
+                        <input type="email" id="accountEmail" placeholder="name@company.com" required>
+                        <small style="color: #7f8c8d;">You will use this to log in.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountPassword">Password *</label>
+                        <input type="password" id="accountPassword" placeholder="Create a strong password" minlength="6"
+                            required>
+                    </div>
+                </div>
+
+                <!-- A. Basic Company Information -->
+                <div class="form-section">
+                    <h3>Basic Information</h3>
+                    <div class="form-group">
+                        <label for="companyName">Company Name *</label>
+                        <input type="text" id="companyName" placeholder="ABC Industries Private Limited" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gstNumber">GST Number *</label>
+                            <input type="text" id="gstNumber" placeholder="22AAAAA0000A1Z5"
+                                pattern="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}" required>
+                            <small style="color: #7f8c8d;">15-character alphanumeric GST number</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="industryType">Industry Type *</label>
+                            <select id="industryType" required>
+                                <option value="" disabled selected>Select Industry Type</option>
+                                <option value="Food Processing">Food Processing</option>
+                                <option value="Textile Manufacturing">Textile Manufacturing</option>
+                                <option value="Chemical Industry">Chemical Industry</option>
+                                <option value="Metal & Mining">Metal & Mining</option>
+                                <option value="Construction Materials">Construction Materials</option>
+                                <option value="Pharmaceutical">Pharmaceutical</option>
+                                <option value="Paper & Pulp">Paper & Pulp</option>
+                                <option value="Fertilizer & Manure Production">Fertilizer & Manure Production</option>
+                                <option value="Insulation Materials Manufacturing">Insulation Materials Manufacturing
+                                </option>
+                                <option value="Cement Manufacturing">Cement Manufacturing</option>
+                                <option value="Power Generation">Power Generation (Thermal/Coal)</option>
+                                <option value="Waste Management">Waste Management & Recycling</option>
+                                <option value="Agriculture">Agriculture & Farming</option>
+                                <option value="Automotive">Automotive Manufacturing</option>
+                                <option value="Electronics">Electronics Manufacturing</option>
+                                <option value="Leather">Leather & Tanning</option>
+                                <option value="Sugar Mills">Sugar Mills</option>
+                                <option value="Beverage">Beverage Production</option>
+                                <option value="Plastic">Plastic Manufacturing</option>
+                                <option value="Steel">Steel Production</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location *</label>
+                        <div class="form-row">
+                            <input type="number" id="latitude" placeholder="Latitude (e.g. 28.6692)" step="any"
+                                required>
+                            <input type="number" id="longitude" placeholder="Longitude (e.g. 77.4538)" step="any"
+                                required>
+                        </div>
+                        <button type="button" id="useLocationBtn" class="btn btn-outline mt-1" style="width: 100%;">📍
+                            Use My Location</button>
+                        <div id="map"></div>
+                        <small style="color: #7f8c8d;">Click on the map to pin your exact location.</small>
+                    </div>
+                </div>
+
+                <!-- B. Company Representatives -->
+                <div class="form-section">
+                    <h3>Company Representatives</h3>
+                    <div id="representativesContainer">
+                        <div class="dynamic-list-item">
+                            <div class="form-group">
+                                <label>Name *</label>
+                                <input type="text" name="repName" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Phone *</label>
+                                    <input type="tel" name="repPhone" pattern="[0-9]{10}" placeholder="9876543210"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email *</label>
+                                    <input type="email" name="repEmail" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="addRepBtn" class="btn btn-secondary"
+                        style="color: var(--primary-blue); border-color: var(--primary-blue);">+ Add Another
+                        Representative</button>
+                </div>
+
+                <!-- C. Raw Materials Needed -->
+                <div class="form-section">
+                    <h3>Raw Materials Needed</h3>
+                    <p class="mb-1">Specify the waste materials you can use as raw inputs.</p>
+                    <div id="materialsContainer">
+                        <!-- Dynamic rows will be added here -->
+                    </div>
+                    <button type="button" id="addMaterialBtn" class="btn btn-secondary"
+                        style="color: var(--primary-blue); border-color: var(--primary-blue);">+ Add Another
+                        Material</button>
+                </div>
+
+                <!-- D. Waste Produced -->
+                <div class="form-section">
+                    <h3>Waste Produced</h3>
+
+                    <h4 style="color: var(--primary-blue); margin-top: 1.5rem;">Major Waste</h4>
+                    <p class="mb-1" style="font-size: 0.9rem;">High-volume waste that is your primary disposal concern.
+                    </p>
+                    <div id="majorWasteContainer">
+                        <!-- Dynamic rows -->
+                    </div>
+                    <button type="button" id="addMajorWasteBtn" class="btn btn-secondary"
+                        style="color: var(--primary-blue); border-color: var(--primary-blue);">+ Add Major
+                        Waste</button>
+
+                    <h4 style="color: var(--primary-blue); margin-top: 2rem;">Byproducts</h4>
+                    <p class="mb-1" style="font-size: 0.9rem;">Lower-volume byproducts from your processes.</p>
+                    <div id="byproductsContainer">
+                        <!-- Dynamic rows -->
+                    </div>
+                    <button type="button" id="addByproductBtn" class="btn btn-secondary"
+                        style="color: var(--primary-blue); border-color: var(--primary-blue);">+ Add Byproduct</button>
+                </div>
+
+                <button type="submit" class="btn btn-green" style="width: 100%; font-size: 1.2rem;">Submit Company
+                    Registration</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="js/map.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

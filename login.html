@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SYMBIOSIS.AI</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        /* Enhanced Auth Page Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a3c27 0%, #0d2b4e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .auth-container {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .auth-header {
+            background: linear-gradient(135deg, #2d5f3f 0%, #1e5a8e 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: float 20s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-30px, -30px) rotate(360deg); }
+        }
+        
+        .logo {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text .symbiosis {
+            color: white;
+        }
+        
+        .logo-text .ai {
+            color: #a8e6cf;
+            font-weight: 300;
+        }
+        
+        .tagline {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 400;
+            margin-top: 5px;
+        }
+        
+        .auth-body {
+            padding: 40px;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-title {
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(to right, #2d5f3f, #1e5a8e);
+            border-radius: 2px;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2d5f3f;
+            font-size: 18px;
+            z-index: 2;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            background: #f8f9fa;
+            transition: all 0.3s;
+            color: #2c3e50;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #2d5f3f;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(45, 95, 63, 0.15);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+        
+        .password-toggle:hover {
+            color: #2d5f3f;
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-check-label {
+            color: #666;
+            cursor: pointer;
+        }
+        
+        .forgot-link {
+            color: #1e5a8e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .forgot-link:hover {
+            color: #2d5f3f;
+            text-decoration: underline;
+        }
+        
+        .btn-auth {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2d5f3f, #1e5a8e);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(45, 95, 63, 0.25);
+        }
+        
+        .btn-auth:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(45, 95, 63, 0.35);
+            background: linear-gradient(135deg, #4a9d5f, #2d5f3f);
+        }
+        
+        .btn-auth:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-auth:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .switch-auth {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e8ed;
+            font-size: 15px;
+            color: #666;
+        }
+        
+        .switch-link {
+            color: #1e5a8e;
+            font-weight: 700;
+            cursor: pointer;
+            margin-left: 5px;
+            transition: all 0.3s;
+        }
+        
+        .switch-link:hover {
+            color: #2d5f3f;
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: none;
+            animation: shake 0.5s;
+            font-size: 14px;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .alert-error {
+            background: linear-gradient(135deg, #fee, #fdd);
+            color: #c0392b;
+            border-left: 5px solid #c0392b;
+            border-right: 1px solid #f5c6cb;
+            border-top: 1px solid #f5c6cb;
+            border-bottom: 1px solid #f5c6cb;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border-left: 5px solid #155724;
+            border-right: 1px solid #c3e6cb;
+            border-top: 1px solid #c3e6cb;
+            border-bottom: 1px solid #c3e6cb;
+        }
+        
+        .alert i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .password-strength {
+            margin-top: 8px;
+            height: 6px;
+            background: #e1e8ed;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .strength-bar {
+            height: 100%;
+            transition: width 0.5s ease;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .strength-0 { width: 20%; background: #e74c3c; }
+        .strength-1 { width: 40%; background: #f39c12; }
+        .strength-2 { width: 60%; background: #f1c40f; }
+        .strength-3 { width: 80%; background: #2ecc71; }
+        .strength-4 { width: 100%; background: #27ae60; }
+        
+        .strength-text {
+            font-size: 12px;
+            margin-top: 5px;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .strength-0 + .strength-text { color: #e74c3c; }
+        .strength-1 + .strength-text { color: #f39c12; }
+        .strength-2 + .strength-text { color: #f1c40f; }
+        .strength-3 + .strength-text { color: #2ecc71; }
+        .strength-4 + .strength-text { color: #27ae60; }
+        
+        /* Registration specific styles */
+        .form-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        /* OTP Section */
+        .otp-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .otp-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .otp-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .otp-input {
+            width: 55px;
+            height: 55px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            background: #f8f9fa;
+            color: #2c3e50;
+            transition: all 0.3s;
+        }
+        
+        .otp-input:focus {
+            outline: none;
+            border-color: #2d5f3f;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(45, 95, 63, 0.15);
+        }
+        
+        .resend-otp {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+        }
+        
+        .resend-link {
+            color: #1e5a8e;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 5px;
+            text-decoration: none;
+        }
+        
+        .resend-link:hover {
+            text-decoration: underline;
+            color: #2d5f3f;
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Footer */
+        .auth-footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 13px;
+            border-top: 1px solid #e1e8ed;
+            background: #f8f9fa;
+        }
+        
+        .auth-footer a {
+            color: #1e5a8e;
+            text-decoration: none;
+        }
+        
+        .auth-footer a:hover {
+            text-decoration: underline;
+            color: #2d5f3f;
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            .auth-container {
+                max-width: 100%;
+                border-radius: 15px;
+            }
+            
+            .auth-body {
+                padding: 30px 20px;
+            }
+            
+            .auth-header {
+                padding: 30px 20px;
+            }
+            
+            .logo-text {
+                font-size: 24px;
+            }
+            
+            .otp-input {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            
+            .remember-forgot {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-recycle"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="symbiosis">SYMBIOSIS</span>
+                    <span class="ai">.AI</span>
+                </div>
+                <div class="tagline">Connecting Industries, Reducing Waste</div>
+            </div>
+        </div>
+        
+        <div class="auth-body">
+            <!-- Error/Success Messages -->
+            <div id="errorAlert" class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+            </div>
+            
+            <div id="successAlert" class="alert alert-success">
+                <i class="fas fa-check-circle"></i> <span id="successText"></span>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form active">
+                <h3 class="form-title">Welcome Back</h3>
+                
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="loginEmail" class="form-control" 
+                           placeholder="Email Address" required autocomplete="email">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" class="form-control" 
+                           placeholder="Password" required autocomplete="current-password">
+                    <button type="button" class="password-toggle" id="toggleLoginPassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <div class="remember-forgot">
+                    <label class="form-check">
+                        <input type="checkbox" id="rememberMe" class="form-check-input">
+                        <span class="form-check-label">Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link" id="forgotPasswordLink">Forgot Password?</a>
+                </div>
+                
+                <button class="btn-auth" id="loginButton">
+                    <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                </button>
+                
+                <div class="switch-auth">
+                    Don't have an account?
+                    <span class="switch-link" id="switchToRegister">Register Factory</span>
+                </div>
+            </div>
+            
+            <!-- Registration Form -->
+            <div id="registerForm" class="auth-form">
+                <h3 class="form-title">Register Your Factory</h3>
+                
+                <div class="input-group">
+                    <i class="fas fa-user-tie"></i>
+                    <input type="text" id="regFullName" class="form-control" 
+                           placeholder="Full Name" required autocomplete="name">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-at"></i>
+                    <input type="text" id="regUsername" class="form-control" 
+                           placeholder="Username" required autocomplete="username">
+                    <div class="form-hint">This will be displayed as Factory Representative</div>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="regEmail" class="form-control" 
+                           placeholder="Factory Email Address" required autocomplete="email">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="regMobile" class="form-control" 
+                           placeholder="Mobile Number" required autocomplete="tel">
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="regPassword" class="form-control" 
+                           placeholder="Create Password" required autocomplete="new-password">
+                    <button type="button" class="password-toggle" id="toggleRegPassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <div class="password-strength">
+                    <div id="passwordStrengthBar" class="strength-bar strength-0"></div>
+                </div>
+                <div id="strengthText" class="strength-text">Password Strength: Very Weak</div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="regConfirmPassword" class="form-control" 
+                           placeholder="Confirm Password" required autocomplete="new-password">
+                    <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+                <div class="form-check" style="margin: 25px 0;">
+                    <input type="checkbox" id="acceptTerms" class="form-check-input" required>
+                    <label class="form-check-label" for="acceptTerms">
+                        I agree to the <a href="#" style="color: #1e5a8e;">Terms & Conditions</a> and 
+                        <a href="#" style="color: #1e5a8e;">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button class="btn-auth" id="registerButton">
+                    <i class="fas fa-building"></i> Register Factory
+                </button>
+                
+                <div class="switch-auth">
+                    Already have an account?
+                    <span class="switch-link" id="switchToLogin">Login here</span>
+                </div>
+            </div>
+            
+            <!-- Forgot Password -->
+            <div id="forgotPasswordForm" class="auth-form">
+                <h3 class="form-title">Reset Password</h3>
+                
+                <p style="color: #666; margin-bottom: 25px; line-height: 1.6;">
+                    Enter your email address and we'll send you instructions to reset your password.
+                </p>
+                
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="resetEmail" class="form-control" 
+                           placeholder="Enter your email" required>
+                </div>
+                
+                <button class="btn-auth" id="sendResetButton">
+                    <i class="fas fa-paper-plane"></i> Send Reset Instructions
+                </button>
+                
+                <div class="switch-auth">
+                    Remember your password?
+                    <span class="switch-link" id="switchToLoginFromReset">Login here</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-footer">
+            <p>© 2024 SYMBIOSIS.AI. All rights reserved.</p>
+            <p>Connecting Industries, Reducing Waste</p>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <!-- Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Symbiosis.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .chart-container {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .chart-title {
+            font-weight: var(--font-semibold);
+            font-size: var(--text-lg);
+            color: var(--neutral-900);
+        }
+
+        .chart-placeholder {
+            height: 250px;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(6, 182, 212, 0.05));
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neutral-500);
+        }
+
+        .metric-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(249, 115, 22, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .metric-icon {
+            font-size: 32px;
+            margin-bottom: var(--space-2);
+        }
+
+        .metric-value {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            color: var(--primary-500);
+        }
+
+        .metric-label {
+            font-size: var(--text-sm);
+            color: var(--neutral-600);
+            margin-bottom: var(--space-2);
+        }
+
+        .metric-change {
+            font-size: var(--text-sm);
+        }
+
+        .metric-change.positive {
+            color: var(--success);
+        }
+
+        .metric-change.negative {
+            color: var(--error);
+        }
+
+        .sdg-impact-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .sdg-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: var(--font-bold);
+        }
+
+        .sdg-info {
+            flex: 1;
+        }
+
+        .sdg-title {
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-1);
+        }
+
+        .sdg-value {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            color: var(--primary-500);
+        }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+
+        .leaderboard-rank {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--font-bold);
+            font-size: var(--text-sm);
+        }
+
+        .leaderboard-rank.gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+        }
+
+        .leaderboard-rank.silver {
+            background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+            color: white;
+        }
+
+        .leaderboard-rank.bronze {
+            background: linear-gradient(135deg, #CD7F32, #8B4513);
+            color: white;
+        }
+
+        .leaderboard-rank.default {
+            background: var(--neutral-200);
+            color: var(--neutral-600);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar" id="sidebar">
+            <div class="sidebar-logo"><a href="/"
+                    style="display:flex;align-items:center;gap:var(--space-2);text-decoration:none;">
+                    <div style="font-size:28px;">♻️</div><span class="sidebar-logo-text">Symbiosis.ai</span>
+                </a></div>
+            <div class="sidebar-menu">
+                <a href="/dashboard" class="sidebar-menu-item"><span class="icon">🏠</span> Dashboard</a>
+                <a href="/marketplace" class="sidebar-menu-item"><span class="icon">🛒</span> Marketplace</a>
+                <a href="/listing" class="sidebar-menu-item"><span class="icon">➕</span> Create Listing</a>
+                <a href="/messages" class="sidebar-menu-item"><span class="icon">💬</span> Messages</a>
+                <a href="/analytics" class="sidebar-menu-item active"><span class="icon">📊</span> Analytics</a>
+                <a href="/profile" class="sidebar-menu-item"><span class="icon">👤</span> Profile</a>
+            </div>
+            <div class="sidebar-menu"
+                style="margin-top:auto;padding-top:var(--space-4);border-top:1px solid var(--border-color-light);">
+                <a href="#" class="sidebar-menu-item" id="logoutBtn"><span class="icon">🚪</span> Logout</a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <button class="mobile-menu-toggle" id="mobileMenuBtn"><span></span></button>
+                <h2 style="font-size:var(--text-xl);font-weight:var(--font-semibold);">📊 Analytics & Impact</h2>
+                <div class="header-actions">
+                    <select class="form-select form-input-sm" id="periodSelect" style="width:150px;">
+                        <option value="7d">Last 7 Days</option>
+                        <option value="30d" selected>Last 30 Days</option>
+                        <option value="90d">Last 90 Days</option>
+                        <option value="1y">Last Year</option>
+                    </select>
+                    <button class="btn btn-outline btn-sm">📥 Export Report</button>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Key Metrics -->
+                <div class="dashboard-grid dashboard-grid-4 mb-6">
+                    <div class="metric-card">
+                        <div class="metric-icon">📦</div>
+                        <div class="metric-value">45</div>
+                        <div class="metric-label">Tons Traded</div>
+                        <div class="metric-change positive">↑ 23% vs last month</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">💰</div>
+                        <div class="metric-value">₹5.2L</div>
+                        <div class="metric-label">Revenue/Savings</div>
+                        <div class="metric-change positive">↑ 15% vs last month</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🌍</div>
+                        <div class="metric-value">12t</div>
+                        <div class="metric-label">CO₂ Emissions Saved</div>
+                        <div class="metric-change positive">↑ 40% vs last month</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🤝</div>
+                        <div class="metric-value">8</div>
+                        <div class="metric-label">Successful Deals</div>
+                        <div class="metric-change positive">↑ 60% vs last month</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid dashboard-grid-2 mb-6">
+                    <!-- Trading Volume Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">📈 Trading Volume Over Time</div>
+                        </div>
+                        <div class="chart-placeholder">
+                            <div style="text-align:center;">
+                                <div style="font-size:48px;margin-bottom:var(--space-2);">📊</div>
+                                <p>Interactive chart would render here</p>
+                                <p style="font-size:var(--text-sm);">Showing waste traded in tons per month</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Material Breakdown -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">🥧 Material Type Breakdown</div>
+                        </div>
+                        <div style="display:grid;gap:var(--space-3);">
+                            <div style="display:flex;align-items:center;gap:var(--space-3);">
+                                <div style="width:16px;height:16px;background:var(--primary-500);border-radius:3px;">
+                                </div><span style="flex:1;">Fly Ash</span><strong>40%</strong>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:var(--space-3);">
+                                <div style="width:16px;height:16px;background:var(--secondary-500);border-radius:3px;">
+                                </div><span style="flex:1;">Metal Scrap</span><strong>25%</strong>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:var(--space-3);">
+                                <div style="width:16px;height:16px;background:var(--accent-500);border-radius:3px;">
+                                </div><span style="flex:1;">Organic Waste</span><strong>20%</strong>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:var(--space-3);">
+                                <div style="width:16px;height:16px;background:var(--warning);border-radius:3px;"></div>
+                                <span style="flex:1;">Plastic</span><strong>10%</strong>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:var(--space-3);">
+                                <div style="width:16px;height:16px;background:var(--neutral-400);border-radius:3px;">
+                                </div><span style="flex:1;">Others</span><strong>5%</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SDG Impact -->
+                <h3 style="margin-bottom:var(--space-4);font-size:var(--text-xl);">🌱 UN SDG Impact Contribution</h3>
+                <div class="dashboard-grid dashboard-grid-3 mb-6">
+                    <div class="sdg-impact-card">
+                        <div class="sdg-icon" style="background:#BF8B2E;">12</div>
+                        <div class="sdg-info">
+                            <div class="sdg-title">Responsible Consumption</div>
+                            <div class="sdg-value">45 tons</div>
+                            <div style="font-size:var(--text-sm);color:var(--neutral-600);">waste diverted from landfill
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sdg-impact-card">
+                        <div class="sdg-icon" style="background:#3F7E44;">13</div>
+                        <div class="sdg-info">
+                            <div class="sdg-title">Climate Action</div>
+                            <div class="sdg-value">12t CO₂</div>
+                            <div style="font-size:var(--text-sm);color:var(--neutral-600);">emissions prevented</div>
+                        </div>
+                    </div>
+                    <div class="sdg-impact-card">
+                        <div class="sdg-icon" style="background:#FD6925;">9</div>
+                        <div class="sdg-info">
+                            <div class="sdg-title">Industry & Innovation</div>
+                            <div class="sdg-value">8 partnerships</div>
+                            <div style="font-size:var(--text-sm);color:var(--neutral-600);">symbiotic connections</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid dashboard-grid-2">
+                    <!-- Top Deals -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">🏆 Top Deals This Month</div>
+                        </div>
+                        <div style="display:grid;gap:var(--space-2);">
+                            <div class="leaderboard-item">
+                                <div class="leaderboard-rank gold">1</div>
+                                <div style="flex:1;"><strong>Fly Ash to TechSteel</strong><br><span
+                                        style="font-size:var(--text-sm);color:var(--neutral-600);">20 tons •
+                                        ₹2.4L</span></div><span class="badge badge-success">Completed</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <div class="leaderboard-rank silver">2</div>
+                                <div style="flex:1;"><strong>Metal Scrap to GreenChem</strong><br><span
+                                        style="font-size:var(--text-sm);color:var(--neutral-600);">15 tons •
+                                        ₹1.8L</span></div><span class="badge badge-success">Completed</span>
+                            </div>
+                            <div class="leaderboard-item">
+                                <div class="leaderboard-rank bronze">3</div>
+                                <div style="flex:1;"><strong>Rice Husk to EcoPaper</strong><br><span
+                                        style="font-size:var(--text-sm);color:var(--neutral-600);">10 tons • ₹80K</span>
+                                </div><span class="badge badge-warning">In Progress</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Environmental Equivalents -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">🌳 Environmental Impact Equivalents</div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4);">
+                            <div
+                                style="text-align:center;padding:var(--space-4);background:var(--success-light);border-radius:var(--radius-lg);">
+                                <div style="font-size:40px;margin-bottom:var(--space-2);">🌳</div>
+                                <div
+                                    style="font-size:var(--text-2xl);font-weight:var(--font-bold);color:var(--success);">
+                                    120</div>
+                                <div style="font-size:var(--text-sm);color:var(--neutral-600);">Trees Planted Equivalent
+                                </div>
+                            </div>
+                            <div
+                                style="text-align:center;padding:var(--space-4);background:var(--primary-50);border-radius:var(--radius-lg);">
+                                <div style="font-size:40px;margin-bottom:var(--space-2);">🚗</div>
+                                <div
+                                    style="font-size:var(--text-2xl);font-weight:var(--font-bold);color:var(--primary-500);">
+                                    48,000</div>
+                                <div style="font-size:var(--text-sm);color:var(--neutral-600);">km Car Travel Offset
+                                </div>
+                            </div>
+                            <div
+                                style="text-align:center;padding:var(--space-4);background:var(--secondary-50);border-radius:var(--radius-lg);">
+                                <div style="font-size:40px;margin-bottom:var(--space-2);">💧</div>
+                                <div
+                                    style="font-size:var(--text-2xl);font-weight:var(--font-bold);color:var(--secondary-500);">
+                                    12K</div>
+                                <div style="font-size:var(--text-sm);color:var(--neutral-600);">Liters Water Saved</div>
+                            </div>
+                            <div
+                                style="text-align:center;padding:var(--space-4);background:var(--accent-50);border-radius:var(--radius-lg);">
+                                <div style="font-size:40px;margin-bottom:var(--space-2);">⚡</div>
+                                <div
+                                    style="font-size:var(--text-2xl);font-weight:var(--font-bold);color:var(--accent-500);">
+                                    8,500</div>
+                                <div style="font-size:var(--text-sm);color:var(--neutral-600);">kWh Energy Saved</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        if (!requireAuth()) throw new Error('Not authenticated');
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('mobileOverlay').classList.toggle('active'); });
+        document.getElementById('mobileOverlay').addEventListener('click', () => { document.getElementById('sidebar').classList.remove('active'); document.getElementById('mobileOverlay').classList.remove('active'); });
+        document.getElementById('logoutBtn').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+    </script>
+</body>
+
+</html>

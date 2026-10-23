@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Symbiosis.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar" id="sidebar">
+            <div class="sidebar-logo"><a href="/"
+                    style="display:flex;align-items:center;gap:var(--space-2);text-decoration:none;">
+                    <div style="font-size:28px;">♻️</div><span class="sidebar-logo-text">Symbiosis.ai</span>
+                </a></div>
+            <div class="sidebar-menu">
+                <a href="/dashboard" class="sidebar-menu-item"><span class="icon">🏠</span> Dashboard</a>
+                <a href="/marketplace" class="sidebar-menu-item"><span class="icon">🛒</span> Marketplace</a>
+                <a href="/listing" class="sidebar-menu-item"><span class="icon">➕</span> Create Listing</a>
+                <a href="/messages" class="sidebar-menu-item"><span class="icon">💬</span> Messages</a>
+                <a href="/analytics" class="sidebar-menu-item"><span class="icon">📊</span> Analytics</a>
+                <a href="/profile" class="sidebar-menu-item active"><span class="icon">👤</span> Profile</a>
+            </div>
+            <div class="sidebar-menu"
+                style="margin-top:auto;padding-top:var(--space-4);border-top:1px solid var(--border-color-light);">
+                <a href="#" class="sidebar-menu-item" id="logoutBtn"><span class="icon">🚪</span> Logout</a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <button class="mobile-menu-toggle" id="mobileMenuBtn"><span></span></button>
+                <h2 style="font-size:var(--text-xl);font-weight:var(--font-semibold);">👤 Company Profile</h2>
+                <div class="header-actions"><button class="btn btn-primary btn-sm" id="editProfileBtn">✏️ Edit
+                        Profile</button></div>
+            </header>
+
+            <div class="dashboard-content">
+                <!-- Profile Header -->
+                <div class="card mb-6" style="background: linear-gradient(135deg, #131926 0%, #0b0e14 100%); border: 1px solid rgba(249, 115, 22, 0.35); box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(249, 115, 22, 0.12); color:white;">
+                    <div class="card-body" style="display:flex;align-items:center;gap:var(--space-6);">
+                        <div style="width:100px;height:100px;background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;font-size:48px;"
+                            id="profileAvatar">🏭</div>
+                        <div style="flex:1;">
+                            <h2 style="color:white;margin-bottom:var(--space-1);" id="profileName">Loading...</h2>
+                            <p style="color:var(--neutral-400);margin-bottom:var(--space-3);" id="profileIndustry">Industry</p>
+                            <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;">
+                                <span class="badge" style="background:rgba(16,185,129,0.18);border:1px solid rgba(16,185,129,0.35);color:#34d399;">✅ Verified</span>
+                                <span id="profileLocation" style="color:var(--neutral-300);">📍 Location</span>
+                                <span id="profileSince" style="color:var(--neutral-300);">🗓️ Since 2020</span>
+                            </div>
+                        </div>
+                        <div
+                            style="text-align:center;padding:var(--space-4);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);">
+                            <div style="font-size:var(--text-3xl);font-weight:var(--font-bold);color:#f97316;">4.8</div>
+                            <div style="opacity:0.9;">⭐⭐⭐⭐⭐</div>
+                            <div style="font-size:var(--text-sm);color:var(--neutral-400);">12 reviews</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid dashboard-grid-main-sidebar">
+                    <div>
+                        <!-- Company Details -->
+                        <div class="card mb-6">
+                            <div class="card-header">
+                                <h3 class="card-title">🏢 Company Information</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4);">
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Legal Name</div>
+                                        <div style="font-weight:var(--font-medium);" id="infoName">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            GST Number</div>
+                                        <div style="font-weight:var(--font-medium);" id="infoGst">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Registration No.</div>
+                                        <div style="font-weight:var(--font-medium);" id="infoReg">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Industry Type</div>
+                                        <div style="font-weight:var(--font-medium);" id="infoIndustry">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Employees</div>
+                                        <div style="font-weight:var(--font-medium);" id="infoEmployees">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Annual Turnover</div>
+                                        <div style="font-weight:var(--font-medium);" id="infoTurnover">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Factory Location -->
+                        <div class="card mb-6">
+                            <div class="card-header">
+                                <h3 class="card-title">📍 Factory Location</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="display:grid;gap:var(--space-3);">
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Factory Name</div>
+                                        <div style="font-weight:var(--font-medium);" id="factoryName">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Address</div>
+                                        <div style="font-weight:var(--font-medium);" id="factoryAddress">-</div>
+                                    </div>
+                                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-3);">
+                                        <div>
+                                            <div
+                                                style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                                City</div>
+                                            <div style="font-weight:var(--font-medium);" id="factoryCity">-</div>
+                                        </div>
+                                        <div>
+                                            <div
+                                                style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                                State</div>
+                                            <div style="font-weight:var(--font-medium);" id="factoryState">-</div>
+                                        </div>
+                                        <div>
+                                            <div
+                                                style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                                Pincode</div>
+                                            <div style="font-weight:var(--font-medium);" id="factoryPincode">-</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">📞 Contact Person</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4);">
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Name</div>
+                                        <div style="font-weight:var(--font-medium);" id="contactName">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Designation</div>
+                                        <div style="font-weight:var(--font-medium);" id="contactDesignation">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Email</div>
+                                        <div style="font-weight:var(--font-medium);" id="contactEmail">-</div>
+                                    </div>
+                                    <div>
+                                        <div
+                                            style="font-size:var(--text-sm);color:var(--neutral-500);margin-bottom:var(--space-1);">
+                                            Mobile</div>
+                                        <div style="font-weight:var(--font-medium);" id="contactMobile">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Sidebar -->
+                    <div>
+                        <!-- SDG Badges -->
+                        <div class="card mb-6">
+                            <div class="card-header">
+                                <h3 class="card-title">🌱 SDG Contributions</h3>
+                            </div>
+                            <div class="card-body" id="sdgBadges">
+                                <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Documents -->
+                        <div class="card mb-6">
+                            <div class="card-header">
+                                <h3 class="card-title">📄 Documents</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="display:grid;gap:var(--space-2);">
+                                    <div
+                                        style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);background:var(--bg-secondary);border-radius:var(--radius-md);">
+                                        <span>📋</span><span style="flex:1;">GST Certificate</span><span
+                                            class="badge badge-success">Verified</span></div>
+                                    <div
+                                        style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);background:var(--bg-secondary);border-radius:var(--radius-md);">
+                                        <span>📋</span><span style="flex:1;">Company Registration</span><span
+                                            class="badge badge-success">Verified</span></div>
+                                    <div
+                                        style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);background:var(--bg-secondary);border-radius:var(--radius-md);">
+                                        <span>📋</span><span style="flex:1;">Factory License</span><span
+                                            class="badge badge-warning">Pending</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">📊 Platform Stats</h3>
+                            </div>
+                            <div class="card-body">
+                                <div style="display:grid;gap:var(--space-3);">
+                                    <div style="display:flex;justify-content:space-between;"><span>Total
+                                            Listings</span><strong>4</strong></div>
+                                    <div style="display:flex;justify-content:space-between;"><span>Successful
+                                            Deals</span><strong>8</strong></div>
+                                    <div style="display:flex;justify-content:space-between;"><span>Response
+                                            Rate</span><strong>92%</strong></div>
+                                    <div style="display:flex;justify-content:space-between;"><span>Avg. Response
+                                            Time</span><strong>2 hours</strong></div>
+                                    <div style="display:flex;justify-content:space-between;"><span>Member
+                                            Since</span><strong id="memberSince">-</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        if (!requireAuth()) throw new Error('Not authenticated');
+
+        async function loadProfile() {
+            const profile = await getFullProfile();
+            if (!profile) return;
+
+            document.getElementById('profileName').textContent = profile.companyName || '-';
+            document.getElementById('profileIndustry').textContent = profile.industryType || '-';
+            document.getElementById('profileLocation').textContent = `📍 ${profile.factory?.city || ''}, ${profile.factory?.state || ''}`;
+            document.getElementById('profileSince').textContent = `🗓️ Since ${profile.yearEstablished || new Date(profile.createdAt).getFullYear()}`;
+
+            document.getElementById('infoName').textContent = profile.companyName || '-';
+            document.getElementById('infoGst').textContent = profile.gstNumber || '-';
+            document.getElementById('infoReg').textContent = profile.registrationNumber || '-';
+            document.getElementById('infoIndustry').textContent = profile.industryType || '-';
+            document.getElementById('infoEmployees').textContent = profile.employeeCount || '-';
+            document.getElementById('infoTurnover').textContent = profile.annualTurnover || '-';
+
+            document.getElementById('factoryName').textContent = profile.factory?.name || '-';
+            document.getElementById('factoryAddress').textContent = profile.factory?.address || '-';
+            document.getElementById('factoryCity').textContent = profile.factory?.city || '-';
+            document.getElementById('factoryState').textContent = profile.factory?.state || '-';
+            document.getElementById('factoryPincode').textContent = profile.factory?.pincode || '-';
+
+            document.getElementById('contactName').textContent = profile.representative?.name || '-';
+            document.getElementById('contactDesignation').textContent = profile.representative?.designation || '-';
+            document.getElementById('contactEmail').textContent = profile.email || '-';
+            document.getElementById('contactMobile').textContent = profile.representative?.mobile ? `+91 ${profile.representative.mobile}` : '-';
+
+            document.getElementById('memberSince').textContent = profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : '-';
+
+            // SDG badges
+            const sdgs = profile.sustainability?.sdgs || [];
+            const sdgColors = { 6: '#26BDE2', 7: '#FCC30B', 8: '#A21942', 9: '#FD6925', 11: '#F99D26', 12: '#BF8B2E', 13: '#3F7E44', 14: '#0A97D9', 15: '#56C02B' };
+            const sdgNames = { 6: 'Clean Water', 7: 'Clean Energy', 8: 'Growth', 9: 'Industry', 11: 'Cities', 12: 'Consumption', 13: 'Climate', 14: 'Oceans', 15: 'Land' };
+            document.getElementById('sdgBadges').innerHTML = sdgs.length > 0
+                ? sdgs.map(s => `<span style="display:inline-flex;align-items:center;gap:var(--space-1);padding:var(--space-2) var(--space-3);background:${sdgColors[s] || '#666'};color:white;border-radius:var(--radius-full);font-size:var(--text-sm);margin:var(--space-1);"><strong>${s}</strong> ${sdgNames[s] || ''}</span>`).join('')
+                : '<p style="color:var(--neutral-500);">No SDG commitments yet. <a href="/onboarding">Update profile</a></p>';
+        }
+
+        loadProfile();
+
+        document.getElementById('editProfileBtn').addEventListener('click', () => window.location.href = '/onboarding');
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('mobileOverlay').classList.toggle('active'); });
+        document.getElementById('mobileOverlay').addEventListener('click', () => { document.getElementById('sidebar').classList.remove('active'); document.getElementById('mobileOverlay').classList.remove('active'); });
+        document.getElementById('logoutBtn').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+    </script>
+</body>
+
+</html>

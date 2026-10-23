@@ -1,0 +1,241 @@
+/* Auth Page Layout */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 20%, #151e2c 0%, #0b0e14 70%);
+    padding: var(--space-4);
+}
+
+.auth-card {
+    background: #111622;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    width: 100%;
+    max-width: 800px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-header {
+    background: linear-gradient(135deg, #161e2c 0%, #111622 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    padding: var(--space-6);
+    text-align: center;
+}
+
+.auth-header h2 {
+    margin-bottom: var(--space-2);
+    color: #ffffff;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+}
+
+.auth-header p {
+    color: #94a3b8;
+    margin-bottom: 0;
+}
+
+.auth-body {
+    padding: var(--space-8);
+    background: #111622;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: var(--space-5);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: 600;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 14px;
+    background: #0e131d;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-sm);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.25s ease;
+}
+
+.form-control:focus {
+    border-color: #f97316;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+    background: #121824;
+}
+
+.form-control::placeholder {
+    color: #64748b;
+}
+
+.form-row {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Progress Bar (for Registration) */
+.progress-container {
+    margin-bottom: var(--space-6);
+    padding: 0 var(--space-4);
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+    transform: translateY(-50%);
+}
+
+.step {
+    width: 32px;
+    height: 32px;
+    background: #17202f;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #94a3b8;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.step.active {
+    background: #f97316;
+    border-color: #f97316;
+    color: #ffffff;
+    box-shadow: 0 0 14px rgba(249, 115, 22, 0.4);
+    transform: scale(1.1);
+}
+
+.step.completed {
+    background: #10b981;
+    border-color: #10b981;
+    color: #ffffff;
+}
+
+/* Step Content */
+.step-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.step-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: var(--space-4);
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.auth-footer a {
+    color: #f97316;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    color: #ea580c;
+    text-decoration: underline;
+}
+
+/* File Upload */
+.file-upload-wrapper {
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    background: #0e131d;
+    padding: var(--space-5);
+    text-align: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    color: #94a3b8;
+}
+
+.file-upload-wrapper:hover {
+    border-color: #f97316;
+    color: #ffffff;
+    background: rgba(249, 115, 22, 0.04);
+}
+
+/* Toggle Login/Register */
+.auth-mode-switch {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-5);
+}
+
+.switch-btn {
+    padding: 10px 24px;
+    background: #141b27;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.switch-btn.active {
+    background: #f97316;
+    border-color: #f97316;
+    color: #ffffff;
+}
+
+.switch-btn:first-child {
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.switch-btn:last-child {
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}

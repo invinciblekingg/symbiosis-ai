@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map View - SYMBIOSIS.AI</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Leaflet Geocoder -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        .map-page {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 350px;
+            background: white;
+            border-right: 1px solid #e1e8ed;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 25px;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        
+        .sidebar-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .filter-section {
+            padding: 25px;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        
+        .filter-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .range-slider {
+            width: 100%;
+        }
+        
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .company-list {
+            padding: 25px;
+        }
+        
+        .company-item {
+            background: white;
+            border: 1px solid #e1e8ed;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .company-item:hover {
+            border-color: #2d5f3f;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .company-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .company-industry {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .company-distance {
+            color: #2d5f3f;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+        
+        .map-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .map-control-btn {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .map-control-btn:hover {
+            background: #2d5f3f;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .location-marker {
+            background: linear-gradient(135deg, #3498db, #1e5a8e);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 50vh;
+                z-index: 1000;
+                transform: translateY(-100%);
+                transition: transform 0.3s;
+            }
+            
+            .sidebar.show {
+                transform: translateY(0);
+            }
+            
+            .map-container {
+                height: 100vh;
+            }
+            
+            .toggle-sidebar {
+                display: block;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                z-index: 1001;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="map-page">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Industrial Network Map</div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchAddress" placeholder="Search location or company...">
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label class="filter-label">Industry Type</label>
+                    <select class="filter-select" id="industryFilter">
+                        <option value="">All Industries</option>
+                        <option value="manufacturing">Manufacturing</option>
+                        <option value="construction">Construction</option>
+                        <option value="chemical">Chemical</option>
+                        <option value="textile">Textile</option>
+                        <option value="food">Food Processing</option>
+                        <option value="metal">Metal & Steel</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Material Type</label>
+                    <select class="filter-select" id="materialFilter">
+                        <option value="">All Materials</option>
+                        <option value="fly-ash">Fly Ash</option>
+                        <option value="scrap-metal">Scrap Metal</option>
+                        <option value="plastic">Plastic Waste</option>
+                        <option value="organic">Organic Waste</option>
+                        <option value="textile">Textile Waste</option>
+                        <option value="construction">Construction Waste</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Distance Radius</label>
+                    <input type="range" class="range-slider" id="distanceSlider" min="0" max="500" value="100">
+                    <div class="range-values">
+                        <span>0 km</span>
+                        <span id="distanceValue">100 km</span>
+                        <span>500 km</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="company-list" id="companyList">
+                <!-- Companies will be loaded here -->
+            </div>
+        </div>
+        
+        <!-- Map Container -->
+        <div class="map-container">
+            <div id="map"></div>
+            
+            <div class="map-controls">
+                <button class="map-control-btn" id="locateMe" title="Find my location">
+                    <i class="fas fa-location-crosshairs"></i>
+                </button>
+                <button class="map-control-btn" id="toggleSidebar" title="Toggle sidebar">
+                    <i class="fas fa-layer-group"></i>
+                </button>
+                <button class="map-control-btn" id="filterToggle" title="Show/hide filters">
+                    <i class="fas fa-filter"></i>
+                </button>
+                <button class="map-control-btn" id="drawRoute" title="Draw route">
+                    <i class="fas fa-route"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <!-- Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/app.js"></script>
+    
+    <script>
+        // Initialize map
+        let map = null;
+        let userMarker = null;
+        let companyMarkers = [];
+        let userLocation = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Initialize map
+            initMap();
+            
+            // Get user location
+            getUserLocation();
+            
+            // Load companies
+            loadCompanies();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+        
+        function initMap() {
+            // Initialize map centered on India
+            map = L.map('map').setView([20.5937, 78.9629], 5);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Add geocoder control
+            L.Control.geocoder({
+                defaultMarkGeocode: false
+            }).on('markgeocode', function(e) {
+                const center = e.geocode.center;
+                map.setView(center, 13);
+                L.marker(center).addTo(map)
+                    .bindPopup(e.geocode.name)
+                    .openPopup();
+            }).addTo(map);
+        }
+        
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        
+                        // Add user marker
+                        if (userMarker) {
+                            map.removeLayer(userMarker);
+                        }
+                        
+                        userMarker = L.marker([userLocation.lat, userLocation.lng], {
+                            icon: L.divIcon({
+                                className: 'location-marker',
+                                html: '<i class="fas fa-user"></i>',
+                                iconSize: [40, 40]
+                            })
+                        }).addTo(map);
+                        
+                        userMarker.bindPopup('<b>Your Location</b>').openPopup();
+                        
+                        // Center map on user location
+                        map.setView([userLocation.lat, userLocation.lng], 13);
+                        
+                        // Save location to Firebase
+                        saveUserLocation(userLocation);
+                    },
+                    function(error) {
+                        console.warn('Failed to get location:', error);
+                        alert('Unable to get your location. Please enable location services.');
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
+        }
+        
+        function saveUserLocation(location) {
+            // Save location to Firebase
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (user && firebase.apps.length > 0) {
+                const db = firebase.database();
+                db.ref('users/' + user.id + '/location').set({
+                    lat: location.lat,
+                    lng: location.lng,
+                    updatedAt: new Date().toISOString()
+                });
+            }
+        }
+        
+        async function loadCompanies() {
+            try {
+                // Load companies from Firebase
+                const db = firebase.database();
+                const snapshot = await db.ref('companies').once('value');
+                
+                if (!snapshot.exists()) {
+                    document.getElementById('companyList').innerHTML = `
+                        <div class="text-center text-muted p-4">
+                            <i class="fas fa-building fa-3x mb-3"></i>
+                            <p>No companies found</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const companies = snapshot.val();
+                const companyArray = Object.entries(companies).map(([id, data]) => ({
+                    id,
+                    ...data
+                }));
+                
+                // Display companies in sidebar
+                displayCompanies(companyArray);
+                
+                // Add markers to map
+                addCompanyMarkers(companyArray);
+                
+            } catch (error) {
+                console.error('Error loading companies:', error);
+                document.getElementById('companyList').innerHTML = `
+                    <div class="alert alert-error">
+                        Failed to load companies. Please try again.
+                    </div>
+                `;
+            }
+        }
+        
+        function displayCompanies(companies) {
+            const container = document.getElementById('companyList');
+            let html = '';
+            
+            companies.forEach(company => {
+                const distance = userLocation ? 
+                    calculateDistance(
+                        userLocation.lat,
+                        userLocation.lng,
+                        company.location?.lat || 0,
+                        company.location?.lng || 0
+                    ) : null;
+                
+                html += `
+                    <div class="company-item" data-company-id="${company.id}">
+                        <div class="company-name">${company.name || 'Unnamed Company'}</div>
+                        <div class="company-industry">
+                            <i class="fas fa-industry"></i> ${company.industry || 'Not specified'}
+                        </div>
+                        ${distance ? `
+                            <div class="company-distance">
+                                <i class="fas fa-road"></i> ${distance.toFixed(1)} km away
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Add click events to company items
+            document.querySelectorAll('.company-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const companyId = this.dataset.companyId;
+                    highlightCompany(companyId);
+                });
+            });
+        }
+        
+        function addCompanyMarkers(companies) {
+            // Clear existing markers
+            companyMarkers.forEach(marker => map.removeLayer(marker));
+            companyMarkers = [];
+            
+            companies.forEach(company => {
+                if (company.location && company.location.lat && company.location.lng) {
+                    const marker = L.marker([company.location.lat, company.location.lng], {
+                        title: company.name
+                    }).addTo(map);
+                    
+                    // Create popup content
+                    const popupContent = `
+                        <div style="min-width: 200px;">
+                            <h4 style="margin: 0 0 10px; color: #2d5f3f;">${company.name}</h4>
+                            <p style="margin: 0 0 5px;"><strong>Industry:</strong> ${company.industry || 'Not specified'}</p>
+                            ${company.materials ? `<p style="margin: 0 0 5px;"><strong>Materials:</strong> ${company.materials.slice(0, 3).join(', ')}</p>` : ''}
+                            <button onclick="viewCompanyDetails('${company.id}')" 
+                                    style="background: #2d5f3f; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px;">
+                                View Details
+                            </button>
+                        </div>
+                    `;
+                    
+                    marker.bindPopup(popupContent);
+                    companyMarkers.push(marker);
+                    
+                    // Store company data in marker
+                    marker.companyId = company.id;
+                }
+            });
+        }
+        
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+        
+        function highlightCompany(companyId) {
+            // Find and highlight marker
+            const marker = companyMarkers.find(m => m.companyId === companyId);
+            if (marker) {
+                map.setView(marker.getLatLng(), 15);
+                marker.openPopup();
+            }
+        }
+        
+        function viewCompanyDetails(companyId) {
+            window.location.href = `browse.html?company=${companyId}`;
+        }
+        
+        function setupEventListeners() {
+            // Locate me button
+            document.getElementById('locateMe').addEventListener('click', getUserLocation);
+            
+            // Toggle sidebar (mobile)
+            document.getElementById('toggleSidebar').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('show');
+            });
+            
+            // Distance slider
+            const distanceSlider = document.getElementById('distanceSlider');
+            const distanceValue = document.getElementById('distanceValue');
+            
+            distanceSlider.addEventListener('input', function() {
+                distanceValue.textContent = this.value + ' km';
+                // Filter companies by distance
+                filterCompaniesByDistance(this.value);
+            });
+            
+            // Search address
+            document.getElementById('searchAddress').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchAddress(this.value);
+                }
+            });
+        }
+        
+        function filterCompaniesByDistance(maxDistance) {
+            // This would filter companies based on distance from user location
+            console.log('Filtering companies within', maxDistance, 'km');
+            // Implementation would filter companyMarkers array
+        }
+        
+        function searchAddress(query) {
+            // Use OpenStreetMap Nominatim API for geocoding
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const result = data[0];
+                        map.setView([result.lat, result.lon], 13);
+                        L.marker([result.lat, result.lon])
+                            .addTo(map)
+                            .bindPopup(result.display_name)
+                            .openPopup();
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

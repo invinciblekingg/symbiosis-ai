@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SYMBIOSIS.AI</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        .profile-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+        
+        .profile-title h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .profile-title p {
+            color: #666;
+        }
+        
+        /* Profile Tabs */
+        .profile-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 10px;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: #666;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn:hover {
+            color: #2d5f3f;
+        }
+        
+        .tab-btn.active {
+            color: #2d5f3f;
+            border-bottom-color: #2d5f3f;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Personal Info Card */
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .info-header h4 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        .edit-btn {
+            padding: 8px 16px;
+            background: #2d5f3f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 20px;
+        }
+        
+        .info-label {
+            display: block;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        /* Avatar Upload */
+        .avatar-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .avatar-upload {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .avatar-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .avatar-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #2d5f3f;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            border-color: #2d5f3f;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 95, 63, 0.1);
+        }
+        
+        /* Materials/Waste Management */
+        .materials-section {
+            margin-top: 30px;
+        }
+        
+        .materials-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .materials-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .material-tag {
+            background: #e8f3ee;
+            color: #2d5f3f;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .material-tag i {
+            cursor: pointer;
+        }
+        
+        .add-material-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Map Container */
+        .map-container {
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        #profileMap {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Security Settings */
+        .security-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .security-info h5 {
+            margin: 0 0 5px;
+            color: #2c3e50;
+        }
+        
+        .security-info p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Verification Status */
+        .verification-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .status-verified {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 20px;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .profile-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <!-- Header -->
+        <div class="profile-header">
+            <div class="profile-title">
+                <h2>Profile Settings</h2>
+                <p>Manage your personal and company information</p>
+            </div>
+            
+            <div class="verification-status">
+                <span class="status-badge status-verified" id="verificationBadge">
+                    <i class="fas fa-check-circle"></i> Verified
+                </span>
+                <button class="edit-btn" onclick="switchTab('company')">
+                    <i class="fas fa-building"></i> Company Profile
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="profile-tabs">
+            <button class="tab-btn active" data-tab="personal">Personal Info</button>
+            <button class="tab-btn" data-tab="company">Company Profile</button>
+            <button class="tab-btn" data-tab="materials">Materials & Waste</button>
+            <button class="tab-btn" data-tab="location">Location</button>
+            <button class="tab-btn" data-tab="security">Security</button>
+        </div>
+        
+        <!-- Personal Info Tab -->
+        <div id="personalTab" class="tab-content active">
+            <div class="info-card">
+                <div class="info-header">
+                    <h4>Personal Information</h4>
+                    <button class="edit-btn" onclick="editPersonalInfo()">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                </div>
+                
+                <div class="avatar-section">
+                    <div class="avatar-upload">
+                        <img src="https://via.placeholder.com/120" alt="Avatar" class="avatar-image" id="avatarImage">
+                        <div class="avatar-overlay" onclick="document.getElementById('avatarInput').click()">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                    </div>
+                    <p class="text-muted mt-2">Click camera icon to upload profile picture</p>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Full Name</span>
+                        <div class="info-value" id="fullName">John Doe</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Username</span>
+                        <div class="info-value" id="username">johndoe</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Email Address</span>
+                        <div class="info-value" id="email">john@example.com</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Mobile Number</span>
+                        <div class="info-value" id="mobile">+91 9876543210</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Role</span>
+                        <div class="info-value" id="role">Factory Representative</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Member Since</span>
+                        <div class="info-value" id="joinDate">January 2024</div>
+                    </div>
+                </div>
+                
+                <!-- Edit Form (Hidden by default) -->
+                <div id="personalEditForm" style="display: none;">
+                    <form id="personalForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="editFullName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" id="editUsername" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="editEmail" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Mobile Number</label>
+                                <input type="tel" class="form-control" id="editMobile" required>
+                            </div>
+                        </div>
+                        
+                        <div class="text-end mt-4">
+                            <button type="button" class="btn btn-secondary me-2" onclick="cancelPersonalEdit()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Company Profile Tab -->
+        <div id="companyTab" class="tab-content">
+            <div class="info-card">
+                <div class="info-header">
+                    <h4>Company Information</h4>
+                    <button class="edit-btn" onclick="editCompanyInfo()">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Company Name</span>
+                        <div class="info-value" id="companyName">EcoManufacture Solutions</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Industry</span>
+                        <div class="info-value" id="companyIndustry">Manufacturing</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">GST Number</span>
+                        <div class="info-value" id="gstNumber">27ABCDE1234F1Z5</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Company Size</span>
+                        <div class="info-value" id="companySize">50-100 employees</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Established Year</span>
+                        <div class="info-value" id="establishedYear">2010</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Annual Turnover</span>
+                        <div class="info-value" id="turnover">₹5-10 Crore</div>
+                    </div>
+                </div>
+                
+                <div class="info-item mt-4">
+                    <span class="info-label">Company Description</span>
+                    <p class="info-value" id="companyDescription">
+                        Leading manufacturer of eco-friendly industrial components with focus on waste reduction and circular economy.
+                    </p>
+                </div>
+                
+                <!-- Edit Form (Hidden by default) -->
+                <div id="companyEditForm" style="display: none;">
+                    <form id="companyForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-control" id="editCompanyName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Industry</label>
+                                <select class="form-control" id="editIndustry" required>
+                                    <option value="">Select Industry</option>
+                                    <option value="manufacturing">Manufacturing</option>
+                                    <option value="construction">Construction</option>
+                                    <option value="chemical">Chemical</option>
+                                    <option value="textile">Textile</option>
+                                    <option value="food">Food Processing</option>
+                                    <option value="metal">Metal & Steel</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">GST Number</label>
+                                <input type="text" class="form-control" id="editGST" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Company Size</label>
+                                <select class="form-control" id="editCompanySize" required>
+                                    <option value="">Select Size</option>
+                                    <option value="1-10">1-10 employees</option>
+                                    <option value="11-50">11-50 employees</option>
+                                    <option value="51-100">51-100 employees</option>
+                                    <option value="101-500">101-500 employees</option>
+                                    <option value="500+">500+ employees</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Established Year</label>
+                                <input type="number" class="form-control" id="editEstablished" min="1900" max="2024">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Annual Turnover</label>
+                                <select class="form-control" id="editTurnover">
+                                    <option value="">Select Range</option>
+                                    <option value="<1">Less than ₹1 Crore</option>
+                                    <option value="1-5">₹1-5 Crore</option>
+                                    <option value="5-10">₹5-10 Crore</option>
+                                    <option value="10-50">₹10-50 Crore</option>
+                                    <option value="50+">₹50+ Crore</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Company Description</label>
+                            <textarea class="form-control" id="editDescription" rows="4"></textarea>
+                        </div>
+                        
+                        <div class="text-end mt-4">
+                            <button type="button" class="btn btn-secondary me-2" onclick="cancelCompanyEdit()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Materials & Waste Tab -->
+        <div id="materialsTab" class="tab-content">
+            <div class="info-card">
+                <div class="info-header">
+                    <h4>Materials Required</h4>
+                    <button class="edit-btn" onclick="showAddMaterialForm()">
+                        <i class="fas fa-plus"></i> Add Material
+                    </button>
+                </div>
+                
+                <div class="materials-section">
+                    <div class="materials-list" id="materialsList">
+                        <!-- Materials will be loaded here -->
+                    </div>
+                    
+                    <!-- Add Material Form -->
+                    <div id="addMaterialForm" class="add-material-form" style="display: none;">
+                        <form id="materialForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Material Type</label>
+                                    <input type="text" class="form-control" id="materialName" 
+                                           placeholder="e.g., Fly Ash, Scrap Metal" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Quantity (per month)</label>
+                                    <input type="text" class="form-control" id="materialQuantity" 
+                                           placeholder="e.g., 100 tons" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Quality Requirements</label>
+                                    <input type="text" class="form-control" id="materialQuality" 
+                                           placeholder="e.g., Moisture < 5%">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Price Range (per ton)</label>
+                                    <input type="text" class="form-control" id="materialPrice" 
+                                           placeholder="e.g., ₹500-1000">
+                                </div>
+                            </div>
+                            
+                            <div class="text-end mt-3">
+                                <button type="button" class="btn btn-secondary me-2" onclick="hideAddMaterialForm()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Add Material</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-card mt-4">
+                <div class="info-header">
+                    <h4>Waste Available</h4>
+                    <button class="edit-btn" onclick="showAddWasteForm()">
+                        <i class="fas fa-plus"></i> Add Waste
+                    </button>
+                </div>
+                
+                <div class="materials-section">
+                    <div class="materials-list" id="wasteList">
+                        <!-- Waste will be loaded here -->
+                    </div>
+                    
+                    <!-- Add Waste Form -->
+                    <div id="addWasteForm" class="add-material-form" style="display: none;">
+                        <form id="wasteForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Waste Type</label>
+                                    <input type="text" class="form-control" id="wasteName" 
+                                           placeholder="e.g., Plastic Waste, Organic Waste" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Quantity (per month)</label>
+                                    <input type="text" class="form-control" id="wasteQuantity" 
+                                           placeholder="e.g., 50 tons" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Quality Specifications</label>
+                                    <input type="text" class="form-control" id="wasteQuality" 
+                                           placeholder="e.g., Contamination < 2%">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Price Expectation (per ton)</label>
+                                    <input type="text" class="form-control" id="wastePrice" 
+                                           placeholder="e.g., ₹300-800">
+                                </div>
+                            </div>
+                            
+                            <div class="text-end mt-3">
+                                <button type="button" class="btn btn-secondary me-2" onclick="hideAddWasteForm()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Add Waste</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Location Tab -->
+        <div id="locationTab" class="tab-content">
+            <div class="info-card">
+                <div class="info-header">
+                    <h4>Company Location</h4>
+                    <button class="edit-btn" onclick="editLocation()">
+                        <i class="fas fa-edit"></i> Edit Location
+                    </button>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Address</span>
+                        <div class="info-value" id="companyAddress">
+                            123 Industrial Estate, Andheri East, Mumbai, Maharashtra - 400069
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">City</span>
+                        <div class="info-value" id="companyCity">Mumbai</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">State</span>
+                        <div class="info-value" id="companyState">Maharashtra</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Pincode</span>
+                        <div class="info-value" id="companyPincode">400069</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">Coordinates</span>
+                        <div class="info-value" id="companyCoordinates">19.0760° N, 72.8777° E</div>
+                    </div>
+                </div>
+                
+                <div class="map-container mt-4">
+                    <div id="profileMap"></div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <button class="btn btn-primary" onclick="getCurrentLocation()">
+                        <i class="fas fa-location-crosshairs"></i> Use Current Location
+                    </button>
+                </div>
+                
+                <!-- Edit Location Form -->
+                <div id="locationEditForm" style="display: none; margin-top: 30px;">
+                    <form id="locationForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Full Address</label>
+                                <textarea class="form-control" id="editAddress" rows="3" required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control" id="editCity" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">State</label>
+                                <input type="text" class="form-control" id="editState" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Pincode</label>
+                                <input type="text" class="form-control" id="editPincode" required>
+                            </div>
+                        </div>
+                        
+                        <div class="text-end mt-4">
+                            <button type="button" class="btn btn-secondary me-2" onclick="cancelLocationEdit()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Location</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Security Tab -->
+        <div id="securityTab" class="tab-content">
+            <div class="info-card">
+                <div class="info-header">
+                    <h4>Account Security</h4>
+                </div>
+                
+                <div class="security-item">
+                    <div class="security-info">
+                        <h5>Password</h5>
+                        <p>Last changed: 3 months ago</p>
+                    </div>
+                    <button class="edit-btn" onclick="changePassword()">
+                        <i class="fas fa-key"></i> Change Password
+                    </button>
+                </div>
+                
+                <div class="security-item">
+                    <div class="security-info">
+                        <h5>Two-Factor Authentication</h5>
+                        <p>Add an extra layer of security</p>
+                    </div>
+                    <button class="edit-btn" onclick="enable2FA()">
+                        <i class="fas fa-shield-alt"></i> Enable
+                    </button>
+                </div>
+                
+                <div class="security-item">
+                    <div class="security-info">
+                        <h5>Login Activity</h5>
+                        <p>View recent login attempts</p>
+                    </div>
+                    <button class="edit-btn" onclick="viewLoginActivity()">
+                        <i class="fas fa-history"></i> View Logs
+                    </button>
+                </div>
+                
+                <div class="security-item">
+                    <div class="security-info">
+                        <h5>Connected Devices</h5>
+                        <p>Manage your logged-in devices</p>
+                    </div>
+                    <button class="edit-btn" onclick="manageDevices()">
+                        <i class="fas fa-laptop"></i> Manage
+                    </button>
+                </div>
+                
+                <!-- Change Password Form -->
+                <div id="passwordChangeForm" class="add-material-form" style="display: none; margin-top: 30px;">
+                    <form id="passwordForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="currentPassword" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" required>
+                                <small class="text-muted">Must be at least 8 characters long</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" required>
+                            </div>
+                        </div>
+                        
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-secondary me-2" onclick="cancelPasswordChange()">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="info-card mt-4">
+                <div class="info-header">
+                    <h4>Danger Zone</h4>
+                </div>
+                
+                <div class="security-item">
+                    <div class="security-info">
+                        <h5 style="color: #e74c3c;">Delete Account</h5>
+                        <p>Permanently delete your account and all data</p>
+                    </div>
+                    <button class="edit-btn" style="background: #e74c3c;" onclick="deleteAccount()">
+                        <i class="fas fa-trash"></i> Delete Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <!-- Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/app.js"></script>
+    
+    <script>
+        let profileMap = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Initialize
+            initTabs();
+            loadUserData();
+            initMap();
+            
+            // Form submissions
+            document.getElementById('personalForm')?.addEventListener('submit', savePersonalInfo);
+            document.getElementById('companyForm')?.addEventListener('submit', saveCompanyInfo);
+            document.getElementById('materialForm')?.addEventListener('submit', addMaterial);
+            document.getElementById('wasteForm')?.addEventListener('submit', addWaste);
+            document.getElementById('locationForm')?.addEventListener('submit', saveLocation);
+            document.getElementById('passwordForm')?.addEventListener('submit', updatePassword);
+            
+            // Avatar upload
+            document.getElementById('avatarInput').addEventListener('change', uploadAvatar);
+        });
+        
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active tab
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = this.dataset.tab;
+                    switchTab(tabId);
+                });
+            });
+        }
+        
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId + 'Tab').classList.add('active');
+            
+            // Special handling for map tab
+            if (tabId === 'location' && profileMap) {
+                setTimeout(() => {
+                    profileMap.invalidateSize();
+                }, 100);
+            }
+        }
+        
+        function initMap() {
+            // Initialize map
+            profileMap = L.map('profileMap').setView([19.0760, 72.8777], 13);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(profileMap);
+            
+            // Add marker
+            L.marker([19.0760, 72.8777]).addTo(profileMap)
+                .bindPopup('Company Location')
+                .openPopup();
+        }
+        
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        
+                        // Update map
+                        profileMap.setView([lat, lng], 15);
+                        L.marker([lat, lng]).addTo(profileMap)
+                            .bindPopup('Your Current Location')
+                            .openPopup();
+                        
+                        // Update coordinates display
+                        document.getElementById('companyCoordinates').textContent = 
+                            `${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E`;
+                        
+                        // Save to Firebase
+                        saveLocationToFirebase(lat, lng);
+                        
+                        alert('Location updated successfully!');
+                    },
+                    function(error) {
+                        alert('Unable to get your location: ' + error.message);
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by your browser.');
+            }
+        }
+        
+        async function saveLocationToFirebase(lat, lng) {
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user || !user.companyId) return;
+            
+            try {
+                const db = firebase.database();
+                await db.ref(`companies/${user.companyId}/location`).set({
+                    lat: lat,
+                    lng: lng,
+                    updatedAt: new Date().toISOString()
+                });
+                
+                console.log('Location saved to Firebase');
+            } catch (error) {
+                console.error('Error saving location:', error);
+            }
+        }
+        
+        function loadUserData() {
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user) return;
+            
+            // Load personal info
+            loadPersonalInfo(user);
+            
+            // Load company info
+            loadCompanyInfo(user);
+            
+            // Load materials and waste
+            loadMaterialsWaste(user);
+        }
+        
+        function loadPersonalInfo(user) {
+            // Set user data
+            document.getElementById('fullName').textContent = user.fullName || 'Not set';
+            document.getElementById('username').textContent = user.username || 'Not set';
+            document.getElementById('email').textContent = user.email || 'Not set';
+            document.getElementById('mobile').textContent = user.mobile || 'Not set';
+            document.getElementById('role').textContent = user.role || 'Factory Representative';
+            document.getElementById('joinDate').textContent = 
+                user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Not set';
+            
+            // Set edit form values
+            document.getElementById('editFullName').value = user.fullName || '';
+            document.getElementById('editUsername').value = user.username || '';
+            document.getElementById('editEmail').value = user.email || '';
+            document.getElementById('editMobile').value = user.mobile || '';
+        }
+        
+        async function loadCompanyInfo(user) {
+            if (!user.companyId) return;
+            
+            try {
+                const db = firebase.database();
+                const snapshot = await db.ref(`companies/${user.companyId}`).once('value');
+                
+                if (snapshot.exists()) {
+                    const company = snapshot.val();
+                    
+                    // Display company info
+                    document.getElementById('companyName').textContent = company.name || 'Not set';
+                    document.getElementById('companyIndustry').textContent = company.industry || 'Not set';
+                    document.getElementById('gstNumber').textContent = company.gst || 'Not set';
+                    document.getElementById('companySize').textContent = company.size || 'Not set';
+                    document.getElementById('establishedYear').textContent = company.established || 'Not set';
+                    document.getElementById('turnover').textContent = company.turnover || 'Not set';
+                    document.getElementById('companyDescription').textContent = company.description || 'Not set';
+                    
+                    // Set edit form values
+                    document.getElementById('editCompanyName').value = company.name || '';
+                    document.getElementById('editIndustry').value = company.industry || '';
+                    document.getElementById('editGST').value = company.gst || '';
+                    document.getElementById('editCompanySize').value = company.size || '';
+                    document.getElementById('editEstablished').value = company.established || '';
+                    document.getElementById('editTurnover').value = company.turnover || '';
+                    document.getElementById('editDescription').value = company.description || '';
+                    
+                    // Load location if exists
+                    if (company.location) {
+                        document.getElementById('companyCoordinates').textContent = 
+                            `${company.location.lat?.toFixed(4) || '0'}° N, ${company.location.lng?.toFixed(4) || '0'}° E`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading company info:', error);
+            }
+        }
+        
+        async function loadMaterialsWaste(user) {
+            if (!user.companyId) return;
+            
+            try {
+                const db = firebase.database();
+                const snapshot = await db.ref(`companies/${user.companyId}`).once('value');
+                
+                if (snapshot.exists()) {
+                    const company = snapshot.val();
+                    
+                    // Load materials
+                    const materialsContainer = document.getElementById('materialsList');
+                    if (company.materials && company.materials.length > 0) {
+                        materialsContainer.innerHTML = company.materials.map((material, index) => `
+                            <div class="material-tag">
+                                ${material}
+                                <i class="fas fa-times" onclick="removeMaterial(${index})"></i>
+                            </div>
+                        `).join('');
+                    } else {
+                        materialsContainer.innerHTML = `
+                            <div class="text-muted">
+                                <i class="fas fa-info-circle"></i> No materials added yet
+                            </div>
+                        `;
+                    }
+                    
+                    // Load waste
+                    const wasteContainer = document.getElementById('wasteList');
+                    if (company.waste && company.waste.length > 0) {
+                        wasteContainer.innerHTML = company.waste.map((waste, index) => `
+                            <div class="material-tag">
+                                ${waste}
+                                <i class="fas fa-times" onclick="removeWaste(${index})"></i>
+                            </div>
+                        `).join('');
+                    } else {
+                        wasteContainer.innerHTML = `
+                            <div class="text-muted">
+                                <i class="fas fa-info-circle"></i> No waste added yet
+                            </div>
+                        `;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading materials/waste:', error);
+            }
+        }
+        
+        function editPersonalInfo() {
+            document.getElementById('personalEditForm').style.display = 'block';
+        }
+        
+        function cancelPersonalEdit() {
+            document.getElementById('personalEditForm').style.display = 'none';
+        }
+        
+        async function savePersonalInfo(e) {
+            e.preventDefault();
+            
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user) return;
+            
+            const updatedData = {
+                fullName: document.getElementById('editFullName').value,
+                username: document.getElementById('editUsername').value,
+                email: document.getElementById('editEmail').value,
+                mobile: document.getElementById('editMobile').value
+            };
+            
+            try {
+                const db = firebase.database();
+                await db.ref(`users/${user.id}`).update(updatedData);
+                
+                // Update localStorage
+                Object.assign(user, updatedData);
+                localStorage.setItem('symbiosis_user', JSON.stringify(user));
+                
+                // Update UI
+                loadPersonalInfo(user);
+                
+                // Hide form
+                document.getElementById('personalEditForm').style.display = 'none';
+                
+                alert('Personal information updated successfully!');
+                
+            } catch (error) {
+                console.error('Error saving personal info:', error);
+                alert('Failed to update information. Please try again.');
+            }
+        }
+        
+        function editCompanyInfo() {
+            document.getElementById('companyEditForm').style.display = 'block';
+        }
+        
+        function cancelCompanyEdit() {
+            document.getElementById('companyEditForm').style.display = 'none';
+        }
+        
+        async function saveCompanyInfo(e) {
+            e.preventDefault();
+            
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user || !user.companyId) return;
+            
+            const updatedData = {
+                name: document.getElementById('editCompanyName').value,
+                industry: document.getElementById('editIndustry').value,
+                gst: document.getElementById('editGST').value,
+                size: document.getElementById('editCompanySize').value,
+                established: document.getElementById('editEstablished').value,
+                turnover: document.getElementById('editTurnover').value,
+                description: document.getElementById('editDescription').value,
+                updatedAt: new Date().toISOString()
+            };
+            
+            try {
+                const db = firebase.database();
+                await db.ref(`companies/${user.companyId}`).update(updatedData);
+                
+                // Update UI
+                loadCompanyInfo(user);
+                
+                // Hide form
+                document.getElementById('companyEditForm').style.display = 'none';
+                
+                alert('Company information updated successfully!');
+                
+            } catch (error) {
+                console.error('Error saving company info:', error);
+                alert('Failed to update company information. Please try again.');
+            }
+        }
+        
+        function showAddMaterialForm() {
+            document.getElementById('addMaterialForm').style.display = 'block';
+        }
+        
+        function hideAddMaterialForm() {
+            document.getElementById('addMaterialForm').style.display = 'none';
+            document.getElementById('materialForm').reset();
+        }
+        
+        async function addMaterial(e) {
+            e.preventDefault();
+            
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user || !user.companyId) return;
+            
+            const materialName = document.getElementById('materialName').value;
+            if (!materialName) return;
+            
+            try {
+                const db = firebase.database();
+                const companyRef = db.ref(`companies/${user.companyId}`);
+                const snapshot = await companyRef.child('materials').once('value');
+                
+                let materials = [];
+                if (snapshot.exists()) {
+                    materials = snapshot.val();
+                }
+                
+                // Add new material
+                materials.push(materialName);
+                
+                // Update Firebase
+                await companyRef.update({
+                    materials: materials,
+                    updatedAt: new Date().toISOString()
+                });
+                
+                // Update UI
+                loadMaterialsWaste(user);
+                
+                // Hide form and reset
+                hideAddMaterialForm();
+                
+                alert('Material added successfully!');
+                
+            } catch (error) {
+                console.error('Error adding material:', error);
+                alert('Failed to add material. Please try again.');
+            }
+        }
+        
+        async function removeMaterial(index) {
+            if (!confirm('Are you sure you want to remove this material?')) return;
+            
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user || !user.companyId) return;
+            
+            try {
+                const db = firebase.database();
+                const companyRef = db.ref(`companies/${user.companyId}`);
+                const snapshot = await companyRef.child('materials').once('value');
+                
+                if (snapshot.exists()) {
+                    let materials = snapshot.val();
+                    materials.splice(index, 1); // Remove at index
+                    
+                    await companyRef.update({
+                        materials: materials,
+                        updatedAt: new Date().toISOString()
+                    });
+                    
+                    // Update UI
+                    loadMaterialsWaste(user);
+                    
+                    alert('Material removed successfully!');
+                }
+            } catch (error) {
+                console.error('Error removing material:', error);
+                alert('Failed to remove material. Please try again.');
+            }
+        }
+        
+        function showAddWasteForm() {
+            document.getElementById('addWasteForm').style.display = 'block';
+        }
+        
+        function hideAddWasteForm() {
+            document.getElementById('addWasteForm').style.display = 'none';
+            document.getElementById('wasteForm').reset();
+        }
+        
+        async function addWaste(e) {
+            e.preventDefault();
+            
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user || !user.companyId) return;
+            
+            const wasteName = document.getElementById('wasteName').value;
+            if (!wasteName) return;
+            
+            try {
+                const db = firebase.database();
+                const companyRef = db.ref(`companies/${user.companyId}`);
+                const snapshot = await companyRef.child('waste').once('value');
+                
+                let waste = [];
+                if (snapshot.exists()) {
+                    waste = snapshot.val();
+                }
+                
+                // Add new waste
+                waste.push(wasteName);
+                
+                // Update Firebase
+                await companyRef.update({
+                    waste: waste,
+                    updatedAt: new Date().toISOString()
+                });
+                
+                // Update UI
+                loadMaterialsWaste(user);
+                
+                // Hide form and reset
+                hideAddWasteForm();
+                
+                alert('Waste type added successfully!');
+                
+            } catch (error) {
+                console.error('Error adding waste:', error);
+                alert('Failed to add waste type. Please try again.');
+            }
+        }
+        
+        async function removeWaste(index) {
+            if (!confirm('Are you sure you want to remove this waste type?')) return;
+            
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user || !user.companyId) return;
+            
+            try {
+                const db = firebase.database();
+                const companyRef = db.ref(`companies/${user.companyId}`);
+                const snapshot = await companyRef.child('waste').once('value');
+                
+                if (snapshot.exists()) {
+                    let waste = snapshot.val();
+                    waste.splice(index, 1); // Remove at index
+                    
+                    await companyRef.update({
+                        waste: waste,
+                        updatedAt: new Date().toISOString()
+                    });
+                    
+                    // Update UI
+                    loadMaterialsWaste(user);
+                    
+                    alert('Waste type removed successfully!');
+                }
+            } catch (error) {
+                console.error('Error removing waste:', error);
+                alert('Failed to remove waste type. Please try again.');
+            }
+        }
+        
+        function editLocation() {
+            document.getElementById('locationEditForm').style.display = 'block';
+        }
+        
+        function cancelLocationEdit() {
+            document.getElementById('locationEditForm').style.display = 'none';
+        }
+        
+        async function saveLocation(e) {
+            e.preventDefault();
+            
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user || !user.companyId) return;
+            
+            const locationData = {
+                address: document.getElementById('editAddress').value,
+                city: document.getElementById('editCity').value,
+                state: document.getElementById('editState').value,
+                pincode: document.getElementById('editPincode').value
+            };
+            
+            try {
+                const db = firebase.database();
+                await db.ref(`companies/${user.companyId}`).update({
+                    location: locationData,
+                    updatedAt: new Date().toISOString()
+                });
+                
+                // Update UI
+                document.getElementById('companyAddress').textContent = locationData.address;
+                document.getElementById('companyCity').textContent = locationData.city;
+                document.getElementById('companyState').textContent = locationData.state;
+                document.getElementById('companyPincode').textContent = locationData.pincode;
+                
+                // Hide form
+                document.getElementById('locationEditForm').style.display = 'none';
+                
+                alert('Location updated successfully!');
+                
+            } catch (error) {
+                console.error('Error saving location:', error);
+                alert('Failed to update location. Please try again.');
+            }
+        }
+        
+        function changePassword() {
+            document.getElementById('passwordChangeForm').style.display = 'block';
+        }
+        
+        function cancelPasswordChange() {
+            document.getElementById('passwordChangeForm').style.display = 'none';
+            document.getElementById('passwordForm').reset();
+        }
+        
+        async function updatePassword(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword.length < 8) {
+                alert('New password must be at least 8 characters long');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match');
+                return;
+            }
+            
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user) return;
+            
+            try {
+                // In production, verify current password first
+                // For demo, we'll just update
+                
+                const db = firebase.database();
+                await db.ref(`users/${user.id}`).update({
+                    password: btoa(newPassword + 'symbiosis_salt'), // Simple hash for demo
+                    updatedAt: new Date().toISOString()
+                });
+                
+                // Reset form
+                document.getElementById('passwordForm').reset();
+                document.getElementById('passwordChangeForm').style.display = 'none';
+                
+                alert('Password updated successfully!');
+                
+            } catch (error) {
+                console.error('Error updating password:', error);
+                alert('Failed to update password. Please try again.');
+            }
+        }
+        
+        function uploadAvatar(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Check file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            // Check file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image size should be less than 5MB');
+                return;
+            }
+            
+            // Create preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('avatarImage').src = e.target.result;
+                
+                // In production, upload to Firebase Storage
+                // For demo, we'll just update the preview
+                alert('Profile picture updated! (In production, this would be saved to Firebase)');
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function enable2FA() {
+            alert('Two-factor authentication would be implemented in production');
+        }
+        
+        function viewLoginActivity() {
+            alert('Login activity would be shown here in production');
+        }
+        
+        function manageDevices() {
+            alert('Device management would be implemented in production');
+        }
+        
+        function deleteAccount() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                alert('Account deletion would be implemented in production');
+            }
+        }
+    </script>
+</body>
+</html>

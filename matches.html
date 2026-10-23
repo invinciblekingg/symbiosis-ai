@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Matches - SYMBIOSIS.AI</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        .matches-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .matches-sidebar {
+            width: 300px;
+            background: white;
+            border-right: 1px solid #e1e8ed;
+            padding: 25px;
+        }
+        
+        .matches-main {
+            flex: 1;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .matches-header {
+            margin-bottom: 30px;
+        }
+        
+        .matches-header h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .matches-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d5f3f;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Profile Summary */
+        .profile-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2d5f3f, #1e5a8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .profile-info h4 {
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        .profile-info p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .profile-materials {
+            margin-bottom: 20px;
+        }
+        
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .material-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #2d5f3f;
+        }
+        
+        .material-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .material-details {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Match Cards */
+        .match-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            background: white;
+            min-width: 200px;
+        }
+        
+        .matches-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .match-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .match-header {
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(45, 95, 63, 0.1), rgba(30, 90, 142, 0.1));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .match-company {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #2d5f3f, #1e5a8e);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .company-info h4 {
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        .company-info p {
+            margin: 5px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .match-score {
+            text-align: center;
+        }
+        
+        .score-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d5f3f, #4a9d5f);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .score-value {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        
+        .score-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .match-body {
+            padding: 20px;
+        }
+        
+        .match-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .detail-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .match-reasons {
+            margin-bottom: 20px;
+        }
+        
+        .reasons-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .reason-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .reason-tag {
+            padding: 6px 12px;
+            background: #e8f3ee;
+            color: #2d5f3f;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+        
+        .match-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #2d5f3f, #4a9d5f);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(45, 95, 63, 0.2);
+        }
+        
+        .btn-outline {
+            background: white;
+            color: #2d5f3f;
+            border: 2px solid #2d5f3f;
+        }
+        
+        .btn-outline:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Loading and Empty States */
+        .loading-state {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            color: #e1e8ed;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .matches-container {
+                flex-direction: column;
+            }
+            
+            .matches-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e1e8ed;
+            }
+            
+            .matches-stats {
+                flex-direction: column;
+            }
+            
+            .match-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .match-company {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .match-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="matches-container">
+        <!-- Sidebar - User Profile -->
+        <div class="matches-sidebar">
+            <div class="profile-summary">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="userAvatar">UR</div>
+                    <div class="profile-info">
+                        <h4 id="userCompany">Loading...</h4>
+                        <p id="userIndustry">Industry not set</p>
+                    </div>
+                </div>
+                
+                <div class="profile-materials">
+                    <h5 class="mb-3">Your Materials/Waste</h5>
+                    <div class="materials-grid" id="userMaterials">
+                        <!-- Materials will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button class="btn btn-primary w-100" onclick="window.location.href='profile.html'">
+                        <i class="fas fa-edit"></i> Update Profile
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <h5>Matching Preferences</h5>
+                <div class="form-group">
+                    <label class="form-label">Maximum Distance</label>
+                    <input type="range" class="form-range" id="maxDistance" min="0" max="500" value="100">
+                    <div class="d-flex justify-content-between">
+                        <small>0 km</small>
+                        <small id="distanceValue">100 km</small>
+                        <small>500 km</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Minimum Match Score</label>
+                    <input type="range" class="form-range" id="minScore" min="50" max="100" value="70">
+                    <div class="d-flex justify-content-between">
+                        <small>50%</small>
+                        <small id="scoreValue">70%</small>
+                        <small>100%</small>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary w-100 mt-3" id="updatePreferences">
+                    <i class="fas fa-sync"></i> Update Preferences
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="matches-main">
+            <div class="matches-header">
+                <h2>AI-Powered Matches</h2>
+                <p>Discover companies that match your waste streams and material needs</p>
+                
+                <div class="matches-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalMatches">0</div>
+                        <div class="stat-label">Total Matches Found</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="highQuality">0</div>
+                        <div class="stat-label">High Quality Matches</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avgScore">0%</div>
+                        <div class="stat-label">Average Match Score</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="match-filters">
+                <select class="filter-select" id="sortBy">
+                    <option value="score">Sort by: Match Score</option>
+                    <option value="distance">Sort by: Distance</option>
+                    <option value="company">Sort by: Company Name</option>
+                </select>
+                
+                <select class="filter-select" id="industryFilter">
+                    <option value="">All Industries</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="construction">Construction</option>
+                    <option value="chemical">Chemical</option>
+                    <option value="textile">Textile</option>
+                </select>
+                
+                <select class="filter-select" id="materialFilter">
+                    <option value="">All Materials</option>
+                    <option value="fly-ash">Fly Ash</option>
+                    <option value="scrap-metal">Scrap Metal</option>
+                    <option value="plastic">Plastic</option>
+                    <option value="organic">Organic</option>
+                </select>
+                
+                <button class="btn btn-outline" id="refreshMatches">
+                    <i class="fas fa-redo"></i> Refresh
+                </button>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">Finding the best matches for you...</p>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h4>No matches found</h4>
+                <p class="text-muted">Update your company profile with materials and waste details to get better matches.</p>
+                <button class="btn btn-primary mt-3" onclick="window.location.href='profile.html'">
+                    <i class="fas fa-edit"></i> Update Profile
+                </button>
+            </div>
+            
+            <!-- Matches List -->
+            <div class="matches-list" id="matchesList">
+                <!-- Matches will be loaded here -->
+            </div>
+            
+            <!-- Pagination -->
+            <div class="mt-4 text-center" id="pagination" style="display: none;">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <!-- Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/app.js"></script>
+    
+    <script>
+        let matches = [];
+        let userCompany = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Initialize
+            initEventListeners();
+            loadUserProfile();
+            loadMatches();
+            
+            // Range sliders
+            const distanceSlider = document.getElementById('maxDistance');
+            const distanceValue = document.getElementById('distanceValue');
+            const scoreSlider = document.getElementById('minScore');
+            const scoreValue = document.getElementById('scoreValue');
+            
+            distanceSlider.addEventListener('input', function() {
+                distanceValue.textContent = this.value + ' km';
+            });
+            
+            scoreSlider.addEventListener('input', function() {
+                scoreValue.textContent = this.value + '%';
+            });
+        });
+        
+        function initEventListeners() {
+            // Update preferences
+            document.getElementById('updatePreferences').addEventListener('click', updatePreferences);
+            
+            // Sort and filter
+            document.getElementById('sortBy').addEventListener('change', sortMatches);
+            document.getElementById('industryFilter').addEventListener('change', filterMatches);
+            document.getElementById('materialFilter').addEventListener('change', filterMatches);
+            document.getElementById('refreshMatches').addEventListener('click', loadMatches);
+        }
+        
+        async function loadUserProfile() {
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user || !user.companyId) return;
+            
+            try {
+                const db = firebase.database();
+                const snapshot = await db.ref(`companies/${user.companyId}`).once('value');
+                
+                if (snapshot.exists()) {
+                    userCompany = snapshot.val();
+                    userCompany.id = user.companyId;
+                    
+                    // Update UI
+                    updateUserProfileUI();
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+            }
+        }
+        
+        function updateUserProfileUI() {
+            if (!userCompany) return;
+            
+            // Update company name
+            document.getElementById('userCompany').textContent = userCompany.name || 'Your Company';
+            document.getElementById('userIndustry').textContent = userCompany.industry || 'Industry not set';
+            
+            // Update avatar
+            const avatar = document.getElementById('userAvatar');
+            const name = userCompany.name || 'Your Company';
+            const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+            avatar.textContent = initials;
+            
+            // Update materials
+            const materialsContainer = document.getElementById('userMaterials');
+            const materials = [...(userCompany.materials || []), ...(userCompany.waste || [])];
+            
+            if (materials.length === 0) {
+                materialsContainer.innerHTML = `
+                    <div class="text-center text-muted p-3">
+                        <i class="fas fa-info-circle"></i>
+                        <p class="mb-0">No materials/waste added</p>
+                    </div>
+                `;
+            } else {
+                let html = '';
+                materials.slice(0, 4).forEach(material => {
+                    html += `
+                        <div class="material-item">
+                            <div class="material-name">${material}</div>
+                            <div class="material-details">Available</div>
+                        </div>
+                    `;
+                });
+                
+                if (materials.length > 4) {
+                    html += `
+                        <div class="material-item">
+                            <div class="material-name">+${materials.length - 4} more</div>
+                            <div class="material-details">View all</div>
+                        </div>
+                    `;
+                }
+                
+                materialsContainer.innerHTML = html;
+            }
+        }
+        
+        async function loadMatches() {
+            const loading = document.getElementById('loadingState');
+            const empty = document.getElementById('emptyState');
+            const list = document.getElementById('matchesList');
+            const pagination = document.getElementById('pagination');
+            
+            // Show loading
+            loading.style.display = 'block';
+            empty.style.display = 'none';
+            list.innerHTML = '';
+            pagination.style.display = 'none';
+            
+            try {
+                // Use the app's matching engine
+                if (window.app && window.app.matchingEngine) {
+                    matches = await app.loadPotentialMatches();
+                    
+                    // Update stats
+                    updateMatchStats(matches);
+                    
+                    // Render matches
+                    renderMatches(matches);
+                    
+                    // Hide loading, show results
+                    loading.style.display = 'none';
+                    if (matches.length === 0) {
+                        empty.style.display = 'block';
+                    } else {
+                        pagination.style.display = 'block';
+                    }
+                } else {
+                    // Fallback: Load companies and calculate matches
+                    await loadCompaniesForMatching();
+                }
+                
+            } catch (error) {
+                console.error('Error loading matches:', error);
+                loading.style.display = 'none';
+                empty.style.display = 'block';
+                empty.innerHTML = `
+                    <div class="empty-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h4>Error loading matches</h4>
+                    <p class="text-muted">Please try again later</p>
+                    <button class="btn btn-primary mt-3" onclick="loadMatches()">
+                        <i class="fas fa-redo"></i> Retry
+                    </button>
+                `;
+            }
+        }
+        
+        async function loadCompaniesForMatching() {
+            if (!userCompany) await loadUserProfile();
+            if (!userCompany) return [];
+            
+            try {
+                const db = firebase.database();
+                const snapshot = await db.ref('companies').once('value');
+                
+                if (!snapshot.exists()) return [];
+                
+                const companies = [];
+                snapshot.forEach(child => {
+                    if (child.key !== userCompany.id) {
+                        companies.push({
+                            id: child.key,
+                            ...child.val()
+                        });
+                    }
+                });
+                
+                // Calculate match scores
+                const matchingEngine = new MatchingEngine();
+                matches = companies.map(company => {
+                    const score = matchingEngine.calculateMatchScore(userCompany, company);
+                    return {
+                        ...company,
+                        matchScore: score.total,
+                        scoreBreakdown: score.breakdown,
+                        matchReasons: score.reasons
+                    };
+                }).filter(match => match.matchScore > 50)
+                  .sort((a, b) => b.matchScore - a.matchScore);
+                
+                return matches;
+                
+            } catch (error) {
+                console.error('Error loading companies:', error);
+                return [];
+            }
+        }
+        
+        function updateMatchStats(matches) {
+            document.getElementById('totalMatches').textContent = matches.length;
+            
+            const highQuality = matches.filter(m => m.matchScore >= 80).length;
+            document.getElementById('highQuality').textContent = highQuality;
+            
+            const avgScore = matches.length > 0 ? 
+                Math.round(matches.reduce((sum, m) => sum + m.matchScore, 0) / matches.length) : 0;
+            document.getElementById('avgScore').textContent = avgScore + '%';
+        }
+        
+        function renderMatches(matchesToRender) {
+            const list = document.getElementById('matchesList');
+            
+            if (matchesToRender.length === 0) {
+                list.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            matchesToRender.forEach((match, index) => {
+                const initials = (match.name || 'Company').split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                
+                html += `
+                    <div class="match-card" data-match-index="${index}">
+                        <div class="match-header">
+                            <div class="match-company">
+                                <div class="company-logo">${initials}</div>
+                                <div class="company-info">
+                                    <h4>${match.name || 'Unnamed Company'}</h4>
+                                    <p><i class="fas fa-industry"></i> ${match.industry || 'Not specified'}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="match-score">
+                                <div class="score-circle">
+                                    <div class="score-value">${match.matchScore}%</div>
+                                    <div class="score-label">Match</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="match-body">
+                            <div class="match-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Materials Required</div>
+                                    <div class="detail-value">
+                                        ${match.materials?.slice(0, 3).join(', ') || 'Not specified'}
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-item">
+                                    <div class="detail-label">Waste Available</div>
+                                    <div class="detail-value">
+                                        ${match.waste?.slice(0, 3).join(', ') || 'Not specified'}
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-item">
+                                    <div class="detail-label">Location</div>
+                                    <div class="detail-value">
+                                        ${match.location?.city || 'Not specified'}
+                                    </div>
+                                </div>
+                                
+                                <div class="detail-item">
+                                    <div class="detail-label">Success Rate</div>
+                                    <div class="detail-value">
+                                        ${match.successRate || 'N/A'}%
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            ${match.matchReasons?.length > 0 ? `
+                                <div class="match-reasons">
+                                    <div class="reasons-title">Why this is a good match:</div>
+                                    <div class="reason-tags">
+                                        ${match.matchReasons.slice(0, 3).map(reason => `
+                                            <span class="reason-tag">${reason}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            <div class="match-actions">
+                                <button class="action-btn btn-outline view-match-details" data-index="${index}">
+                                    <i class="fas fa-eye"></i> View Details
+                                </button>
+                                <button class="action-btn btn-primary contact-match" data-company-id="${match.id}">
+                                    <i class="fas fa-envelope"></i> Contact
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            list.innerHTML = html;
+            
+            // Add event listeners
+            addMatchEventListeners();
+        }
+        
+        function addMatchEventListeners() {
+            // View match details
+            document.querySelectorAll('.view-match-details').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const index = this.dataset.index;
+                    showMatchDetails(index);
+                });
+            });
+            
+            // Contact match
+            document.querySelectorAll('.contact-match').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const companyId = this.dataset.companyId;
+                    if (window.app) {
+                        app.startConversation(companyId);
+                    } else {
+                        alert('Please wait for app to load');
+                    }
+                });
+            });
+        }
+        
+        function showMatchDetails(matchIndex) {
+            const match = matches[matchIndex];
+            if (!match) return;
+            
+            // Create modal content
+            const modalContent = `
+                <div style="max-width: 600px;">
+                    <h4>${match.name || 'Company Details'}</h4>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5>Company Information</h5>
+                            <p><strong>Industry:</strong> ${match.industry || 'Not specified'}</p>
+                            <p><strong>Location:</strong> ${match.location?.address || 'Not specified'}</p>
+                            <p><strong>Match Score:</strong> ${match.matchScore}%</p>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h5>Score Breakdown</h5>
+                            ${Object.entries(match.scoreBreakdown || {}).map(([key, value]) => `
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>${formatKey(key)}:</span>
+                                    <span><strong>${value.toFixed(1)}%</strong></span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5>Materials Required</h5>
+                            ${match.materials?.length > 0 ? 
+                                match.materials.map(m => `<span class="badge bg-primary me-1 mb-1">${m}</span>`).join('') :
+                                '<p>No materials specified</p>'
+                            }
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h5>Waste Available</h5>
+                            ${match.waste?.length > 0 ? 
+                                match.waste.map(w => `<span class="badge bg-secondary me-1 mb-1">${w}</span>`).join('') :
+                                '<p>No waste specified</p>'
+                            }
+                        </div>
+                    </div>
+                    
+                    ${match.description ? `
+                        <div class="mt-4">
+                            <h5>Description</h5>
+                            <p>${match.description}</p>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="mt-4 text-end">
+                        <button class="btn btn-secondary me-2" onclick="this.closest('.modal').remove()">Close</button>
+                        <button class="btn btn-primary" onclick="app.startConversation('${match.id}')">
+                            <i class="fas fa-envelope"></i> Start Conversation
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Show modal
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal-dialog">
+                    <div class="modal-header">
+                        <h5>Match Details</h5>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        ${modalContent}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close functionality
+            modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+        }
+        
+        function formatKey(key) {
+            return key.replace(/([A-Z])/g, ' $1')
+                      .replace(/^./, str => str.toUpperCase())
+                      .replace('Match', '');
+        }
+        
+        function updatePreferences() {
+            const maxDistance = document.getElementById('maxDistance').value;
+            const minScore = document.getElementById('minScore').value;
+            
+            // Save preferences to localStorage or Firebase
+            localStorage.setItem('match_preferences', JSON.stringify({
+                maxDistance,
+                minScore
+            }));
+            
+            // Apply filters
+            filterMatches();
+            
+            // Show success message
+            alert('Preferences updated successfully!');
+        }
+        
+        function sortMatches() {
+            const sortBy = document.getElementById('sortBy').value;
+            
+            let sortedMatches = [...matches];
+            
+            switch(sortBy) {
+                case 'distance':
+                    // Sort by distance (would need location data)
+                    break;
+                case 'company':
+                    sortedMatches.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                    break;
+                case 'score':
+                default:
+                    sortedMatches.sort((a, b) => b.matchScore - a.matchScore);
+                    break;
+            }
+            
+            renderMatches(sortedMatches);
+        }
+        
+        function filterMatches() {
+            const industry = document.getElementById('industryFilter').value;
+            const material = document.getElementById('materialFilter').value;
+            
+            let filteredMatches = matches.filter(match => {
+                // Industry filter
+                if (industry && match.industry !== industry) {
+                    return false;
+                }
+                
+                // Material filter
+                if (material) {
+                    const hasMaterial = match.materials?.some(m => 
+                        m.toLowerCase().includes(material.toLowerCase())) ||
+                        match.waste?.some(w => w.toLowerCase().includes(material.toLowerCase()));
+                    
+                    if (!hasMaterial) return false;
+                }
+                
+                return true;
+            });
+            
+            renderMatches(filteredMatches);
+        }
+    </script>
+</body>
+</html>

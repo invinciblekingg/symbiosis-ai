@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Symbiosis.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .register-page {
+            min-height: 100vh;
+            background: var(--bg-secondary);
+        }
+
+        .register-header {
+            background: var(--bg-primary);
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--border-color-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .register-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            text-decoration: none;
+        }
+
+        .register-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-gradient);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .register-logo-text {
+            font-family: var(--font-heading);
+            font-size: var(--text-xl);
+            font-weight: var(--font-bold);
+            background: var(--bg-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .register-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-8) var(--space-4);
+        }
+
+        .register-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .register-card-header {
+            padding: var(--space-6);
+            border-bottom: 1px solid var(--border-color-light);
+            text-align: center;
+        }
+
+        .register-title {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-2);
+        }
+
+        .register-subtitle {
+            color: var(--neutral-600);
+        }
+
+        .register-card-body {
+            padding: var(--space-6);
+        }
+
+        /* Step Progress */
+        .step-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-8);
+            position: relative;
+            padding: 0 var(--space-4);
+        }
+
+        .step-progress::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 60px;
+            right: 60px;
+            height: 3px;
+            background: var(--neutral-200);
+        }
+
+        .step-progress-fill {
+            position: absolute;
+            top: 20px;
+            left: 60px;
+            height: 3px;
+            background: var(--bg-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--neutral-200);
+            color: var(--neutral-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--font-semibold);
+            transition: all 0.3s ease;
+        }
+
+        .step-item.active .step-circle {
+            background: var(--bg-gradient);
+            color: white;
+        }
+
+        .step-item.completed .step-circle {
+            background: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            margin-top: var(--space-2);
+            font-size: var(--text-xs);
+            color: var(--neutral-500);
+            text-align: center;
+            max-width: 80px;
+        }
+
+        .step-item.active .step-label {
+            color: var(--primary-500);
+            font-weight: var(--font-medium);
+        }
+
+        /* Form Steps */
+        .form-step {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .step-title {
+            font-size: var(--text-xl);
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-2);
+        }
+
+        .step-description {
+            color: var(--neutral-600);
+            margin-bottom: var(--space-6);
+        }
+
+        .register-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-8);
+            padding-top: var(--space-6);
+            border-top: 1px solid var(--border-color-light);
+        }
+
+        .register-footer {
+            text-align: center;
+            padding: var(--space-6);
+            background: var(--bg-secondary);
+            color: var(--neutral-600);
+        }
+
+        .register-footer a {
+            color: var(--primary-500);
+            font-weight: var(--font-medium);
+        }
+
+        /* Industry Type Grid */
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-3);
+        }
+
+        .industry-option {
+            padding: var(--space-4);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .industry-option:hover {
+            border-color: var(--primary-300);
+            background: var(--primary-50);
+        }
+
+        .industry-option.selected {
+            border-color: var(--primary-500);
+            background: var(--primary-50);
+        }
+
+        .industry-option-icon {
+            font-size: 24px;
+            margin-bottom: var(--space-2);
+        }
+
+        .industry-option-label {
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+        }
+
+        @media (max-width: 768px) {
+
+            .step-progress::before,
+            .step-progress-fill {
+                display: none;
+            }
+
+            .step-progress {
+                flex-wrap: wrap;
+                gap: var(--space-4);
+                justify-content: center;
+            }
+
+            .industry-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-row-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-page">
+        <!-- Header -->
+        <header class="register-header">
+            <a href="/" class="register-logo">
+                <div class="register-logo-icon">♻️</div>
+                <span class="register-logo-text">Symbiosis.ai</span>
+            </a>
+            <a href="/login" class="btn btn-ghost">Already have an account? Sign In</a>
+        </header>
+
+        <!-- Content -->
+        <div class="register-content">
+            <div class="register-card">
+                <div class="register-card-header">
+                    <h1 class="register-title">Register Your Factory</h1>
+                    <p class="register-subtitle">Join 500+ factories already trading on our platform</p>
+                </div>
+
+                <div class="register-card-body">
+                    <!-- Progress Steps -->
+                    <div class="step-progress">
+                        <div class="step-progress-fill" id="progressFill"></div>
+                        <div class="step-item active" data-step="1">
+                            <div class="step-circle">1</div>
+                            <div class="step-label">Company Info</div>
+                        </div>
+                        <div class="step-item" data-step="2">
+                            <div class="step-circle">2</div>
+                            <div class="step-label">Location</div>
+                        </div>
+                        <div class="step-item" data-step="3">
+                            <div class="step-circle">3</div>
+                            <div class="step-label">Contact</div>
+                        </div>
+                        <div class="step-item" data-step="4">
+                            <div class="step-circle">4</div>
+                            <div class="step-label">Documents</div>
+                        </div>
+                        <div class="step-item" data-step="5">
+                            <div class="step-circle">5</div>
+                            <div class="step-label">Confirm</div>
+                        </div>
+                    </div>
+
+                    <form id="registerForm">
+                        <!-- Step 1: Company Information -->
+                        <div class="form-step active" data-step="1">
+                            <h2 class="step-title">Company Basic Information</h2>
+                            <p class="step-description">Tell us about your company</p>
+
+                            <div class="form-group">
+                                <label class="form-label required" for="companyName">Company Legal Name</label>
+                                <input type="text" id="companyName" class="form-input"
+                                    placeholder="Enter your company's legal name" required>
+                            </div>
+
+                            <div class="form-row form-row-2">
+                                <div class="form-group">
+                                    <label class="form-label required" for="gstNumber">GST Number</label>
+                                    <input type="text" id="gstNumber" class="form-input" placeholder="22AAAAA0000A1Z5"
+                                        pattern="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}" required>
+                                    <span class="form-hint">Format: 22AAAAA0000A1Z5</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required" for="registrationNumber">Company Registration
+                                        No.</label>
+                                    <input type="text" id="registrationNumber" class="form-input"
+                                        placeholder="CIN/Registration Number" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label required">Industry Type</label>
+                                <select id="industryType" class="form-select" required>
+                                    <option value="">Select your industry</option>
+                                    <option value="steel_metal">Steel & Metal Manufacturing</option>
+                                    <option value="chemical">Chemical & Petrochemical</option>
+                                    <option value="cement">Cement & Construction Materials</option>
+                                    <option value="textile">Textile & Garment</option>
+                                    <option value="food">Food Processing</option>
+                                    <option value="paper">Paper & Pulp</option>
+                                    <option value="plastics">Plastics Manufacturing</option>
+                                    <option value="electronics">Electronics & E-waste</option>
+                                    <option value="pharma">Pharmaceutical</option>
+                                    <option value="auto">Automobile Manufacturing</option>
+                                    <option value="power">Power Generation (Thermal/Coal)</option>
+                                    <option value="sugar">Sugar & Distillery</option>
+                                    <option value="mining">Mining & Minerals</option>
+                                    <option value="agri">Agriculture Processing</option>
+                                    <option value="other">Others</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row form-row-3">
+                                <div class="form-group">
+                                    <label class="form-label" for="yearEstablished">Year Established</label>
+                                    <select id="yearEstablished" class="form-select">
+                                        <option value="">Select year</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="employeeCount">Number of Employees</label>
+                                    <select id="employeeCount" class="form-select">
+                                        <option value="">Select range</option>
+                                        <option value="1-10">1-10</option>
+                                        <option value="11-50">11-50</option>
+                                        <option value="51-200">51-200</option>
+                                        <option value="201-500">201-500</option>
+                                        <option value="500+">500+</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="annualTurnover">Annual Turnover</label>
+                                    <select id="annualTurnover" class="form-select">
+                                        <option value="">Select range</option>
+                                        <option value="<1cr">&lt; ₹1 Crore</option>
+                                        <option value="1-5cr">₹1-5 Crore</option>
+                                        <option value="5-10cr">₹5-10 Crore</option>
+                                        <option value="10-50cr">₹10-50 Crore</option>
+                                        <option value="50-100cr">₹50-100 Crore</option>
+                                        <option value=">100cr">&gt; ₹100 Crore</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Factory Location -->
+                        <div class="form-step" data-step="2">
+                            <h2 class="step-title">Factory Location Details</h2>
+                            <p class="step-description">Where is your factory located?</p>
+
+                            <div class="form-group">
+                                <label class="form-label required" for="factoryName">Factory/Plant Name</label>
+                                <input type="text" id="factoryName" class="form-input"
+                                    placeholder="e.g., Main Production Unit" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label required" for="address">Complete Address</label>
+                                <textarea id="address" class="form-textarea" rows="3"
+                                    placeholder="Enter complete factory address" required></textarea>
+                            </div>
+
+                            <div class="form-row form-row-3">
+                                <div class="form-group">
+                                    <label class="form-label required" for="pincode">Pin Code</label>
+                                    <input type="text" id="pincode" class="form-input" placeholder="6-digit PIN"
+                                        pattern="[0-9]{6}" maxlength="6" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="city">City</label>
+                                    <input type="text" id="city" class="form-input" placeholder="City" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="state">State</label>
+                                    <input type="text" id="state" class="form-input" placeholder="State" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-row form-row-2">
+                                <div class="form-group">
+                                    <label class="form-label" for="latitude">Latitude</label>
+                                    <input type="text" id="latitude" class="form-input" placeholder="Auto-detected">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="longitude">Longitude</label>
+                                    <input type="text" id="longitude" class="form-input" placeholder="Auto-detected">
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-outline" id="detectLocation">
+                                📍 Detect My Location
+                            </button>
+                        </div>
+
+                        <!-- Step 3: Contact Information -->
+                        <div class="form-step" data-step="3">
+                            <h2 class="step-title">Representative Contact Information</h2>
+                            <p class="step-description">Who should we contact for queries?</p>
+
+                            <div class="form-row form-row-2">
+                                <div class="form-group">
+                                    <label class="form-label required" for="representativeName">Full Name</label>
+                                    <input type="text" id="representativeName" class="form-input"
+                                        placeholder="Enter full name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required" for="designation">Designation</label>
+                                    <select id="designation" class="form-select" required>
+                                        <option value="">Select designation</option>
+                                        <option value="owner">Owner</option>
+                                        <option value="director">Director</option>
+                                        <option value="manager">Manager</option>
+                                        <option value="waste_officer">Waste Management Officer</option>
+                                        <option value="procurement">Procurement Head</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label required" for="email">Email Address</label>
+                                <input type="email" id="email" class="form-input" placeholder="you@company.com"
+                                    required>
+                                <span class="form-hint">This will be used for login</span>
+                            </div>
+
+                            <div class="form-row form-row-2">
+                                <div class="form-group">
+                                    <label class="form-label required" for="mobile">Mobile Number</label>
+                                    <div class="input-addon">
+                                        <span class="input-prefix">+91</span>
+                                        <input type="tel" id="mobile" class="form-input" placeholder="10-digit mobile"
+                                            pattern="[0-9]{10}" maxlength="10" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="altContact">Alternate Contact</label>
+                                    <input type="tel" id="altContact" class="form-input" placeholder="Optional">
+                                </div>
+                            </div>
+
+                            <div class="form-row form-row-2">
+                                <div class="form-group">
+                                    <label class="form-label required" for="password">Password</label>
+                                    <input type="password" id="password" class="form-input"
+                                        placeholder="Min. 8 characters" minlength="8" required>
+                                    <div class="password-strength" id="passwordStrength" data-strength="0">
+                                        <div class="password-strength-bar">
+                                            <div class="password-strength-segment"></div>
+                                            <div class="password-strength-segment"></div>
+                                            <div class="password-strength-segment"></div>
+                                            <div class="password-strength-segment"></div>
+                                        </div>
+                                        <span class="password-strength-text" id="strengthText"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label required" for="confirmPassword">Confirm Password</label>
+                                    <input type="password" id="confirmPassword" class="form-input"
+                                        placeholder="Re-enter password" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Documents -->
+                        <div class="form-step" data-step="4">
+                            <h2 class="step-title">Document Uploads</h2>
+                            <p class="step-description">Upload your company documents for verification</p>
+
+                            <div class="form-group">
+                                <label class="form-label required">GST Certificate</label>
+                                <div class="file-upload">
+                                    <input type="file" id="gstCertificate" class="file-upload-input"
+                                        accept=".pdf,.jpg,.jpeg,.png" required>
+                                    <label for="gstCertificate" class="file-upload-zone" id="gstUploadZone">
+                                        <div class="file-upload-icon">📄</div>
+                                        <div class="file-upload-text">Click to upload GST Certificate</div>
+                                        <div class="file-upload-hint">PDF, JPG, PNG (Max 5MB)</div>
+                                    </label>
+                                </div>
+                                <div id="gstPreview" class="file-preview hidden"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label required">Company Registration Certificate</label>
+                                <div class="file-upload">
+                                    <input type="file" id="regCertificate" class="file-upload-input"
+                                        accept=".pdf,.jpg,.jpeg,.png" required>
+                                    <label for="regCertificate" class="file-upload-zone">
+                                        <div class="file-upload-icon">📄</div>
+                                        <div class="file-upload-text">Click to upload Registration Certificate</div>
+                                        <div class="file-upload-hint">PDF, JPG, PNG (Max 5MB)</div>
+                                    </label>
+                                </div>
+                                <div id="regPreview" class="file-preview hidden"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Factory License (Optional)</label>
+                                <div class="file-upload">
+                                    <input type="file" id="factoryLicense" class="file-upload-input"
+                                        accept=".pdf,.jpg,.jpeg,.png">
+                                    <label for="factoryLicense" class="file-upload-zone">
+                                        <div class="file-upload-icon">📄</div>
+                                        <div class="file-upload-text">Click to upload Factory License</div>
+                                        <div class="file-upload-hint">PDF, JPG, PNG (Max 5MB)</div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Pollution Control Board Certificate (Optional)</label>
+                                <div class="file-upload">
+                                    <input type="file" id="pcbCertificate" class="file-upload-input"
+                                        accept=".pdf,.jpg,.jpeg,.png">
+                                    <label for="pcbCertificate" class="file-upload-zone">
+                                        <div class="file-upload-icon">📄</div>
+                                        <div class="file-upload-text">Click to upload PCB Certificate</div>
+                                        <div class="file-upload-hint">PDF, JPG, PNG (Max 5MB)</div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Terms -->
+                        <div class="form-step" data-step="5">
+                            <h2 class="step-title">Terms & Verification</h2>
+                            <p class="step-description">Review and accept our terms to complete registration</p>
+
+                            <div class="card mb-6"
+                                style="background: var(--primary-50); border: 1px solid var(--primary-200);">
+                                <div class="card-body">
+                                    <h4 style="color: var(--primary-700); margin-bottom: var(--space-2);">📋
+                                        Registration Summary</h4>
+                                    <div id="summaryContent"
+                                        style="font-size: var(--text-sm); color: var(--neutral-700);">
+                                        <!-- Will be populated by JS -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-check-group">
+                                <label class="form-check form-check-card">
+                                    <input type="checkbox" class="form-check-input" id="termsAgree" required>
+                                    <div>
+                                        <span class="form-check-label">I agree to the <a href="#" target="_blank">Terms
+                                                of Service</a></span>
+                                        <p class="form-check-description">By registering, you agree to abide by our
+                                            platform rules and guidelines.</p>
+                                    </div>
+                                </label>
+
+                                <label class="form-check form-check-card">
+                                    <input type="checkbox" class="form-check-input" id="privacyAgree" required>
+                                    <div>
+                                        <span class="form-check-label">I agree to the <a href="#"
+                                                target="_blank">Privacy Policy</a></span>
+                                        <p class="form-check-description">We handle your data responsibly as described
+                                            in our privacy policy.</p>
+                                    </div>
+                                </label>
+
+                                <label class="form-check form-check-card">
+                                    <input type="checkbox" class="form-check-input" id="dataConsent" required>
+                                    <div>
+                                        <span class="form-check-label">I consent to data processing as per Indian
+                                            regulations</span>
+                                        <p class="form-check-description">Your data will be processed in compliance with
+                                            applicable Indian laws.</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Navigation -->
+                        <div class="register-nav">
+                            <button type="button" class="btn btn-ghost" id="prevBtn" disabled>
+                                ← Previous
+                            </button>
+                            <button type="button" class="btn btn-primary" id="nextBtn">
+                                Next Step →
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-lg hidden" id="submitBtn">
+                                Complete Registration
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="register-footer">
+                    Already have an account? <a href="/login">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/document-validator.js"></script>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+        const formData = {};
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate year dropdown
+            const yearSelect = document.getElementById('yearEstablished');
+            const currentYear = new Date().getFullYear();
+            for (let year = currentYear; year >= 1950; year--) {
+                yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+            }
+
+            // Check if already logged in
+            if (redirectIfAuthenticated()) return;
+
+            updateStepUI();
+        });
+
+        // Step navigation
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                saveStepData(currentStep);
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateStepUI();
+                }
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepUI();
+            }
+        });
+
+        function updateStepUI() {
+            // Update step indicators
+            document.querySelectorAll('.step-item').forEach((item, index) => {
+                const stepNum = index + 1;
+                item.classList.remove('active', 'completed');
+                if (stepNum < currentStep) {
+                    item.classList.add('completed');
+                } else if (stepNum === currentStep) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Update progress bar
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progressFill').style.width = `calc(${progress}% - 0px)`;
+
+            // Show current step
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+                if (parseInt(step.dataset.step) === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentStep === 1;
+            document.getElementById('nextBtn').classList.toggle('hidden', currentStep === totalSteps);
+            document.getElementById('submitBtn').classList.toggle('hidden', currentStep !== totalSteps);
+
+            // Update summary on last step
+            if (currentStep === totalSteps) {
+                updateSummary();
+            }
+        }
+
+        function validateStep(step) {
+            const stepEl = document.querySelector(`.form-step[data-step="${step}"]`);
+            const inputs = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
+
+            let valid = true;
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    valid = false;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            // Step-specific validation
+            if (step === 3) {
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                if (password !== confirmPassword) {
+                    showToast('Passwords do not match', 'error');
+                    valid = false;
+                }
+                if (password.length < 8) {
+                    showToast('Password must be at least 8 characters', 'error');
+                    valid = false;
+                }
+            }
+
+            if (!valid) {
+                showToast('Please fill in all required fields', 'error');
+            }
+
+            return valid;
+        }
+
+        function saveStepData(step) {
+            if (step === 1) {
+                formData.companyName = document.getElementById('companyName').value;
+                formData.gstNumber = document.getElementById('gstNumber').value;
+                formData.registrationNumber = document.getElementById('registrationNumber').value;
+                formData.industryType = document.getElementById('industryType').value;
+                formData.yearEstablished = document.getElementById('yearEstablished').value;
+                formData.employeeCount = document.getElementById('employeeCount').value;
+                formData.annualTurnover = document.getElementById('annualTurnover').value;
+            } else if (step === 2) {
+                formData.factory = {
+                    name: document.getElementById('factoryName').value,
+                    address: document.getElementById('address').value,
+                    pincode: document.getElementById('pincode').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    coordinates: {
+                        latitude: document.getElementById('latitude').value,
+                        longitude: document.getElementById('longitude').value
+                    }
+                };
+            } else if (step === 3) {
+                formData.representative = {
+                    name: document.getElementById('representativeName').value,
+                    designation: document.getElementById('designation').value,
+                    mobile: document.getElementById('mobile').value,
+                    altContact: document.getElementById('altContact').value
+                };
+                formData.email = document.getElementById('email').value;
+                formData.password = document.getElementById('password').value;
+            }
+        }
+
+        function updateSummary() {
+            const summary = `
+                <p><strong>Company:</strong> ${formData.companyName}</p>
+                <p><strong>Industry:</strong> ${document.getElementById('industryType').selectedOptions[0]?.text || ''}</p>
+                <p><strong>Location:</strong> ${formData.factory?.city || ''}, ${formData.factory?.state || ''}</p>
+                <p><strong>Contact:</strong> ${formData.representative?.name || ''} (${formData.email})</p>
+            `;
+            document.getElementById('summaryContent').innerHTML = summary;
+        }
+
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!validateStep(5)) return;
+            saveStepData(5);
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner spinner-sm"></span> Registering...';
+
+            try {
+                const result = await register(formData);
+
+                if (result.success) {
+                    showToast('Registration successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/onboarding';
+                    }, 1500);
+                } else {
+                    showToast(result.message || 'Registration failed', 'error');
+                }
+            } catch (error) {
+                showToast('An error occurred. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Complete Registration';
+            }
+        });
+
+        // Pincode lookup (simulated)
+        document.getElementById('pincode').addEventListener('input', function () {
+            if (this.value.length === 6) {
+                // Simulate city/state lookup
+                const pincodeData = {
+                    '600001': { city: 'Chennai', state: 'Tamil Nadu' },
+                    '400001': { city: 'Mumbai', state: 'Maharashtra' },
+                    '110001': { city: 'New Delhi', state: 'Delhi' },
+                    '560001': { city: 'Bangalore', state: 'Karnataka' },
+                    '700001': { city: 'Kolkata', state: 'West Bengal' }
+                };
+
+                const data = pincodeData[this.value];
+                if (data) {
+                    document.getElementById('city').value = data.city;
+                    document.getElementById('state').value = data.state;
+                } else {
+                    document.getElementById('city').value = '';
+                    document.getElementById('state').value = '';
+                }
+            }
+        });
+
+        // Location detection
+        document.getElementById('detectLocation').addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        document.getElementById('latitude').value = position.coords.latitude.toFixed(6);
+                        document.getElementById('longitude').value = position.coords.longitude.toFixed(6);
+                        showToast('Location detected successfully!', 'success');
+                    },
+                    (error) => {
+                        showToast('Could not detect location. Please enter manually.', 'warning');
+                    }
+                );
+            } else {
+                showToast('Geolocation is not supported by your browser', 'error');
+            }
+        });
+
+        // Password strength
+        document.getElementById('password').addEventListener('input', function () {
+            const password = this.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            const strengthEl = document.getElementById('passwordStrength');
+            const textEl = document.getElementById('strengthText');
+
+            strengthEl.dataset.strength = strength;
+
+            const texts = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+            textEl.textContent = texts[strength];
+        });
+
+        // File upload preview
+        document.querySelectorAll('.file-upload-input').forEach(input => {
+            input.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        showToast('File size must be less than 5MB', 'error');
+                        this.value = '';
+                        return;
+                    }
+                    const zone = this.nextElementSibling;
+                    zone.querySelector('.file-upload-text').textContent = file.name;
+                    zone.style.borderColor = 'var(--success)';
+                    zone.style.background = 'var(--success-light)';
+                }
+            });
+        });
+
+        // Toast function
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+    </script>
+</body>
+
+</html>

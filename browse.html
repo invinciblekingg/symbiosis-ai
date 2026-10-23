@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Companies - SYMBIOSIS.AI</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        .browse-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: white;
+            border-right: 1px solid #e1e8ed;
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .view-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .view-btn.active {
+            background: #2d5f3f;
+            color: white;
+            border-color: #2d5f3f;
+        }
+        
+        .search-bar {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .filter-option {
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-option:hover {
+            border-color: #2d5f3f;
+            color: #2d5f3f;
+        }
+        
+        .filter-option.active {
+            background: #2d5f3f;
+            color: white;
+            border-color: #2d5f3f;
+        }
+        
+        .range-slider {
+            width: 100%;
+            margin: 15px 0;
+        }
+        
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Company Cards */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .company-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .company-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #2d5f3f, #1e5a8e);
+            color: white;
+            position: relative;
+        }
+        
+        .company-verified {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .company-body {
+            padding: 20px;
+        }
+        
+        .company-name {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .company-industry {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .company-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #2d5f3f;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .company-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            padding: 4px 10px;
+            background: #e8f3ee;
+            color: #2d5f3f;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .company-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #e1e8ed;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .company-distance {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .company-distance i {
+            color: #2d5f3f;
+            margin-right: 5px;
+        }
+        
+        /* List View */
+        .companies-list .company-card {
+            display: flex;
+        }
+        
+        .companies-list .company-header {
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .companies-list .company-body {
+            flex: 1;
+        }
+        
+        .companies-list .company-footer {
+            border-top: none;
+            border-left: 1px solid #e1e8ed;
+            width: 150px;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Map View */
+        .map-view-container {
+            height: calc(100vh - 100px);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        #browseMap {
+            width: 100%;
+            height: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            .browse-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e1e8ed;
+            }
+            
+            .companies-list .company-card {
+                flex-direction: column;
+            }
+            
+            .companies-list .company-header,
+            .companies-list .company-footer {
+                width: 100%;
+            }
+            
+            .companies-list .company-footer {
+                border-left: none;
+                border-top: 1px solid #e1e8ed;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="browse-container">
+        <!-- Filters Sidebar -->
+        <div class="sidebar">
+            <h3 class="mb-4">Filters</h3>
+            
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="companySearch" placeholder="Search companies...">
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-title">Industry Type</div>
+                <div class="filter-options" id="industryFilters">
+                    <div class="filter-option" data-value="all">All</div>
+                    <div class="filter-option" data-value="manufacturing">Manufacturing</div>
+                    <div class="filter-option" data-value="construction">Construction</div>
+                    <div class="filter-option" data-value="chemical">Chemical</div>
+                    <div class="filter-option" data-value="textile">Textile</div>
+                    <div class="filter-option" data-value="food">Food Processing</div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-title">Material Type</div>
+                <div class="filter-options" id="materialFilters">
+                    <div class="filter-option" data-value="all">All</div>
+                    <div class="filter-option" data-value="fly-ash">Fly Ash</div>
+                    <div class="filter-option" data-value="scrap-metal">Scrap Metal</div>
+                    <div class="filter-option" data-value="plastic">Plastic</div>
+                    <div class="filter-option" data-value="organic">Organic</div>
+                    <div class="filter-option" data-value="construction">Construction Waste</div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-title">Distance</div>
+                <input type="range" class="range-slider" id="distanceRange" min="0" max="500" value="100">
+                <div class="range-values">
+                    <span>0 km</span>
+                    <span id="distanceDisplay">100 km</span>
+                    <span>500 km</span>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-title">Verification Status</div>
+                <div class="filter-options" id="verificationFilters">
+                    <div class="filter-option active" data-value="all">All</div>
+                    <div class="filter-option" data-value="verified">Verified Only</div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary w-100 mt-4" id="applyFilters">
+                <i class="fas fa-filter"></i> Apply Filters
+            </button>
+            
+            <button class="btn btn-secondary w-100 mt-2" id="clearFilters">
+                <i class="fas fa-times"></i> Clear All
+            </button>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="page-header">
+                <h2>Browse Companies</h2>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th-large"></i> Grid
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i> List
+                    </button>
+                    <button class="view-btn" data-view="map">
+                        <i class="fas fa-map"></i> Map
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Grid/List View -->
+            <div id="gridListView" class="companies-grid">
+                <!-- Companies loaded here -->
+            </div>
+            
+            <!-- Map View -->
+            <div id="mapView" class="map-view-container" style="display: none;">
+                <div id="browseMap"></div>
+            </div>
+            
+            <!-- Loading -->
+            <div id="loadingIndicator" class="text-center p-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">Loading companies...</p>
+            </div>
+            
+            <!-- No Results -->
+            <div id="noResults" class="text-center p-5" style="display: none;">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h4>No companies found</h4>
+                <p class="text-muted">Try adjusting your filters or search criteria</p>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="pagination" class="mt-4 text-center" style="display: none;">
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <!-- Scripts -->
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/app.js"></script>
+    
+    <script>
+        let browseMap = null;
+        let companies = [];
+        let currentView = 'grid';
+        let filters = {
+            industry: 'all',
+            material: 'all',
+            distance: 100,
+            verified: 'all',
+            search: ''
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            const user = JSON.parse(localStorage.getItem('symbiosis_user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Initialize
+            initViewToggle();
+            initFilters();
+            loadCompanies();
+            
+            // Check for URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search');
+            const companyId = urlParams.get('company');
+            
+            if (searchQuery) {
+                document.getElementById('companySearch').value = searchQuery;
+                filters.search = searchQuery;
+                applyFilters();
+            }
+            
+            if (companyId) {
+                // Show specific company details
+                showCompanyDetails(companyId);
+            }
+        });
+        
+        function initViewToggle() {
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active button
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Switch view
+                    currentView = this.dataset.view;
+                    switchView(currentView);
+                });
+            });
+        }
+        
+        function switchView(view) {
+            const gridView = document.getElementById('gridListView');
+            const mapView = document.getElementById('mapView');
+            
+            if (view === 'map') {
+                gridView.style.display = 'none';
+                mapView.style.display = 'block';
+                initBrowseMap();
+            } else {
+                gridView.style.display = view === 'grid' ? 'grid' : 'block';
+                mapView.style.display = 'none';
+                
+                // Update class for list view
+                if (view === 'list') {
+                    gridView.className = 'companies-list';
+                } else {
+                    gridView.className = 'companies-grid';
+                }
+            }
+            
+            renderCompanies();
+        }
+        
+        function initBrowseMap() {
+            if (!browseMap) {
+                browseMap = L.map('browseMap').setView([20.5937, 78.9629], 5);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19
+                }).addTo(browseMap);
+            }
+            
+            // Clear existing markers
+            browseMap.eachLayer(layer => {
+                if (layer instanceof L.Marker) {
+                    browseMap.removeLayer(layer);
+                }
+            });
+            
+            // Add company markers
+            companies.forEach(company => {
+                if (company.location && company.location.lat && company.location.lng) {
+                    const marker = L.marker([company.location.lat, company.location.lng])
+                        .addTo(browseMap)
+                        .bindPopup(`
+                            <div style="min-width: 200px;">
+                                <h4 style="margin: 0 0 10px;">${company.name}</h4>
+                                <p style="margin: 0 0 5px;">${company.industry || ''}</p>
+                                <button onclick="viewCompany('${company.id}')" 
+                                        style="background: #2d5f3f; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 10px;">
+                                    View Details
+                                </button>
+                            </div>
+                        `);
+                }
+            });
+        }
+        
+        function initFilters() {
+            // Search input
+            document.getElementById('companySearch').addEventListener('input', function() {
+                filters.search = this.value;
+                debounceSearch();
+            });
+            
+            // Industry filters
+            document.querySelectorAll('#industryFilters .filter-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('#industryFilters .filter-option').forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    filters.industry = this.dataset.value;
+                });
+            });
+            
+            // Material filters
+            document.querySelectorAll('#materialFilters .filter-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('#materialFilters .filter-option').forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    filters.material = this.dataset.value;
+                });
+            });
+            
+            // Distance slider
+            const distanceSlider = document.getElementById('distanceRange');
+            const distanceDisplay = document.getElementById('distanceDisplay');
+            
+            distanceSlider.addEventListener('input', function() {
+                distanceDisplay.textContent = this.value + ' km';
+                filters.distance = parseInt(this.value);
+            });
+            
+            // Verification filters
+            document.querySelectorAll('#verificationFilters .filter-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('#verificationFilters .filter-option').forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    filters.verified = this.dataset.value;
+                });
+            });
+            
+            // Apply filters button
+            document.getElementById('applyFilters').addEventListener('click', applyFilters);
+            
+            // Clear filters button
+            document.getElementById('clearFilters').addEventListener('click', clearFilters);
+        }
+        
+        let searchTimeout;
+        function debounceSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(applyFilters, 500);
+        }
+        
+        function applyFilters() {
+            renderCompanies();
+            if (currentView === 'map') {
+                initBrowseMap();
+            }
+        }
+        
+        function clearFilters() {
+            // Reset all filters
+            filters = {
+                industry: 'all',
+                material: 'all',
+                distance: 100,
+                verified: 'all',
+                search: ''
+            };
+            
+            // Reset UI
+            document.getElementById('companySearch').value = '';
+            document.getElementById('distanceRange').value = 100;
+            document.getElementById('distanceDisplay').textContent = '100 km';
+            
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.value === 'all') {
+                    option.classList.add('active');
+                }
+            });
+            
+            // Reapply
+            applyFilters();
+        }
+        
+        async function loadCompanies() {
+            try {
+                const db = firebase.database();
+                const snapshot = await db.ref('companies').once('value');
+                
+                if (!snapshot.exists()) {
+                    showNoResults();
+                    return;
+                }
+                
+                const companiesData = snapshot.val();
+                companies = Object.entries(companiesData).map(([id, data]) => ({
+                    id,
+                    ...data
+                }));
+                
+                renderCompanies();
+                
+            } catch (error) {
+                console.error('Error loading companies:', error);
+                showNoResults();
+            }
+        }
+        
+        function renderCompanies() {
+            const container = document.getElementById('gridListView');
+            const loading = document.getElementById('loadingIndicator');
+            const noResults = document.getElementById('noResults');
+            const pagination = document.getElementById('pagination');
+            
+            // Hide loading
+            loading.style.display = 'none';
+            
+            // Filter companies
+            let filteredCompanies = companies.filter(company => {
+                // Search filter
+                if (filters.search) {
+                    const searchTerm = filters.search.toLowerCase();
+                    const nameMatch = company.name?.toLowerCase().includes(searchTerm);
+                    const industryMatch = company.industry?.toLowerCase().includes(searchTerm);
+                    const materialMatch = company.materials?.some(m => m.toLowerCase().includes(searchTerm));
+                    const wasteMatch = company.waste?.some(w => w.toLowerCase().includes(searchTerm));
+                    
+                    if (!(nameMatch || industryMatch || materialMatch || wasteMatch)) {
+                        return false;
+                    }
+                }
+                
+                // Industry filter
+                if (filters.industry !== 'all' && company.industry !== filters.industry) {
+                    return false;
+                }
+                
+                // Material filter
+                if (filters.material !== 'all') {
+                    const hasMaterial = company.materials?.some(m => 
+                        m.toLowerCase().includes(filters.material)) || 
+                        company.waste?.some(w => w.toLowerCase().includes(filters.material));
+                    
+                    if (!hasMaterial) return false;
+                }
+                
+                // Verification filter
+                if (filters.verified === 'verified' && !company.verified) {
+                    return false;
+                }
+                
+                // Distance filter would require user location
+                // For now, just pass all
+                
+                return true;
+            });
+            
+            if (filteredCompanies.length === 0) {
+                container.innerHTML = '';
+                noResults.style.display = 'block';
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            pagination.style.display = 'block';
+            
+            // Render companies
+            let html = '';
+            filteredCompanies.forEach(company => {
+                html += createCompanyCard(company);
+            });
+            
+            container.innerHTML = html;
+            
+            // Add click events
+            document.querySelectorAll('.company-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const companyId = this.dataset.companyId;
+                    viewCompany(companyId);
+                });
+            });
+        }
+        
+        function createCompanyCard(company) {
+            return `
+                <div class="company-card" data-company-id="${company.id}">
+                    <div class="company-header">
+                        ${company.verified ? '<div class="company-verified">Verified</div>' : ''}
+                        <h4 class="mb-0">${company.name || 'Unnamed Company'}</h4>
+                        <p class="mb-0" style="opacity: 0.8;">${company.industry || 'Industry not specified'}</p>
+                    </div>
+                    
+                    <div class="company-body">
+                        <div class="company-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${company.matches || 0}</div>
+                                <div class="stat-label">Matches</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${company.successRate || 0}%</div>
+                                <div class="stat-label">Success Rate</div>
+                            </div>
+                        </div>
+                        
+                        ${company.materials?.length > 0 ? `
+                            <div class="company-tags">
+                                <strong>Materials:</strong><br>
+                                ${company.materials.slice(0, 3).map(m => `<span class="tag">${m}</span>`).join('')}
+                                ${company.materials.length > 3 ? '<span class="tag">+' + (company.materials.length - 3) + '</span>' : ''}
+                            </div>
+                        ` : ''}
+                        
+                        ${company.description ? `
+                            <p class="mt-2" style="font-size: 14px; color: #666;">${company.description.substring(0, 100)}...</p>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="company-footer">
+                        <div class="company-distance">
+                            <i class="fas fa-map-marker-alt"></i> ${company.location?.city || 'Location not set'}
+                        </div>
+                        <button class="btn btn-sm btn-primary" onclick="event.stopPropagation(); startConversation('${company.id}')">
+                            <i class="fas fa-envelope"></i> Contact
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function viewCompany(companyId) {
+            window.location.href = `company-details.html?id=${companyId}`;
+        }
+        
+        function startConversation(companyId) {
+            if (typeof app !== 'undefined') {
+                app.startConversation(companyId);
+            } else {
+                alert('Please login to start a conversation');
+                window.location.href = 'login.html';
+            }
+        }
+        
+        function showCompanyDetails(companyId) {
+            // Implement company details modal or page
+            console.log('Show company details:', companyId);
+        }
+        
+        function showNoResults() {
+            const loading = document.getElementById('loadingIndicator');
+            const noResults = document.getElementById('noResults');
+            const container = document.getElementById('gridListView');
+            
+            loading.style.display = 'none';
+            container.innerHTML = '';
+            noResults.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

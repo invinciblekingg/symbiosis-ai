@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Symbiosis.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .auth-layout {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .auth-visual {
+            background: radial-gradient(circle at 60% 40%, #17202f 0%, #0b0e14 70%);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .auth-visual-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            max-width: 400px;
+        }
+
+        .auth-visual-icon {
+            font-size: 80px;
+            margin-bottom: var(--space-6);
+        }
+
+        .auth-visual-title {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-4);
+            color: white;
+        }
+
+        .auth-visual-text {
+            font-size: var(--text-lg);
+            opacity: 0.9;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .auth-form-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--space-12);
+            background: var(--bg-primary);
+        }
+
+        .auth-form {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .auth-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-8);
+            text-decoration: none;
+        }
+
+        .auth-logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-gradient);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .auth-logo-text {
+            font-family: var(--font-heading);
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            background: var(--bg-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auth-title {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-2);
+        }
+
+        .auth-subtitle {
+            color: var(--neutral-600);
+            margin-bottom: var(--space-8);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            margin: var(--space-6) 0;
+            color: var(--neutral-500);
+            font-size: var(--text-sm);
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: var(--space-8);
+            color: var(--neutral-600);
+        }
+
+        .auth-footer a {
+            color: var(--primary-500);
+            font-weight: var(--font-medium);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+        }
+
+        .forgot-link {
+            font-size: var(--text-sm);
+            color: var(--primary-500);
+        }
+
+        @media (max-width: 768px) {
+            .auth-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-visual {
+                display: none;
+            }
+
+            .auth-form-container {
+                padding: var(--space-6);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-layout">
+        <!-- Visual Side -->
+        <div class="auth-visual">
+            <div class="auth-visual-content">
+                <div class="auth-visual-icon">🏭</div>
+                <h2 class="auth-visual-title">Welcome Back!</h2>
+                <p class="auth-visual-text">Access your personalized dashboard to discover matches, manage listings, and
+                    grow your business sustainably.</p>
+            </div>
+        </div>
+
+        <!-- Form Side -->
+        <div class="auth-form-container">
+            <div class="auth-form">
+                <a href="/" class="auth-logo">
+                    <div class="auth-logo-icon">♻️</div>
+                    <span class="auth-logo-text">Symbiosis.ai</span>
+                </a>
+
+                <h1 class="auth-title">Sign In</h1>
+                <p class="auth-subtitle">Enter your credentials to access your account</p>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label required" for="email">Email Address</label>
+                        <input type="email" id="email" class="form-input" placeholder="you@company.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required" for="password">Password</label>
+                        <div class="input-group">
+                            <input type="password" id="password" class="form-input has-icon-right"
+                                placeholder="Enter your password" required>
+                            <span class="input-icon-right clickable" id="togglePassword">
+                                👁️
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <label class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <span class="form-check-label">Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-link" id="forgotPasswordLink">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-full" id="loginBtn">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    Don't have an account? <a href="/register">Register your factory</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-backdrop" id="forgotModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Reset Password</h3>
+                <button class="modal-close" id="closeForgotModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-4">Enter your email address and we'll send you a link to reset your password.</p>
+                <form id="forgotForm">
+                    <div class="form-group">
+                        <label class="form-label required" for="forgotEmail">Email Address</label>
+                        <input type="email" id="forgotEmail" class="form-input" placeholder="you@company.com" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" id="cancelForgot">Cancel</button>
+                <button class="btn btn-primary" id="sendResetLink">Send Reset Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                this.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                this.textContent = '👁️';
+            }
+        });
+
+        // Forgot password modal
+        const forgotModal = document.getElementById('forgotModal');
+        document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            forgotModal.classList.add('active');
+        });
+
+        document.getElementById('closeForgotModal').addEventListener('click', () => {
+            forgotModal.classList.remove('active');
+        });
+
+        document.getElementById('cancelForgot').addEventListener('click', () => {
+            forgotModal.classList.remove('active');
+        });
+
+        // Close modal on backdrop click
+        forgotModal.addEventListener('click', (e) => {
+            if (e.target === forgotModal) {
+                forgotModal.classList.remove('active');
+            }
+        });
+
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="spinner spinner-sm"></span> Signing in...';
+
+            try {
+                const result = await login(email, password);
+
+                if (result.success) {
+                    showToast('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = result.onboardingComplete ? '/dashboard' : '/onboarding';
+                    }, 1000);
+                } else {
+                    showToast(result.message || 'Invalid credentials', 'error');
+                }
+            } catch (error) {
+                showToast('An error occurred. Please try again.', 'error');
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = 'Sign In';
+            }
+        });
+
+        // Forgot password submission
+        document.getElementById('sendResetLink').addEventListener('click', async () => {
+            const email = document.getElementById('forgotEmail').value;
+            if (!email) {
+                showToast('Please enter your email', 'error');
+                return;
+            }
+
+            // In production, this would send a reset email
+            showToast('If the email exists, a reset link has been sent', 'success');
+            forgotModal.classList.remove('active');
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = getCurrentUser();
+            if (user) {
+                window.location.href = '/dashboard';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile - Symbiosis.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .onboarding-page {
+            min-height: 100vh;
+            background: var(--bg-secondary);
+        }
+
+        .onboarding-header {
+            background: var(--bg-primary);
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--border-color-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .onboarding-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            text-decoration: none;
+        }
+
+        .onboarding-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-gradient);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .onboarding-logo-text {
+            font-family: var(--font-heading);
+            font-size: var(--text-xl);
+            font-weight: var(--font-bold);
+            background: var(--bg-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .progress-text {
+            font-size: var(--text-sm);
+            color: var(--neutral-600);
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: var(--neutral-200);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--bg-gradient);
+            transition: width 0.3s;
+        }
+
+        .onboarding-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--space-8) var(--space-4);
+        }
+
+        .onboarding-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: var(--space-8);
+            margin-bottom: var(--space-6);
+        }
+
+        .section-header {
+            margin-bottom: var(--space-6);
+        }
+
+        .section-icon {
+            font-size: 32px;
+            margin-bottom: var(--space-3);
+        }
+
+        .section-title {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-2);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .section-description {
+            color: var(--neutral-600);
+        }
+
+        .material-item {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            margin-bottom: var(--space-4);
+            border: 1px solid var(--border-color-light);
+            position: relative;
+        }
+
+        .material-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .material-item-number {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-weight: var(--font-semibold);
+        }
+
+        .material-number-badge {
+            width: 28px;
+            height: 28px;
+            background: var(--bg-gradient);
+            color: white;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-sm);
+        }
+
+        .remove-item-btn {
+            background: transparent;
+            border: 1px solid var(--error);
+            color: var(--error);
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--text-sm);
+            transition: all 0.2s;
+        }
+
+        .remove-item-btn:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        .add-item-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            width: 100%;
+            padding: var(--space-4);
+            background: var(--primary-50);
+            border: 2px dashed var(--primary-300);
+            border-radius: var(--radius-lg);
+            color: var(--primary-500);
+            font-weight: var(--font-semibold);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-item-btn:hover {
+            background: var(--primary-100);
+            border-color: var(--primary-500);
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-3);
+        }
+
+        .sdg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-3);
+        }
+
+        .sdg-option {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sdg-option:hover {
+            border-color: var(--primary-300);
+            background: var(--primary-50);
+        }
+
+        .sdg-option.selected {
+            border-color: var(--primary-500);
+            background: var(--primary-50);
+        }
+
+        .sdg-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: var(--font-bold);
+            flex-shrink: 0;
+        }
+
+        .sdg-content {
+            flex: 1;
+        }
+
+        .sdg-title {
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-1);
+        }
+
+        .sdg-desc {
+            font-size: var(--text-sm);
+            color: var(--neutral-600);
+        }
+
+        .onboarding-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: var(--space-4);
+            margin-top: var(--space-8);
+            padding: var(--space-6);
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            bottom: var(--space-4);
+        }
+
+        @media (max-width: 768px) {
+            .onboarding-header {
+                flex-direction: column;
+                gap: var(--space-3);
+            }
+
+            .progress-bar {
+                width: 100%;
+            }
+
+            .onboarding-card {
+                padding: var(--space-4);
+            }
+
+            .checkbox-grid,
+            .sdg-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .onboarding-actions {
+                flex-direction: column;
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="onboarding-page">
+        <header class="onboarding-header">
+            <a href="/" class="onboarding-logo">
+                <div class="onboarding-logo-icon">♻️</div>
+                <span class="onboarding-logo-text">Symbiosis.ai</span>
+            </a>
+            <div class="progress-container">
+                <span class="progress-text"><span id="progressPercent">0</span>% Complete</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+            <button class="btn btn-ghost" id="saveDraftBtn">💾 Save Draft</button>
+        </header>
+
+        <div class="onboarding-content">
+            <div style="text-align: center; margin-bottom: var(--space-8);">
+                <h1 style="font-size: var(--text-3xl); margin-bottom: var(--space-2);">Complete Your Factory Profile
+                </h1>
+                <p style="color: var(--neutral-600); font-size: var(--text-lg);">Help us find perfect matches for your
+                    factory</p>
+            </div>
+
+            <form id="onboardingForm">
+                <!-- Section A: Waste Materials -->
+                <div class="onboarding-card" id="wasteSection">
+                    <div class="section-header">
+                        <div class="section-icon">🏭</div>
+                        <h2 class="section-title">Section A: Waste Materials Your Factory Produces</h2>
+                        <p class="section-description">Tell us about the waste/byproduct materials your factory
+                            generates. These will be matched with factories that need them as raw materials.</p>
+                    </div>
+
+                    <div id="wasteItems">
+                        <!-- Waste items will be added here dynamically -->
+                    </div>
+
+                    <button type="button" class="add-item-btn" id="addWasteBtn">
+                        ➕ Add Waste Material
+                    </button>
+                </div>
+
+                <!-- Section B: Required Materials -->
+                <div class="onboarding-card" id="requirementsSection">
+                    <div class="section-header">
+                        <div class="section-icon">📦</div>
+                        <h2 class="section-title">Section B: Raw Materials Your Factory Requires</h2>
+                        <p class="section-description">Tell us what raw materials or alternative materials your factory
+                            needs. We'll match you with factories producing these as waste.</p>
+                    </div>
+
+                    <div id="requirementItems">
+                        <!-- Requirement items will be added here dynamically -->
+                    </div>
+
+                    <button type="button" class="add-item-btn" id="addRequirementBtn">
+                        ➕ Add Required Material
+                    </button>
+                </div>
+
+                <!-- Section C: Logistics -->
+                <div class="onboarding-card">
+                    <div class="section-header">
+                        <div class="section-icon">🚛</div>
+                        <h2 class="section-title">Section C: Logistics & Operations</h2>
+                        <p class="section-description">Tell us about your logistics capabilities and preferences.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Transportation Capabilities</label>
+                        <div class="checkbox-grid">
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="transport"
+                                    value="pickup"><span class="form-check-label">We can arrange pickup</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="transport"
+                                    value="delivery"><span class="form-check-label">We prefer delivery</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="transport"
+                                    value="flexible"><span class="form-check-label">We're flexible</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="transport"
+                                    value="thirdparty"><span class="form-check-label">Need third-party
+                                    logistics</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Loading/Unloading Facilities</label>
+                        <div class="checkbox-grid">
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="loading"
+                                    value="forklift"><span class="form-check-label">Forklift available</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="loading"
+                                    value="crane"><span class="form-check-label">Crane available</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="loading"
+                                    value="dock"><span class="form-check-label">Loading dock</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="loading"
+                                    value="manual"><span class="form-check-label">Manual loading only</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Storage Facilities</label>
+                        <div class="checkbox-grid">
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="storage"
+                                    value="covered"><span class="form-check-label">Covered warehouse</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="storage"
+                                    value="open"><span class="form-check-label">Open yard storage</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="storage"
+                                    value="temp"><span class="form-check-label">Temperature-controlled</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="storage"
+                                    value="hazmat"><span class="form-check-label">Hazardous material
+                                    certified</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Payment Terms Preference</label>
+                        <div class="checkbox-grid">
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="payment"
+                                    value="advance"><span class="form-check-label">Advance payment</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="payment"
+                                    value="delivery"><span class="form-check-label">Payment on delivery</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="payment"
+                                    value="15days"><span class="form-check-label">15 days credit</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="payment"
+                                    value="30days"><span class="form-check-label">30 days credit</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="payment"
+                                    value="45days"><span class="form-check-label">45 days credit</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="payment"
+                                    value="custom"><span class="form-check-label">Custom terms</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section D: Sustainability -->
+                <div class="onboarding-card">
+                    <div class="section-header">
+                        <div class="section-icon">🌱</div>
+                        <h2 class="section-title">Section D: Sustainability Commitments</h2>
+                        <p class="section-description">Symbiosis.ai aligns with UN Sustainable Development Goals. Tell
+                            us about your sustainability initiatives.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Which UN SDGs does your factory contribute to?</label>
+                        <div class="sdg-grid" id="sdgGrid">
+                            <div class="sdg-option" data-sdg="6"><input type="checkbox" name="sdg" value="6" hidden>
+                                <div class="sdg-icon" style="background:#26BDE2">6</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Clean Water & Sanitation</div>
+                                    <div class="sdg-desc">Water conservation, wastewater treatment</div>
+                                </div>
+                            </div>
+                            <div class="sdg-option" data-sdg="7"><input type="checkbox" name="sdg" value="7" hidden>
+                                <div class="sdg-icon" style="background:#FCC30B">7</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Affordable & Clean Energy</div>
+                                    <div class="sdg-desc">Renewable energy, energy efficiency</div>
+                                </div>
+                            </div>
+                            <div class="sdg-option" data-sdg="8"><input type="checkbox" name="sdg" value="8" hidden>
+                                <div class="sdg-icon" style="background:#A21942">8</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Decent Work & Economic Growth</div>
+                                    <div class="sdg-desc">Job creation, ethical practices</div>
+                                </div>
+                            </div>
+                            <div class="sdg-option" data-sdg="9"><input type="checkbox" name="sdg" value="9" hidden>
+                                <div class="sdg-icon" style="background:#FD6925">9</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Industry, Innovation & Infrastructure</div>
+                                    <div class="sdg-desc">Sustainable industrialization</div>
+                                </div>
+                            </div>
+                            <div class="sdg-option" data-sdg="11"><input type="checkbox" name="sdg" value="11" hidden>
+                                <div class="sdg-icon" style="background:#F99D26">11</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Sustainable Cities & Communities</div>
+                                    <div class="sdg-desc">Waste reduction, urban sustainability</div>
+                                </div>
+                            </div>
+                            <div class="sdg-option" data-sdg="12"><input type="checkbox" name="sdg" value="12" hidden>
+                                <div class="sdg-icon" style="background:#BF8B2E">12</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Responsible Consumption & Production</div>
+                                    <div class="sdg-desc">Circular economy, waste minimization</div>
+                                </div>
+                            </div>
+                            <div class="sdg-option" data-sdg="13"><input type="checkbox" name="sdg" value="13" hidden>
+                                <div class="sdg-icon" style="background:#3F7E44">13</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Climate Action</div>
+                                    <div class="sdg-desc">Carbon reduction, climate initiatives</div>
+                                </div>
+                            </div>
+                            <div class="sdg-option" data-sdg="14"><input type="checkbox" name="sdg" value="14" hidden>
+                                <div class="sdg-icon" style="background:#0A97D9">14</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Life Below Water</div>
+                                    <div class="sdg-desc">Marine pollution prevention</div>
+                                </div>
+                            </div>
+                            <div class="sdg-option" data-sdg="15"><input type="checkbox" name="sdg" value="15" hidden>
+                                <div class="sdg-icon" style="background:#56C02B">15</div>
+                                <div class="sdg-content">
+                                    <div class="sdg-title">Life on Land</div>
+                                    <div class="sdg-desc">Land restoration, biodiversity</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Sustainability Certifications</label>
+                        <div class="checkbox-grid">
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="cert"
+                                    value="iso14001"><span class="form-check-label">ISO 14001</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="cert"
+                                    value="iso50001"><span class="form-check-label">ISO 50001</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="cert"
+                                    value="zerowaste"><span class="form-check-label">Zero Waste to
+                                    Landfill</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="cert"
+                                    value="carbon"><span class="form-check-label">Carbon Neutral</span></label>
+                            <label class="form-check"><input type="checkbox" class="form-check-input" name="cert"
+                                    value="green"><span class="form-check-label">Green Building</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="sustainabilityGoals">Sustainability Goals (Optional)</label>
+                        <textarea id="sustainabilityGoals" class="form-textarea" rows="3"
+                            placeholder="Describe your factory's sustainability goals and initiatives"
+                            maxlength="500"></textarea>
+                        <div class="char-counter"><span id="goalsCharCount">0</span>/500</div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="onboarding-actions">
+                    <button type="button" class="btn btn-ghost" id="saveDraftBtn2">💾 Save as Draft</button>
+                    <button type="submit" class="btn btn-primary btn-lg" id="completeBtn">
+                        🎉 Complete Profile & Find Matches
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        const materialTypes = {
+            construction: ['Fly Ash', 'Bottom Ash', 'Gypsum', 'Cement Kiln Dust', 'Demolished Concrete', 'Brick Waste'],
+            metal: ['Ferrous Scrap (Iron/Steel)', 'Non-ferrous Scrap (Aluminum)', 'Non-ferrous Scrap (Copper)', 'Non-ferrous Scrap (Brass)', 'Metal Turnings/Chips', 'Slag (Steel/Iron)'],
+            plastic: ['PET Bottles/Scrap', 'HDPE Scrap', 'LDPE Film', 'PP Scrap', 'PVC Scrap', 'Mixed Plastic Waste'],
+            organic: ['Food Processing Waste', 'Agricultural Residue', 'Bagasse (Sugarcane)', 'Rice Husk', 'Corn Cob', 'Press Mud'],
+            chemical: ['Chemical Sludge', 'Spent Catalyst', 'Acid/Alkali Byproducts', 'Glycerin', 'Tar'],
+            textile: ['Cotton Fabric Scraps', 'Synthetic Fabric Scraps', 'Yarn Waste', 'Cutting Waste'],
+            paper: ['Cardboard Waste', 'Office Paper Waste', 'Packaging Paper'],
+            electronic: ['E-waste Components', 'Circuit Board Scrap', 'Battery Scrap']
+        };
+
+        let wasteCount = 0;
+        let requirementCount = 0;
+
+        // Check auth
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!requireAuth()) return;
+            addWasteItem();
+            addRequirementItem();
+            setupSDGSelection();
+            updateProgress();
+        });
+
+        function getMaterialOptions() {
+            let html = '<option value="">Select material type</option>';
+            Object.entries(materialTypes).forEach(([category, materials]) => {
+                html += `<optgroup label="${category.charAt(0).toUpperCase() + category.slice(1)} Waste">`;
+                materials.forEach(m => html += `<option value="${m}">${m}</option>`);
+                html += '</optgroup>';
+            });
+            html += '<option value="other">Other (specify)</option>';
+            return html;
+        }
+
+        function addWasteItem() {
+            wasteCount++;
+            const html = `
+                <div class="material-item" data-waste-id="${wasteCount}">
+                    <div class="material-item-header">
+                        <div class="material-item-number"><span class="material-number-badge">${wasteCount}</span> Waste Material</div>
+                        <button type="button" class="remove-item-btn" onclick="removeWasteItem(${wasteCount})">🗑️ Remove</button>
+                    </div>
+                    <div class="form-row form-row-2">
+                        <div class="form-group"><label class="form-label required">Waste Type</label><select class="form-select" name="waste_type_${wasteCount}" required>${getMaterialOptions()}</select></div>
+                        <div class="form-group"><label class="form-label">Category</label><input type="text" class="form-input" name="waste_category_${wasteCount}" placeholder="Auto-filled" readonly></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" name="waste_desc_${wasteCount}" rows="2" placeholder="Describe source, composition, characteristics" maxlength="500"></textarea></div>
+                    <div class="form-row form-row-3">
+                        <div class="form-group"><label class="form-label required">Monthly Quantity</label><input type="number" class="form-input" name="waste_qty_${wasteCount}" placeholder="Amount" required></div>
+                        <div class="form-group"><label class="form-label">Unit</label><select class="form-select" name="waste_unit_${wasteCount}"><option value="kg">Kilograms</option><option value="ton" selected>Metric Tons</option><option value="liter">Liters</option><option value="m3">Cubic Meters</option></select></div>
+                        <div class="form-group"><label class="form-label">Disposal Cost (₹/ton)</label><input type="number" class="form-input" name="waste_cost_${wasteCount}" placeholder="Current cost"></div>
+                    </div>
+                    <div class="form-row form-row-2">
+                        <div class="form-group"><label class="form-label">Purity %</label><input type="range" class="form-range" name="waste_purity_${wasteCount}" min="0" max="100" value="80"><span class="range-current" id="purity_${wasteCount}">80%</span></div>
+                        <div class="form-group"><label class="form-label">Moisture %</label><input type="range" class="form-range" name="waste_moisture_${wasteCount}" min="0" max="100" value="10"><span class="range-current" id="moisture_${wasteCount}">10%</span></div>
+                    </div>
+                    <div class="form-row form-row-2">
+                        <div class="form-group"><label class="form-label">Hazardous Classification</label><select class="form-select" name="waste_hazard_${wasteCount}"><option value="non-hazardous">Non-Hazardous</option><option value="hazardous">Hazardous</option><option value="unknown">Unknown</option></select></div>
+                        <div class="form-group"><label class="form-label">Availability</label><select class="form-select" name="waste_avail_${wasteCount}"><option value="continuous">Continuous</option><option value="seasonal">Seasonal</option><option value="occasional">Occasional</option></select></div>
+                    </div>
+                </div>`;
+            document.getElementById('wasteItems').insertAdjacentHTML('beforeend', html);
+            setupRangeInputs();
+            updateProgress();
+        }
+
+        function removeWasteItem(id) {
+            document.querySelector(`[data-waste-id="${id}"]`)?.remove();
+            updateProgress();
+        }
+
+        function addRequirementItem() {
+            requirementCount++;
+            const html = `
+                <div class="material-item" data-req-id="${requirementCount}">
+                    <div class="material-item-header">
+                        <div class="material-item-number"><span class="material-number-badge">${requirementCount}</span> Required Material</div>
+                        <button type="button" class="remove-item-btn" onclick="removeRequirementItem(${requirementCount})">🗑️ Remove</button>
+                    </div>
+                    <div class="form-row form-row-2">
+                        <div class="form-group"><label class="form-label required">Material Type</label><select class="form-select" name="req_type_${requirementCount}" required>${getMaterialOptions()}</select></div>
+                        <div class="form-group"><label class="form-label">Purpose/Use</label><input type="text" class="form-input" name="req_purpose_${requirementCount}" placeholder="How will it be used?"></div>
+                    </div>
+                    <div class="form-row form-row-3">
+                        <div class="form-group"><label class="form-label required">Monthly Requirement</label><input type="number" class="form-input" name="req_qty_${requirementCount}" placeholder="Amount" required></div>
+                        <div class="form-group"><label class="form-label">Unit</label><select class="form-select" name="req_unit_${requirementCount}"><option value="kg">Kilograms</option><option value="ton" selected>Metric Tons</option><option value="liter">Liters</option><option value="m3">Cubic Meters</option></select></div>
+                        <div class="form-group"><label class="form-label">Budget (₹/ton)</label><input type="number" class="form-input" name="req_budget_${requirementCount}" placeholder="Max price"></div>
+                    </div>
+                    <div class="form-row form-row-2">
+                        <div class="form-group"><label class="form-label">Min Purity Required %</label><input type="range" class="form-range" name="req_purity_${requirementCount}" min="0" max="100" value="70"><span class="range-current" id="req_purity_${requirementCount}">70%</span></div>
+                        <div class="form-group"><label class="form-label">Max Distance (km)</label><input type="range" class="form-range" name="req_distance_${requirementCount}" min="0" max="500" value="200"><span class="range-current" id="req_dist_${requirementCount}">200 km</span></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Procurement Frequency</label><select class="form-select" name="req_freq_${requirementCount}"><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="biweekly">Bi-weekly</option><option value="monthly" selected>Monthly</option><option value="quarterly">Quarterly</option><option value="asneeded">As needed</option></select></div>
+                </div>`;
+            document.getElementById('requirementItems').insertAdjacentHTML('beforeend', html);
+            setupRangeInputs();
+            updateProgress();
+        }
+
+        function removeRequirementItem(id) {
+            document.querySelector(`[data-req-id="${id}"]`)?.remove();
+            updateProgress();
+        }
+
+        function setupRangeInputs() {
+            document.querySelectorAll('input[type="range"]').forEach(input => {
+                const updateValue = () => {
+                    const name = input.name;
+                    let display = input.value;
+                    if (name.includes('distance')) display += ' km';
+                    else display += '%';
+                    const targetId = name.replace('waste_', '').replace('req_', 'req_').replace('_' + name.split('_').pop(), '_' + name.split('_').pop());
+                    const span = input.nextElementSibling;
+                    if (span) span.textContent = display;
+                };
+                input.addEventListener('input', updateValue);
+                updateValue();
+            });
+        }
+
+        function setupSDGSelection() {
+            document.querySelectorAll('.sdg-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    option.classList.toggle('selected');
+                    option.querySelector('input').checked = option.classList.contains('selected');
+                    updateProgress();
+                });
+            });
+        }
+
+        function updateProgress() {
+            const wasteItems = document.querySelectorAll('[data-waste-id]').length;
+            const reqItems = document.querySelectorAll('[data-req-id]').length;
+            const logistics = document.querySelectorAll('[name^="transport"]:checked, [name^="loading"]:checked, [name^="storage"]:checked, [name^="payment"]:checked').length;
+            const sdgs = document.querySelectorAll('.sdg-option.selected').length;
+            const total = wasteItems * 10 + reqItems * 10 + logistics * 5 + sdgs * 5;
+            const percent = Math.min(100, Math.round(total));
+            document.getElementById('progressPercent').textContent = percent;
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        document.getElementById('sustainabilityGoals').addEventListener('input', function () {
+            document.getElementById('goalsCharCount').textContent = this.value.length;
+        });
+
+        document.getElementById('addWasteBtn').addEventListener('click', addWasteItem);
+        document.getElementById('addRequirementBtn').addEventListener('click', addRequirementItem);
+
+        // Save draft
+        document.querySelectorAll('#saveDraftBtn, #saveDraftBtn2').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const data = collectFormData();
+                await saveOnboardingDraft(data);
+                showToast('Draft saved successfully!', 'success');
+            });
+        });
+
+        function collectFormData() {
+            const wasteProduced = [];
+            document.querySelectorAll('[data-waste-id]').forEach(item => {
+                const id = item.dataset.wasteId;
+                wasteProduced.push({
+                    materialType: item.querySelector(`[name="waste_type_${id}"]`)?.value,
+                    description: item.querySelector(`[name="waste_desc_${id}"]`)?.value,
+                    quantity: item.querySelector(`[name="waste_qty_${id}"]`)?.value,
+                    unit: item.querySelector(`[name="waste_unit_${id}"]`)?.value,
+                    disposalCost: item.querySelector(`[name="waste_cost_${id}"]`)?.value,
+                    quality: { purity: item.querySelector(`[name="waste_purity_${id}"]`)?.value, moisture: item.querySelector(`[name="waste_moisture_${id}"]`)?.value },
+                    hazardous: item.querySelector(`[name="waste_hazard_${id}"]`)?.value,
+                    availability: item.querySelector(`[name="waste_avail_${id}"]`)?.value
+                });
+            });
+
+            const materialsRequired = [];
+            document.querySelectorAll('[data-req-id]').forEach(item => {
+                const id = item.dataset.reqId;
+                materialsRequired.push({
+                    materialType: item.querySelector(`[name="req_type_${id}"]`)?.value,
+                    purpose: item.querySelector(`[name="req_purpose_${id}"]`)?.value,
+                    quantity: item.querySelector(`[name="req_qty_${id}"]`)?.value,
+                    unit: item.querySelector(`[name="req_unit_${id}"]`)?.value,
+                    budget: item.querySelector(`[name="req_budget_${id}"]`)?.value,
+                    quality: { minPurity: item.querySelector(`[name="req_purity_${id}"]`)?.value },
+                    maxDistance: item.querySelector(`[name="req_distance_${id}"]`)?.value,
+                    frequency: item.querySelector(`[name="req_freq_${id}"]`)?.value
+                });
+            });
+
+            const logistics = {
+                transport: [...document.querySelectorAll('[name="transport"]:checked')].map(c => c.value),
+                loading: [...document.querySelectorAll('[name="loading"]:checked')].map(c => c.value),
+                storage: [...document.querySelectorAll('[name="storage"]:checked')].map(c => c.value),
+                payment: [...document.querySelectorAll('[name="payment"]:checked')].map(c => c.value)
+            };
+
+            const sustainability = {
+                sdgs: [...document.querySelectorAll('[name="sdg"]:checked')].map(c => c.value),
+                certifications: [...document.querySelectorAll('[name="cert"]:checked')].map(c => c.value),
+                goals: document.getElementById('sustainabilityGoals')?.value
+            };
+
+            return { wasteProduced, materialsRequired, logistics, sustainability };
+        }
+
+        // Submit
+        document.getElementById('onboardingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('completeBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner spinner-sm"></span> Finding matches...';
+
+            try {
+                const data = collectFormData();
+                const result = await completeOnboarding(data);
+
+                if (result.success) {
+                    showToast('🎉 Profile complete! Redirecting to dashboard...', 'success');
+                    setTimeout(() => window.location.href = '/dashboard', 2000);
+                } else {
+                    showToast(result.message || 'Failed to save', 'error');
+                }
+            } catch (error) {
+                showToast('An error occurred', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '🎉 Complete Profile & Find Matches';
+            }
+        });
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<span>${message}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+    </script>
+</body>
+
+</html>

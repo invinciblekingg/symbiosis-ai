@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resilience Command Dashboard - NIVAAR AI & SYMBIOSIS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <!-- Chart.js for High-Precision Operations Visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar matching Reference Screenshot -->
+        <aside class="dashboard-sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <a href="/">
+                    <div class="sidebar-logo-icon">🛡️</div>
+                    <div>
+                        <div class="sidebar-logo-text">NIVAAR AI</div>
+                        <span class="sidebar-logo-sub">Symbiosis AI Fusion</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Group 1: Multimodal AI & TENG -->
+            <div class="sidebar-menu">
+                <div class="sidebar-menu-title">
+                    <span>Multimodal AI & TENG</span>
+                    <span class="live-pill">LIVE</span>
+                </div>
+                <a href="#teng-sensors" class="sidebar-menu-item" id="navTengSensors">
+                    <span class="icon">⚡</span>
+                    <span>TENG Sensors</span>
+                    <span class="nav-badge">IoT Waveform</span>
+                </a>
+                <a href="#ai-vision" class="sidebar-menu-item" id="navAiVision">
+                    <span class="icon">📷</span>
+                    <span>AI Vision Platform</span>
+                    <span class="nav-badge">CV Defects</span>
+                </a>
+                <a href="#symbiosis-fusion" class="sidebar-menu-item" id="navSymbiosisFusion">
+                    <span class="icon">✨</span>
+                    <span>Symbiosis AI Fusion</span>
+                    <span class="nav-badge">Multimodal</span>
+                </a>
+            </div>
+
+            <!-- Group 2: Operations & Fleet -->
+            <div class="sidebar-menu">
+                <div class="sidebar-menu-title">
+                    <span>Operations & Fleet</span>
+                </div>
+                <a href="javascript:void(0)" class="sidebar-menu-item active" id="navOverview">
+                    <span class="icon">⊞</span>
+                    <span>Overview Dashboard</span>
+                </a>
+                <a href="#registry" class="sidebar-menu-item" id="navMachineRegistry">
+                    <span class="icon">📑</span>
+                    <span>Machine Registry</span>
+                    <span class="nav-badge">8 Types</span>
+                </a>
+                <a href="javascript:void(0)" class="sidebar-menu-item" id="navTelemetry">
+                    <span class="icon">📈</span>
+                    <span>Machine Telemetry</span>
+                </a>
+                <a href="#diagnostics" class="sidebar-menu-item" id="navDiagnostics">
+                    <span class="icon">⚙️</span>
+                    <span>AI Diagnostics</span>
+                </a>
+                <a href="#digital-twin" class="sidebar-menu-item" id="navExplorer">
+                    <span class="icon">❖</span>
+                    <span>Component Explorer</span>
+                    <span class="nav-badge">Digital Twin</span>
+                </a>
+                <a href="#maintenance" class="sidebar-menu-item" id="navPredictive">
+                    <span class="icon">🔧</span>
+                    <span>Predictive Maintenance</span>
+                </a>
+                <a href="#distributed" class="sidebar-menu-item" id="navDistributed">
+                    <span class="icon">🌐</span>
+                    <span>Distributed</span>
+                    <span class="nav-badge">Mandatory</span>
+                </a>
+            </div>
+
+            <!-- Group 3: Resource Exchange & Platform -->
+            <div class="sidebar-menu" style="border-top: 1px solid rgba(255,255,255,0.06);">
+                <div class="sidebar-menu-title">
+                    <span>Resource Platform</span>
+                </div>
+                <a href="/marketplace" class="sidebar-menu-item">
+                    <span class="icon">🛒</span>
+                    <span>Marketplace</span>
+                    <span class="nav-badge">B2B</span>
+                </a>
+                <a href="/listing" class="sidebar-menu-item">
+                    <span class="icon">➕</span>
+                    <span>Create Listing</span>
+                    <span class="nav-badge">New</span>
+                </a>
+                <a href="/messages" class="sidebar-menu-item">
+                    <span class="icon">💬</span>
+                    <span>Messages</span>
+                </a>
+                <a href="/analytics" class="sidebar-menu-item">
+                    <span class="icon">📊</span>
+                    <span>Analytics</span>
+                </a>
+                <a href="/profile" class="sidebar-menu-item">
+                    <span class="icon">👤</span>
+                    <span>Profile</span>
+                </a>
+            </div>
+
+            <!-- Sidebar Footer Stats -->
+            <div class="sidebar-stats" style="margin-top: auto;">
+                <div class="sidebar-stats-title">Impact Sync</div>
+                <div class="sidebar-stats-grid">
+                    <div class="sidebar-stat-item">
+                        <div class="sidebar-stat-value" id="statWaste">0</div>
+                        <div class="sidebar-stat-label">Tons Recovered</div>
+                    </div>
+                    <div class="sidebar-stat-item">
+                        <div class="sidebar-stat-value" id="statSavings">0</div>
+                        <div class="sidebar-stat-label">₹ Saved</div>
+                    </div>
+                    <div class="sidebar-stat-item">
+                        <div class="sidebar-stat-value" id="statCO2">0t</div>
+                        <div class="sidebar-stat-label">CO₂ Abated</div>
+                    </div>
+                    <div class="sidebar-stat-item">
+                        <div class="sidebar-stat-value" id="statMatches">0</div>
+                        <div class="sidebar-stat-label">AI Matches</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-menu" style="border-top: 1px solid rgba(255,255,255,0.06); padding: 8px 0;">
+                <a href="#" class="sidebar-menu-item" id="logoutBtn"><span class="icon">🚪</span> Logout Session</a>
+            </div>
+        </aside>
+
+        <!-- Main Content Pane -->
+        <main class="dashboard-main">
+            <!-- Top Command Header matching Screenshot 1 -->
+            <header class="dashboard-header">
+                <div class="header-left-branding">
+                    <button class="header-nav-toggle mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation">☰</button>
+                    <div class="sidebar-logo-icon" style="width: 34px; height: 34px; font-size: 18px;">🛡️</div>
+                    <div>
+                        <h1 class="header-brand-title">
+                            NIVAAR AI
+                            <span class="header-brand-badge">MULTIMODAL AI & TENG</span>
+                        </h1>
+                        <p class="header-brand-subtitle">Predict Failures. Prevent Disruptions.</p>
+                    </div>
+                </div>
+
+                <!-- Center Status Pills -->
+                <div class="header-center-pills">
+                    <div class="header-status-pill workers">
+                        <span>⚙️ Distributed Fleet:</span>
+                        <span class="pulse-dot-green"></span>
+                        <span class="active-count">2 Active Workers</span>
+                    </div>
+
+                    <div class="header-status-pill alerts">
+                        <span>⚠️ 17 Critical Alerts</span>
+                    </div>
+
+                    <a href="/listing" class="header-launch-btn">
+                        <span>▶ LAUNCH HACKATHON DEMO</span>
+                    </a>
+                </div>
+
+                <!-- Right Action Cluster -->
+                <div class="header-actions">
+                    <div class="header-search">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="form-input" placeholder="Search telemetry, sensors, materials..." id="globalSearch">
+                    </div>
+                    <button class="header-icon-btn" id="notificationBtn" title="Notifications">
+                        🔔<span class="notification-dot"></span>
+                    </button>
+                    <div class="header-user" id="userMenu">
+                        <div class="avatar" id="userAvatar" style="background:#17202f; color:#f97316; font-weight:bold;">U</div>
+                        <div class="header-user-info">
+                            <div class="header-user-name" id="userName">User</div>
+                            <div class="header-user-role" id="userRole">Operations Command</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Container -->
+            <div class="dashboard-content">
+
+                <!-- ══════════════════════════════════════════════════════════
+                     VIEW 1: OVERVIEW DASHBOARD (Screenshot 1)
+                     ══════════════════════════════════════════════════════════ -->
+                <div id="overviewDashboardView">
+                    <!-- Top Operational Resilience Command Banner -->
+                    <div class="command-banner">
+                        <div class="command-banner-content">
+                            <div class="command-banner-title">
+                                <span>Operational Resilience Command</span>
+                                <span class="command-pill-badge">DISRUPTION PREVENTION</span>
+                            </div>
+                            <p class="command-banner-desc">
+                                Continuous AI telemetry surveillance and distributed fault diagnostics safeguarding vital municipal, healthcare, manufacturing, and energy infrastructure against catastrophic operational downtime.
+                            </p>
+                        </div>
+                        <button class="command-action-btn" onclick="document.getElementById('navTelemetry').click()">
+                            <span>Upload Telemetry CSV</span>
+                            <span>↗</span>
+                        </button>
+                    </div>
+
+                    <!-- 8-Card KPI Matrix (Row 1 & Row 2 matching Screenshot 1) -->
+                    <div class="kpi-matrix">
+                        <!-- Card 1: Registered Fleet -->
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">
+                                <span>Registered Fleet</span>
+                                <span class="kpi-icon" style="color: #f97316;">☵</span>
+                            </div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" id="kpiFleetCount">8</span>
+                                <span class="kpi-status-tag green">100% Active</span>
+                            </div>
+                            <p class="kpi-subtext">Across 8 critical categories</p>
+                        </div>
+
+                        <!-- Card 2: Healthy State -->
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">
+                                <span>Healthy State</span>
+                                <span class="kpi-icon" style="color: #10b981;">🛡️</span>
+                            </div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" id="kpiHealthyCount">3</span>
+                                <span class="kpi-status-tag green">Nominal ISO</span>
+                            </div>
+                            <p class="kpi-subtext">Within baseline envelope</p>
+                        </div>
+
+                        <!-- Card 3: Requires Inspection -->
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">
+                                <span>Requires Inspection</span>
+                                <span class="kpi-icon" style="color: #f59e0b;">⚠️</span>
+                            </div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" id="kpiInspectionCount">1</span>
+                                <span class="kpi-status-tag amber">Drift Flagged</span>
+                            </div>
+                            <p class="kpi-subtext">Statistical anomalies active</p>
+                        </div>
+
+                        <!-- Card 4: Critical Incidents -->
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">
+                                <span>Critical Incidents</span>
+                                <span class="kpi-icon" style="color: #ef4444;">⛔</span>
+                            </div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" id="kpiCriticalCount">4</span>
+                                <span class="kpi-status-tag red">IMMEDIATE ACTION</span>
+                            </div>
+                            <p class="kpi-subtext">Hospital & Turbine alerts</p>
+                        </div>
+
+                        <!-- Card 5: Avg Fleet Health -->
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">
+                                <span>Avg Fleet Health</span>
+                                <span class="kpi-icon" style="color: #06b6d4;">〽️</span>
+                            </div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" id="kpiAvgHealth">67.5%</span>
+                                <span class="kpi-status-tag" style="color: #94a3b8; font-weight: normal; text-transform: none;">Weighted Mean</span>
+                            </div>
+                            <div class="health-progress-bar">
+                                <div class="health-progress-bar-fill" style="width: 67.5%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Card 6: Active AI Workers -->
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">
+                                <span>Active AI Workers</span>
+                                <span class="kpi-icon" style="color: #f97316;">⚙️</span>
+                            </div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number">2</span>
+                                <span class="kpi-status-tag" style="color: #94a3b8; font-weight: normal; text-transform: none;">Alpha / Beta</span>
+                            </div>
+                            <div class="sync-status-row">
+                                <span class="pulse-dot-green"></span>
+                                <span>Heartbeat Sync Active</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 7: Task Queue Status -->
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">
+                                <span>Task Queue Status</span>
+                                <span class="kpi-icon" style="color: #f97316;">🕒</span>
+                            </div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number">0</span>
+                                <span class="kpi-status-tag" style="color: #94a3b8; font-weight: normal; text-transform: none;">In-Flight / Queued</span>
+                            </div>
+                            <p class="kpi-subtext">16 total jobs executed</p>
+                        </div>
+
+                        <!-- Card 8: Maintenance Orders -->
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">
+                                <span>Maintenance Orders</span>
+                                <span class="kpi-icon" style="color: #f59e0b;">🔧</span>
+                            </div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number">3 Active</span>
+                                <span class="kpi-status-tag amber" style="text-transform: none;">Assigned</span>
+                            </div>
+                            <p class="kpi-subtext">Prioritized by AI risk score</p>
+                        </div>
+                    </div>
+
+                    <!-- Visualizations Row: Health Index Stream & Category Coverage Arc -->
+                    <div class="charts-dual-grid">
+                        <!-- Left Panel: Fleet Aggregate Health Index & Anomaly Stream -->
+                        <div class="chart-panel">
+                            <div class="chart-panel-header">
+                                <div class="chart-panel-title">
+                                    <span style="color: #f97316;">📈</span>
+                                    <span>Fleet Aggregate Health Index & Anomaly Stream</span>
+                                </div>
+                                <button class="chart-action-pill" id="liveReplayBtn">Live Replay Stream</button>
+                            </div>
+                            <p class="chart-panel-subtitle">Composite sensor reliability index calculated across monitored industrial assets</p>
+                            <div class="chart-canvas-wrap">
+                                <canvas id="fleetHealthChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Asset Category Coverage -->
+                        <div class="chart-panel">
+                            <div class="chart-panel-header">
+                                <div class="chart-panel-title">
+                                    <span style="color: #10b981;">☵</span>
+                                    <span>Asset Category Coverage</span>
+                                </div>
+                                <span class="chart-action-pill">8 Profiles</span>
+                            </div>
+                            <p class="chart-panel-subtitle">Sensor array distribution across asset types</p>
+                            <div class="arc-coverage-wrap">
+                                <canvas id="assetCoverageChart" style="max-height: 180px;"></canvas>
+                                <div class="arc-legend-list">
+                                    <div class="arc-legend-item"><span class="arc-legend-color" style="background:#f97316;"></span>Turbines</div>
+                                    <div class="arc-legend-item"><span class="arc-legend-color" style="background:#06b6d4;"></span>Pumps</div>
+                                    <div class="arc-legend-item"><span class="arc-legend-color" style="background:#eab308;"></span>Compressors</div>
+                                    <div class="arc-legend-item"><span class="arc-legend-color" style="background:#ec4899;"></span>Transformers</div>
+                                    <div class="arc-legend-item"><span class="arc-legend-color" style="background:#10b981;"></span>Generators</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platform AI Matching & Circular Exchange Data -->
+                    <div class="dashboard-grid dashboard-grid-main-sidebar">
+                        <div>
+                            <!-- AI Matches Section -->
+                            <div class="dashboard-section">
+                                <div class="dashboard-section-header">
+                                    <h3 class="dashboard-section-title">🤖 AI-Powered Symbiosis Matches for You</h3>
+                                    <div class="tabs-pills">
+                                        <button class="tab active" data-tab="buyers">Need Your Waste</button>
+                                        <button class="tab" data-tab="sellers">Produce What You Need</button>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content active" id="buyersTab">
+                                    <div class="match-grid" id="buyerMatches">
+                                        <div class="skeleton" style="height: 200px; border-radius: var(--radius-lg);"></div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-content" id="sellersTab">
+                                    <div class="match-grid" id="sellerMatches">
+                                        <div class="skeleton" style="height: 200px; border-radius: var(--radius-lg);"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Impact Calculator -->
+                            <div class="impact-card mb-6">
+                                <div class="impact-card-title">📊 Real-Time Environmental & Economic Ledger</div>
+                                <div class="impact-stats">
+                                    <div class="impact-stat">
+                                        <div class="impact-stat-icon">♻️</div>
+                                        <div class="impact-stat-value" id="impactDiverted">0</div>
+                                        <div class="impact-stat-label">Tons Diverted from Landfill</div>
+                                    </div>
+                                    <div class="impact-stat">
+                                        <div class="impact-stat-icon">💧</div>
+                                        <div class="impact-stat-value" id="impactWater">0</div>
+                                        <div class="impact-stat-label">Liters Water Saved</div>
+                                    </div>
+                                    <div class="impact-stat">
+                                        <div class="impact-stat-icon">⚡</div>
+                                        <div class="impact-stat-value" id="impactEnergy">0</div>
+                                        <div class="impact-stat-label">kWh Energy Saved</div>
+                                    </div>
+                                    <div class="impact-stat">
+                                        <div class="impact-stat-icon">🌳</div>
+                                        <div class="impact-stat-value" id="impactTrees">0</div>
+                                        <div class="impact-stat-label">Trees Equivalent</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Sidebar: Quick Actions & Activity Feed -->
+                        <div>
+                            <div class="quick-actions mb-6">
+                                <div class="quick-actions-title">Command Actions</div>
+                                <button class="quick-action-btn" onclick="location.href='/listing'">
+                                    <div class="icon">➕</div>
+                                    <div class="text">
+                                        <div class="title">Register Industrial Asset</div>
+                                        <div class="subtitle">Broadcast material or telemetry</div>
+                                    </div>
+                                </button>
+                                <button class="quick-action-btn" onclick="location.href='/marketplace'">
+                                    <div class="icon">🔍</div>
+                                    <div class="text">
+                                        <div class="title">Browse Exchange Feed</div>
+                                        <div class="subtitle">Discover verified industrial partners</div>
+                                    </div>
+                                </button>
+                                <button class="quick-action-btn" onclick="document.getElementById('navTelemetry').click()">
+                                    <div class="icon">📈</div>
+                                    <div class="text">
+                                        <div class="title">Machine Telemetry Stream</div>
+                                        <div class="subtitle">Real-time vibration & ISO envelope</div>
+                                    </div>
+                                </button>
+                                <button class="quick-action-btn" onclick="location.href='/analytics'">
+                                    <div class="icon">📊</div>
+                                    <div class="text">
+                                        <div class="title">Predictive Diagnostics</div>
+                                        <div class="subtitle">Track MTBF & anomaly scoring</div>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <!-- Activity Feed -->
+                            <div class="activity-feed">
+                                <div class="activity-feed-header">Operational Audit Stream</div>
+                                <div class="activity-feed-list" id="activityList">
+                                    <div class="activity-item">
+                                        <div class="activity-icon match">🎯</div>
+                                        <div class="activity-content">
+                                            <div class="activity-text"><strong>Security Gateway</strong> - Authenticated to Resilience Command</div>
+                                            <div class="activity-time">Just now</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden legacy bridge elements for matching engine compatibility -->
+                    <div style="display:none;">
+                        <span id="welcomeName">User</span>
+                        <span id="newMatchCount">0</span>
+                        <span id="totalListings">0</span>
+                        <span id="totalMatches">0</span>
+                        <span id="totalSavings">₹0</span>
+                        <span id="totalCO2">0t</span>
+                    </div>
+                </div>
+
+                <!-- ══════════════════════════════════════════════════════════
+                     VIEW 2: MACHINE TELEMETRY (Screenshot 2)
+                     ══════════════════════════════════════════════════════════ -->
+                <div id="machineTelemetryView" style="display: none;" class="telemetry-view-container">
+                    <div class="telemetry-toolbar">
+                        <div class="telemetry-title-cluster">
+                            <button class="telemetry-back-btn" id="telemetryBackBtn" title="Back to Overview">←</button>
+                            <div>
+                                <h2 class="telemetry-title">
+                                    Machine Telemetry
+                                    <span class="telemetry-tag-dash"></span>
+                                </h2>
+                                <span style="font-size: 11px; color: #64748b;">• • Asset Tag: TURBINE-GEN-04</span>
+                            </div>
+                            <span class="telemetry-sensor-badge">
+                                ((•)) VERIFIED PHYSICAL SENSOR
+                            </span>
+                        </div>
+
+                        <div class="telemetry-right-controls">
+                            <div class="telemetry-time-tabs">
+                                <button class="time-tab-btn" data-time="1h">1h</button>
+                                <button class="time-tab-btn" data-time="6h">6h</button>
+                                <button class="time-tab-btn active" data-time="24h">24h</button>
+                                <button class="time-tab-btn" data-time="7d">7d</button>
+                                <button class="time-tab-btn" data-time="all">all</button>
+                            </div>
+                            <button class="telemetry-pdf-btn" onclick="alert('Exporting ISO 10816 Telemetry Report PDF...')">
+                                <span>📥</span> Download PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4 Telemetry Metric Cards (Screenshot 2 Top Row) -->
+                    <div class="telemetry-metric-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">Health Index</div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" style="font-size: 24px;">%</span>
+                                <span class="kpi-status-tag amber">Degraded</span>
+                            </div>
+                            <p class="kpi-subtext">ISO 10816 Vibration Envelope</p>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">Vibration ISO Zone</div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" style="font-size: 24px; color: #f59e0b;">Zone B</span>
+                            </div>
+                            <p class="kpi-subtext">Fundamental: Hz</p>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">Telemetry Sampling</div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" style="font-size: 24px;">0</span>
+                                <span style="color: #94a3b8; font-size: 13px;">Samples</span>
+                            </div>
+                            <p class="kpi-subtext">Continuous 10s intervals</p>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-card-header">Detected Anomalies</div>
+                            <div class="kpi-value-row">
+                                <span class="kpi-number" style="font-size: 24px; color: #06b6d4;">0</span>
+                                <span style="color: #06b6d4; font-size: 13px;">Windows</span>
+                            </div>
+                            <p class="kpi-subtext">Isolation Forest evaluation</p>
+                        </div>
+                    </div>
+
+                    <!-- Vibration Amplitude Telemetry Chart (Screenshot 2 Main Chart) -->
+                    <div class="telemetry-chart-card">
+                        <div class="telemetry-chart-header">
+                            <div>
+                                <h3 class="telemetry-chart-title">
+                                    <span style="color: #f97316;">〽️</span>
+                                    <span>Vibration Amplitude Telemetry (X & Y Axis RMS)</span>
+                                </h3>
+                                <p class="telemetry-chart-subtitle">Continuous tri-axial accelerometer readings compared against ISO alarm boundaries</p>
+                            </div>
+                            <div class="telemetry-legend">
+                                <span class="telemetry-legend-item">
+                                    <span class="legend-line-orange">―</span> vibration X (mm/s)
+                                </span>
+                                <span class="telemetry-legend-item">
+                                    <span class="legend-line-teal">―</span> vibration Y (mm/s)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="chart-canvas-wrap" style="min-height: 380px;">
+                            <canvas id="telemetryRmsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+
+    <!-- Chatbot Widget (Themed Obsidian/Orange) -->
+    <div class="chatbot-widget">
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-header-avatar">🤖</div>
+                <div class="chatbot-header-info">
+                    <div class="chatbot-header-title">NIVAAR / Symbiosis Assistant</div>
+                    <div class="chatbot-header-status">● Core Online</div>
+                </div>
+                <button class="chatbot-close" id="closeChatbot">✕</button>
+            </div>
+            <div class="chatbot-messages" id="chatMessages">
+                <div class="chatbot-message">
+                    <div class="chatbot-message-avatar">🤖</div>
+                    <div class="chatbot-message-bubble">Operational Resilience AI online. I can assist with vibration diagnostics, material circular exchanges, and anomaly thresholds. How can I help?</div>
+                </div>
+            </div>
+            <div class="chatbot-suggestions" id="chatSuggestions">
+                <button class="chatbot-suggestion" data-msg="Inspect critical anomalies">Inspect anomalies</button>
+                <button class="chatbot-suggestion" data-msg="Find matches for my materials">Circular matches</button>
+                <button class="chatbot-suggestion" data-msg="Run vibration telemetry check">Vibration check</button>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Command prompt or inquiry...">
+                <button id="sendChatBtn">➤</button>
+            </div>
+        </div>
+        <button class="chatbot-toggle" id="chatbotToggle" title="Open AI Assistant">💬</button>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase Compat SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/matching.js"></script>
+
+    <script>
+        // Check auth with graceful fallback for demo preview
+        let user = null;
+        try {
+            if (typeof requireAuth === 'function') {
+                requireAuth();
+                user = getCurrentUser();
+            }
+        } catch (e) {
+            console.log('Running in local/preview state');
+        }
+        if (!user) {
+            user = { id: 'demo_user', companyName: 'NIVAAR Infrastructure', industryType: 'Smart Manufacturing & Energy' };
+        }
+
+        let unsubscribeMatches = null;
+
+        // Populate User Identity
+        const userNameElem = document.getElementById('userName');
+        const welcomeNameElem = document.getElementById('welcomeName');
+        const userAvatarElem = document.getElementById('userAvatar');
+        const userRoleElem = document.getElementById('userRole');
+
+        if (userNameElem) userNameElem.textContent = user.companyName || 'Operator';
+        if (welcomeNameElem) welcomeNameElem.textContent = (user.companyName || 'Operator').split(' ')[0];
+        if (userAvatarElem) userAvatarElem.textContent = (user.companyName || 'O')[0].toUpperCase();
+        if (userRoleElem) userRoleElem.textContent = user.industryType || 'Operations Command';
+
+        // View Toggling: Overview Dashboard vs Machine Telemetry (Screenshot 1 vs Screenshot 2)
+        const overviewDashboardView = document.getElementById('overviewDashboardView');
+        const machineTelemetryView = document.getElementById('machineTelemetryView');
+        const navOverview = document.getElementById('navOverview');
+        const navTelemetry = document.getElementById('navTelemetry');
+        const telemetryBackBtn = document.getElementById('telemetryBackBtn');
+
+        function showOverview() {
+            overviewDashboardView.style.display = 'block';
+            machineTelemetryView.style.display = 'none';
+            navOverview.classList.add('active');
+            navTelemetry.classList.remove('active');
+        }
+
+        function showTelemetry() {
+            overviewDashboardView.style.display = 'none';
+            machineTelemetryView.style.display = 'block';
+            navOverview.classList.remove('active');
+            navTelemetry.classList.add('active');
+            initTelemetryChart();
+        }
+
+        if (navOverview) navOverview.addEventListener('click', showOverview);
+        if (navTelemetry) navTelemetry.addEventListener('click', showTelemetry);
+        if (telemetryBackBtn) telemetryBackBtn.addEventListener('click', showOverview);
+
+        // Render match card HTML (Preserved exact signature & functionality)
+        function renderMatchCard(match, type) {
+            const icon = typeof MatchingEngine !== 'undefined' && MatchingEngine.getCategoryIcon 
+                ? MatchingEngine.getCategoryIcon(MatchingEngine.getMaterialCategory(match.material)) 
+                : '📦';
+            const scoreClass = match.score >= 80 ? 'high' : match.score >= 60 ? 'medium' : 'low';
+            const labelText = type === 'buyer' ? 'They need' : 'They produce';
+            const qtyLabel = type === 'buyer' ? 'They need' : 'Available';
+            const qtyValue = type === 'buyer' ? match.theyNeed : match.theyProduce;
+
+            return `
+                <div class="match-card">
+                    <div class="match-card-header">
+                        <div class="match-card-company">
+                            <div class="avatar">${match.company?.[0] || '?'}</div>
+                            <div>
+                                <div class="match-card-company-name">${match.company || 'Industrial Partner'}</div>
+                                <div class="match-card-company-industry">${match.industry || 'Manufacturing'}</div>
+                            </div>
+                        </div>
+                        <div class="match-score-badge ${scoreClass}">
+                            <div class="match-score-value">${match.score}%</div>
+                            <div class="match-score-label">Match</div>
+                        </div>
+                    </div>
+                    <div class="match-card-body">
+                        <div class="match-card-material">
+                            <div class="match-card-material-icon">${icon}</div>
+                            <div class="match-card-material-info">
+                                <div class="match-card-material-type">${labelText}</div>
+                                <div class="match-card-material-name">${match.material || 'Material Resource'}</div>
+                            </div>
+                        </div>
+                        <div class="match-card-details">
+                            <div class="match-card-detail">
+                                <div class="match-card-detail-label">${qtyLabel}</div>
+                                <div class="match-card-detail-value">${qtyValue || '-'} ${match.unit || 'tons'}/mo</div>
+                            </div>
+                            <div class="match-card-detail">
+                                <div class="match-card-detail-label">Location</div>
+                                <div class="match-card-detail-value">${match.location || 'Hub Zone'}</div>
+                            </div>
+                        </div>
+                        ${match.factors?.length ? `<div style="margin-top: var(--space-2); font-size: 11px; color: #94a3b8;">✓ ${match.factors.slice(0, 2).join(' • ')}</div>` : ''}
+                    </div>
+                    <div class="match-card-footer">
+                        <button class="btn btn-secondary btn-sm" onclick="alert('Inspection verified. Sensor link healthy.')">View Diagnostics</button>
+                        <button class="btn btn-primary btn-sm" onclick="startConversation('${match.companyId || ''}')">Connect</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render empty state
+        function renderEmptyState(type) {
+            const message = type === 'buyer'
+                ? 'No factories currently need your secondary resources.'
+                : 'No factories currently produce materials matching your specs.';
+
+            return `
+                <div style="text-align: center; padding: 36px; background: #0e131d; border: 1px dashed rgba(255,255,255,0.1); border-radius: var(--radius-lg);">
+                    <div style="font-size: 38px; margin-bottom: 12px;">🛡️</div>
+                    <h4 style="margin-bottom: 6px; color: #ffffff;">Telemetry Standby</h4>
+                    <p style="color: #94a3b8; font-size: 13px; margin-bottom: 14px;">${message}</p>
+                    <a href="/onboarding" class="btn btn-primary btn-sm">Complete Asset Matrix</a>
+                </div>
+            `;
+        }
+
+        // Load and display matches from Firebase
+        async function loadMatches() {
+            const buyerGrid = document.getElementById('buyerMatches');
+            const sellerGrid = document.getElementById('sellerMatches');
+            if (!buyerGrid || !sellerGrid) return;
+
+            try {
+                if (typeof MatchingEngine !== 'undefined' && MatchingEngine.findMatchesForUser) {
+                    const { buyerMatches, sellerMatches } = await MatchingEngine.findMatchesForUser(user.id);
+
+                    if (buyerMatches && buyerMatches.length > 0) {
+                        buyerGrid.innerHTML = buyerMatches.slice(0, 6).map(m => renderMatchCard(m, 'buyer')).join('');
+                    } else {
+                        buyerGrid.innerHTML = renderEmptyState('buyer');
+                    }
+
+                    if (sellerMatches && sellerMatches.length > 0) {
+                        sellerGrid.innerHTML = sellerMatches.slice(0, 6).map(m => renderMatchCard(m, 'seller')).join('');
+                    } else {
+                        sellerGrid.innerHTML = renderEmptyState('seller');
+                    }
+
+                    const totalMatches = (buyerMatches?.length || 0) + (sellerMatches?.length || 0);
+                    const newMatchCount = document.getElementById('newMatchCount');
+                    const statMatches = document.getElementById('statMatches');
+                    if (newMatchCount) newMatchCount.textContent = totalMatches;
+                    if (statMatches) statMatches.textContent = totalMatches;
+                }
+            } catch (error) {
+                console.error('Matches pipeline standby:', error);
+                buyerGrid.innerHTML = renderEmptyState('buyer');
+                sellerGrid.innerHTML = renderEmptyState('seller');
+            }
+        }
+
+        function startConversation(companyId) {
+            if (companyId) sessionStorage.setItem('startConversationWith', companyId);
+            window.location.href = '/messages';
+        }
+
+        // Initialize Operational Charts
+        let fleetChartInstance = null;
+        let coverageChartInstance = null;
+        let telemetryChartInstance = null;
+
+        function initOverviewCharts() {
+            const fleetCanvas = document.getElementById('fleetHealthChart');
+            if (fleetCanvas && typeof Chart !== 'undefined') {
+                const ctx = fleetCanvas.getContext('2d');
+                
+                // Vibrant Orange Gradient Fill
+                const orangeGradient = ctx.createLinearGradient(0, 0, 0, 240);
+                orangeGradient.addColorStop(0, 'rgba(249, 115, 22, 0.35)');
+                orangeGradient.addColorStop(1, 'rgba(249, 115, 22, 0.0)');
+
+                fleetChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['00:00', '03:00', '06:00', '09:00', '12:00', '15:00', '18:00', '21:00', 'Now'],
+                        datasets: [
+                            {
+                                label: 'Health Index',
+                                data: [98, 97, 95, 96, 92, 88, 79, 72, 67.5],
+                                borderColor: '#f97316',
+                                backgroundColor: orangeGradient,
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4,
+                                pointBackgroundColor: '#ffffff',
+                                pointBorderColor: '#f97316',
+                                pointRadius: [0, 0, 0, 0, 0, 0, 0, 0, 5],
+                                pointHoverRadius: 7
+                            },
+                            {
+                                label: 'Baseline Envelope',
+                                data: [85, 85, 85, 85, 85, 85, 85, 85, 85],
+                                borderColor: 'rgba(6, 182, 212, 0.5)',
+                                borderDash: [4, 4],
+                                borderWidth: 1.5,
+                                fill: false,
+                                tension: 0,
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#111622',
+                                titleColor: '#ffffff',
+                                bodyColor: '#cbd5e1',
+                                borderColor: 'rgba(249, 115, 22, 0.4)',
+                                borderWidth: 1,
+                                padding: 10
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: 'rgba(255, 255, 255, 0.04)' },
+                                ticks: { color: '#64748b', font: { size: 11 } }
+                            },
+                            y: {
+                                min: 50,
+                                max: 100,
+                                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                                ticks: { color: '#64748b', font: { size: 11 } }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const coverageCanvas = document.getElementById('assetCoverageChart');
+            if (coverageCanvas && typeof Chart !== 'undefined') {
+                const ctx = coverageCanvas.getContext('2d');
+                coverageChartInstance = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Turbines', 'Pumps', 'Compressors', 'Transformers', 'Generators'],
+                        datasets: [{
+                            data: [32, 24, 18, 14, 12],
+                            backgroundColor: ['#f97316', '#06b6d4', '#eab308', '#ec4899', '#10b981'],
+                            borderColor: '#111622',
+                            borderWidth: 3,
+                            hoverOffset: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '72%',
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+        }
+
+        function initTelemetryChart() {
+            const telemetryCanvas = document.getElementById('telemetryRmsChart');
+            if (telemetryCanvas && typeof Chart !== 'undefined') {
+                if (telemetryChartInstance) telemetryChartInstance.destroy();
+                const ctx = telemetryCanvas.getContext('2d');
+
+                const timeLabels = Array.from({ length: 30 }, (_, i) => `${i * 10}s`);
+                const vibX = [1.2, 1.4, 1.3, 1.5, 1.8, 1.7, 2.1, 2.4, 2.2, 2.8, 3.1, 2.9, 3.4, 3.2, 3.0, 3.5, 3.8, 4.1, 3.9, 3.7, 3.5, 3.4, 3.2, 3.1, 2.9, 2.7, 2.5, 2.4, 2.3, 2.2];
+                const vibY = [0.8, 0.9, 0.8, 1.0, 1.1, 1.2, 1.3, 1.2, 1.4, 1.5, 1.7, 1.6, 1.8, 1.9, 1.7, 1.8, 2.0, 2.1, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.1, 1.0, 0.9];
+
+                telemetryChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: timeLabels,
+                        datasets: [
+                            {
+                                label: 'vibration X (mm/s)',
+                                data: vibX,
+                                borderColor: '#f97316',
+                                backgroundColor: 'rgba(249, 115, 22, 0.05)',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                pointRadius: 0,
+                                fill: true
+                            },
+                            {
+                                label: 'vibration Y (mm/s)',
+                                data: vibY,
+                                borderColor: '#06b6d4',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                pointRadius: 0,
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: 'rgba(255, 255, 255, 0.04)' },
+                                ticks: { color: '#64748b' }
+                            },
+                            y: {
+                                grid: { color: 'rgba(255, 255, 255, 0.04)' },
+                                ticks: { color: '#64748b' }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize matching & charts on DOM ready
+        window.addEventListener('DOMContentLoaded', () => {
+            loadMatches();
+            initOverviewCharts();
+        });
+
+        // Time Filter Tabs on Telemetry
+        document.querySelectorAll('.telemetry-time-tabs .time-tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.telemetry-time-tabs .time-tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Matching Engine Tabs
+        document.querySelectorAll('.tabs-pills .tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.tabs-pills .tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                const target = document.getElementById(this.dataset.tab + 'Tab');
+                if (target) target.classList.add('active');
+            });
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        if (mobileMenuBtn && sidebar && mobileOverlay) {
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+                mobileOverlay.classList.toggle('active');
+            });
+            mobileOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                mobileOverlay.classList.remove('active');
+            });
+        }
+
+        // Chatbot Handling
+        const chatbotWindow = document.getElementById('chatbotWindow');
+        const chatbotToggle = document.getElementById('chatbotToggle');
+        const closeChatbot = document.getElementById('closeChatbot');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendChatBtn = document.getElementById('sendChatBtn');
+
+        if (chatbotToggle) chatbotToggle.addEventListener('click', () => chatbotWindow.classList.toggle('active'));
+        if (closeChatbot) closeChatbot.addEventListener('click', () => chatbotWindow.classList.remove('active'));
+
+        document.querySelectorAll('.chatbot-suggestion').forEach(btn => {
+            btn.addEventListener('click', function () {
+                sendChatMessage(this.dataset.msg);
+            });
+        });
+
+        if (sendChatBtn) {
+            sendChatBtn.addEventListener('click', () => {
+                if (chatInput.value.trim()) {
+                    sendChatMessage(chatInput.value);
+                    chatInput.value = '';
+                }
+            });
+        }
+
+        if (chatInput) {
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && chatInput.value.trim()) {
+                    sendChatMessage(chatInput.value);
+                    chatInput.value = '';
+                }
+            });
+        }
+
+        async function sendChatMessage(text) {
+            chatMessages.innerHTML += `<div class="chatbot-message user"><div class="chatbot-message-avatar">👤</div><div class="chatbot-message-bubble">${text}</div></div>`;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                let reply = 'Operational Resilience AI: Node status healthy. 2 workers actively streaming telemetry. Zero high-severity threshold breaches in last cycle.';
+                const lower = text.toLowerCase();
+                if (lower.includes('anomal') || lower.includes('critical')) {
+                    reply = '17 historical alerts recorded. Current drift flagged on Turbine Generator 04 fundamental frequency. Vibration X RMS currently 2.2 mm/s (Zone B).';
+                } else if (lower.includes('match') || lower.includes('circular')) {
+                    reply = 'Circular matching engine analyzed 8 category profiles. Active partner exchanges available in the Resource Platform tab.';
+                } else if (lower.includes('vibrat') || lower.includes('check')) {
+                    reply = 'Vibration amplitude telemetry stable within ISO 10816 Zone B baseline envelope.';
+                }
+                chatMessages.innerHTML += `<div class="chatbot-message"><div class="chatbot-message-avatar">🤖</div><div class="chatbot-message-bubble">${reply}</div></div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 600);
+        }
+
+        // Logout
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (typeof logout === 'function') logout();
+                else window.location.href = '/login';
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Listing - Symbiosis.ai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar" id="sidebar">
+            <div class="sidebar-logo"><a href="/"
+                    style="display:flex;align-items:center;gap:var(--space-2);text-decoration:none;">
+                    <div style="font-size:28px;">♻️</div><span class="sidebar-logo-text">Symbiosis.ai</span>
+                </a></div>
+            <div class="sidebar-menu">
+                <a href="/dashboard" class="sidebar-menu-item"><span class="icon">🏠</span> Dashboard</a>
+                <a href="/marketplace" class="sidebar-menu-item"><span class="icon">🛒</span> Marketplace</a>
+                <a href="/listing" class="sidebar-menu-item active"><span class="icon">➕</span> Create Listing</a>
+                <a href="/messages" class="sidebar-menu-item"><span class="icon">💬</span> Messages</a>
+                <a href="/analytics" class="sidebar-menu-item"><span class="icon">📊</span> Analytics</a>
+                <a href="/profile" class="sidebar-menu-item"><span class="icon">👤</span> Profile</a>
+            </div>
+            <div class="sidebar-menu"
+                style="margin-top:auto;padding-top:var(--space-4);border-top:1px solid var(--border-color-light);">
+                <a href="#" class="sidebar-menu-item" id="logoutBtn"><span class="icon">🚪</span> Logout</a>
+            </div>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <button class="mobile-menu-toggle" id="mobileMenuBtn"><span></span></button>
+                <h2 style="font-size:var(--text-xl);font-weight:var(--font-semibold);">➕ Create New Listing</h2>
+                <div class="header-actions">
+                    <div class="header-user">
+                        <div class="avatar" id="userAvatar">U</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <div style="max-width:800px;margin:0 auto;">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="listingForm">
+                                <!-- Listing Type -->
+                                <div class="form-section">
+                                    <h3 class="form-section-title">What do you want to list?</h3>
+                                    <div
+                                        style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-top:var(--space-4);">
+                                        <label class="form-check-card"
+                                            style="padding:var(--space-6);text-align:center;cursor:pointer;">
+                                            <input type="radio" name="listingType" value="waste" checked
+                                                style="display:none;">
+                                            <div style="font-size:48px;margin-bottom:var(--space-3);">🏭</div>
+                                            <div style="font-weight:var(--font-semibold);margin-bottom:var(--space-1);">
+                                                Waste Material</div>
+                                            <div style="font-size:var(--text-sm);color:var(--neutral-600);">I have
+                                                waste/byproduct to sell or exchange</div>
+                                        </label>
+                                        <label class="form-check-card"
+                                            style="padding:var(--space-6);text-align:center;cursor:pointer;">
+                                            <input type="radio" name="listingType" value="requirement"
+                                                style="display:none;">
+                                            <div style="font-size:48px;margin-bottom:var(--space-3);">📋</div>
+                                            <div style="font-weight:var(--font-semibold);margin-bottom:var(--space-1);">
+                                                Material Requirement</div>
+                                            <div style="font-size:var(--text-sm);color:var(--neutral-600);">I need raw
+                                                materials for my factory</div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Material Details -->
+                                <div class="form-section">
+                                    <h3 class="form-section-title">Material Details</h3>
+                                    <div class="form-row form-row-2">
+                                        <div class="form-group"><label class="form-label required">Material
+                                                Category</label><select class="form-select" id="category" required>
+                                                <option value="">Select category</option>
+                                                <option value="metal">Metal Waste</option>
+                                                <option value="plastic">Plastic Waste</option>
+                                                <option value="construction">Construction Waste</option>
+                                                <option value="organic">Organic Waste</option>
+                                                <option value="chemical">Chemical Waste</option>
+                                                <option value="textile">Textile Waste</option>
+                                                <option value="paper">Paper Waste</option>
+                                                <option value="electronic">Electronic Waste</option>
+                                            </select></div>
+                                        <div class="form-group"><label class="form-label required">Material
+                                                Type</label><select class="form-select" id="materialType" required>
+                                                <option value="">Select type</option>
+                                            </select></div>
+                                    </div>
+                                    <div class="form-group"><label class="form-label required">Title</label><input
+                                            type="text" class="form-input" id="title"
+                                            placeholder="e.g., High-Grade Fly Ash from Thermal Plant" required
+                                            maxlength="100"></div>
+                                    <div class="form-group"><label class="form-label">Description</label><textarea
+                                            class="form-textarea" id="description" rows="4"
+                                            placeholder="Describe the material, its source, composition, and any special characteristics"
+                                            maxlength="1000"></textarea>
+                                        <div class="char-counter"><span id="descCount">0</span>/1000</div>
+                                    </div>
+                                </div>
+
+                                <!-- Quantity & Quality -->
+                                <div class="form-section">
+                                    <h3 class="form-section-title">Quantity & Quality</h3>
+                                    <div class="form-row form-row-3">
+                                        <div class="form-group"><label
+                                                class="form-label required">Quantity</label><input type="number"
+                                                class="form-input" id="quantity" placeholder="0" required min="1"></div>
+                                        <div class="form-group"><label class="form-label">Unit</label><select
+                                                class="form-select" id="unit">
+                                                <option value="ton">Metric Tons</option>
+                                                <option value="kg">Kilograms</option>
+                                                <option value="liter">Liters</option>
+                                                <option value="m3">Cubic Meters</option>
+                                            </select></div>
+                                        <div class="form-group"><label class="form-label">Availability</label><select
+                                                class="form-select" id="availability">
+                                                <option value="continuous">Continuous</option>
+                                                <option value="monthly">Monthly</option>
+                                                <option value="one-time">One-time</option>
+                                                <option value="seasonal">Seasonal</option>
+                                            </select></div>
+                                    </div>
+                                    <div class="form-row form-row-2">
+                                        <div class="form-group"><label class="form-label">Purity %</label><input
+                                                type="range" class="form-range" id="purity" min="0" max="100"
+                                                value="80">
+                                            <div
+                                                style="display:flex;justify-content:space-between;font-size:var(--text-sm);color:var(--neutral-500);">
+                                                <span>0%</span><span id="purityValue">80%</span><span>100%</span></div>
+                                        </div>
+                                        <div class="form-group"><label class="form-label">Moisture %</label><input
+                                                type="range" class="form-range" id="moisture" min="0" max="100"
+                                                value="10">
+                                            <div
+                                                style="display:flex;justify-content:space-between;font-size:var(--text-sm);color:var(--neutral-500);">
+                                                <span>0%</span><span id="moistureValue">10%</span><span>100%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"><label class="form-label">Hazardous
+                                            Classification</label><select class="form-select" id="hazardous">
+                                            <option value="non-hazardous">Non-Hazardous</option>
+                                            <option value="hazardous">Hazardous (requires special handling)</option>
+                                            <option value="unknown">Unknown</option>
+                                        </select></div>
+                                </div>
+
+                                <!-- Pricing -->
+                                <div class="form-section">
+                                    <h3 class="form-section-title">Pricing</h3>
+                                    <div class="form-group"><label class="form-label">Transaction Type</label>
+                                        <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;">
+                                            <label class="form-check"><input type="checkbox" class="form-check-input"
+                                                    name="transactionType" value="sell" checked><span
+                                                    class="form-check-label">💰 Sell</span></label>
+                                            <label class="form-check"><input type="checkbox" class="form-check-input"
+                                                    name="transactionType" value="exchange"><span
+                                                    class="form-check-label">🔄 Exchange</span></label>
+                                            <label class="form-check"><input type="checkbox" class="form-check-input"
+                                                    name="transactionType" value="free"><span
+                                                    class="form-check-label">🎁 Free (pickup at source)</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row form-row-3" id="priceRow">
+                                        <div class="form-group"><label class="form-label">Price (₹)</label><input
+                                                type="number" class="form-input" id="price" placeholder="0"></div>
+                                        <div class="form-group"><label class="form-label">Price Unit</label><select
+                                                class="form-select" id="priceUnit">
+                                                <option value="per ton">per Ton</option>
+                                                <option value="per kg">per Kg</option>
+                                                <option value="total">Total (fixed)</option>
+                                            </select></div>
+                                        <div class="form-group"><label class="form-label">Price Type</label><select
+                                                class="form-select" id="priceType">
+                                                <option value="negotiable">Negotiable</option>
+                                                <option value="fixed">Fixed</option>
+                                                <option value="auction">Best Offer/Auction</option>
+                                            </select></div>
+                                    </div>
+                                </div>
+
+                                <!-- Images -->
+                                <div class="form-section">
+                                    <h3 class="form-section-title">Images (Optional)</h3>
+                                    <div class="file-upload"><input type="file" id="images" class="file-upload-input"
+                                            accept="image/*" multiple><label for="images" class="file-upload-zone">
+                                            <div class="file-upload-icon">📷</div>
+                                            <div class="file-upload-text">Click to upload images</div>
+                                            <div class="file-upload-hint">JPG, PNG up to 5MB each (max 5 images)</div>
+                                        </label></div>
+                                </div>
+
+                                <!-- Submit -->
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-ghost" onclick="history.back()">Cancel</button>
+                                    <button type="button" class="btn btn-outline" id="saveDraftBtn">💾 Save as
+                                        Draft</button>
+                                    <button type="submit" class="btn btn-primary btn-lg" id="publishBtn">🚀 Publish
+                                        Listing</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        if (!requireAuth()) throw new Error('Not authenticated');
+        const user = getCurrentUser();
+        document.getElementById('userAvatar').textContent = (user.companyName || 'U')[0].toUpperCase();
+
+        const materialTypes = {
+            metal: ['Ferrous Scrap (Iron/Steel)', 'Non-ferrous Scrap (Aluminum)', 'Non-ferrous Scrap (Copper)', 'Slag (Steel/Iron)', 'Metal Turnings'],
+            plastic: ['PET Bottles/Scrap', 'HDPE Scrap', 'LDPE Film', 'PP Scrap', 'PVC Scrap', 'Mixed Plastic'],
+            construction: ['Fly Ash', 'Bottom Ash', 'Gypsum', 'Cement Kiln Dust', 'Demolished Concrete', 'Brick Waste'],
+            organic: ['Food Processing Waste', 'Agricultural Residue', 'Bagasse', 'Rice Husk', 'Corn Cob', 'Press Mud'],
+            chemical: ['Chemical Sludge', 'Spent Catalyst', 'Acid/Alkali Byproducts', 'Glycerin', 'Tar'],
+            textile: ['Cotton Fabric Scraps', 'Synthetic Fabric Scraps', 'Yarn Waste', 'Cutting Waste'],
+            paper: ['Cardboard Waste', 'Office Paper Waste', 'Packaging Paper'],
+            electronic: ['E-waste Components', 'Circuit Board Scrap', 'Battery Scrap']
+        };
+
+        document.getElementById('category').addEventListener('change', function () {
+            const typeSelect = document.getElementById('materialType');
+            typeSelect.innerHTML = '<option value="">Select type</option>';
+            if (this.value && materialTypes[this.value]) {
+                materialTypes[this.value].forEach(t => typeSelect.innerHTML += `<option value="${t}">${t}</option>`);
+            }
+        });
+
+        document.getElementById('purity').addEventListener('input', function () { document.getElementById('purityValue').textContent = this.value + '%'; });
+        document.getElementById('moisture').addEventListener('input', function () { document.getElementById('moistureValue').textContent = this.value + '%'; });
+        document.getElementById('description').addEventListener('input', function () { document.getElementById('descCount').textContent = this.value.length; });
+
+        document.querySelectorAll('[name="listingType"]').forEach(r => {
+            r.addEventListener('change', function () {
+                document.querySelectorAll('.form-check-card').forEach(c => c.style.borderColor = 'var(--border-color)');
+                this.closest('.form-check-card').style.borderColor = 'var(--primary-500)';
+            });
+        });
+
+        document.getElementById('listingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('publishBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner spinner-sm"></span> Publishing...';
+
+            const listing = {
+                type: document.querySelector('[name="listingType"]:checked').value,
+                category: document.getElementById('category').value,
+                materialType: document.getElementById('materialType').value,
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                quantity: document.getElementById('quantity').value,
+                unit: document.getElementById('unit').value,
+                availability: document.getElementById('availability').value,
+                quality: { purity: document.getElementById('purity').value, moisture: document.getElementById('moisture').value },
+                hazardous: document.getElementById('hazardous').value,
+                pricing: { amount: document.getElementById('price').value, unit: document.getElementById('priceUnit').value, type: document.getElementById('priceType').value },
+                transactionTypes: [...document.querySelectorAll('[name="transactionType"]:checked')].map(c => c.value),
+                companyId: user.id,
+                status: 'active',
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                await dbOperations.push('listings', listing);
+                showToast('🎉 Listing published successfully!', 'success');
+                setTimeout(() => window.location.href = '/dashboard', 1500);
+            } catch (error) {
+                showToast('Failed to publish. Please try again.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '🚀 Publish Listing';
+            }
+        });
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('mobileOverlay').classList.toggle('active'); });
+        document.getElementById('mobileOverlay').addEventListener('click', () => { document.getElementById('sidebar').classList.remove('active'); document.getElementById('mobileOverlay').classList.remove('active'); });
+        document.getElementById('logoutBtn').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `<span>${message}</span><button class="toast-close" onclick="this.parentElement.remove()">✕</button>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+    </script>
+</body>
+
+</html>

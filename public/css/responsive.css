@@ -1,0 +1,607 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   SYMBIOSIS.AI - Responsive Styles
+   Mobile-first responsive design breakpoints
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────
+   Tablet (max-width: 1024px)
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+    :root {
+        --sidebar-width: 240px;
+    }
+
+    .dashboard-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid-main-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-row-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header-search {
+        width: 300px;
+    }
+
+    .match-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Mobile Landscape / Small Tablet (max-width: 768px)
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+
+    /* Dashboard Layout */
+    .dashboard-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .dashboard-sidebar.active {
+        transform: translateX(0);
+    }
+
+    .dashboard-main {
+        margin-left: 0;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: var(--neutral-100);
+        border: none;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+    }
+
+    .mobile-menu-toggle span {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background-color: var(--neutral-700);
+        position: relative;
+    }
+
+    .mobile-menu-toggle span::before,
+    .mobile-menu-toggle span::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 2px;
+        background-color: var(--neutral-700);
+        left: 0;
+    }
+
+    .mobile-menu-toggle span::before {
+        top: -6px;
+    }
+
+    .mobile-menu-toggle span::after {
+        top: 6px;
+    }
+
+    /* Header */
+    .header-search {
+        display: none;
+    }
+
+    .header-user-info {
+        display: none;
+    }
+
+    .dashboard-header {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    /* Content */
+    .dashboard-content {
+        padding: var(--space-4);
+    }
+
+    /* Grids */
+    .dashboard-grid-4,
+    .dashboard-grid-3,
+    .dashboard-grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row-4,
+    .form-row-3,
+    .form-row-2 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Cards */
+    .match-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .match-card-details {
+        grid-template-columns: 1fr;
+    }
+
+    /* Impact */
+    .impact-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+    }
+
+    .impact-stat-value {
+        font-size: var(--text-2xl);
+    }
+
+    /* Tables */
+    .table-container {
+        overflow-x: auto;
+    }
+
+    /* Navbar */
+    .navbar-nav {
+        display: none;
+    }
+
+    .navbar-toggle {
+        display: flex;
+    }
+
+    /* Modal */
+    .modal {
+        max-width: calc(100% - var(--space-8));
+        max-height: 80vh;
+    }
+
+    .modal-lg,
+    .modal-xl {
+        max-width: calc(100% - var(--space-8));
+    }
+
+    /* Chatbot */
+    .chatbot-window {
+        width: calc(100vw - var(--space-8));
+        right: calc(-50vw + 50% + var(--space-4));
+    }
+
+    /* Typography */
+    h1 {
+        font-size: var(--text-4xl);
+    }
+
+    h2 {
+        font-size: var(--text-3xl);
+    }
+
+    h3 {
+        font-size: var(--text-2xl);
+    }
+
+    h4 {
+        font-size: var(--text-xl);
+    }
+
+    /* Hero adjustments */
+    .hero-title {
+        font-size: var(--text-4xl);
+    }
+
+    /* Step Progress */
+    .step-progress {
+        flex-wrap: wrap;
+        gap: var(--space-4);
+    }
+
+    .step-progress::before {
+        display: none;
+    }
+
+    .step {
+        flex: 1 1 calc(33.33% - var(--space-4));
+    }
+
+    .step-label {
+        font-size: var(--text-xs);
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Mobile Portrait (max-width: 480px)
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+
+    /* Base */
+    html {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 0 var(--space-3);
+    }
+
+    /* Header */
+    .dashboard-header {
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .header-actions {
+        gap: var(--space-2);
+    }
+
+    .header-icon-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    /* Content */
+    .dashboard-content {
+        padding: var(--space-3);
+    }
+
+    /* Cards */
+    .card-body,
+    .card-header {
+        padding: var(--space-4);
+    }
+
+    .match-card-header,
+    .match-card-body {
+        padding: var(--space-4);
+    }
+
+    .match-card-footer {
+        padding: var(--space-3) var(--space-4);
+        flex-direction: column;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .btn-lg {
+        padding: var(--space-3) var(--space-6);
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+
+    /* Forms */
+    .form-wizard-nav {
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .form-wizard-nav .btn {
+        width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    /* Step Progress on mobile */
+    .step {
+        flex: 1 1 calc(50% - var(--space-4));
+    }
+
+    .step-circle {
+        width: 32px;
+        height: 32px;
+        font-size: var(--text-sm);
+    }
+
+    /* Impact */
+    .impact-card {
+        padding: var(--space-4);
+    }
+
+    .impact-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-3);
+    }
+
+    .impact-stat-value {
+        font-size: var(--text-xl);
+    }
+
+    /* Sidebar Stats */
+    .sidebar-stats {
+        margin: var(--space-3);
+        padding: var(--space-3);
+    }
+
+    .sidebar-stats-grid {
+        gap: var(--space-2);
+    }
+
+    /* Quick Actions */
+    .quick-action-btn {
+        padding: var(--space-3);
+    }
+
+    .quick-action-btn .icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    /* Avatar */
+    .avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+    .avatar-lg {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* Tabs */
+    .tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab {
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-sm);
+    }
+
+    /* Alert */
+    .alert {
+        padding: var(--space-3);
+    }
+
+    /* Toast */
+    .toast-container {
+        left: var(--space-3);
+        right: var(--space-3);
+        top: var(--space-3);
+    }
+
+    .toast {
+        min-width: auto;
+        max-width: 100%;
+    }
+
+    /* Chatbot */
+    .chatbot-widget {
+        bottom: var(--space-4);
+        right: var(--space-4);
+    }
+
+    .chatbot-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .chatbot-window {
+        bottom: 70px;
+        width: calc(100vw - var(--space-6));
+        max-height: 70vh;
+    }
+
+    .chatbot-messages {
+        height: 250px;
+    }
+
+    /* Modal on mobile */
+    .modal-backdrop {
+        padding: var(--space-3);
+        align-items: flex-end;
+    }
+
+    .modal {
+        max-width: 100%;
+        max-height: 90vh;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    }
+
+    /* File Upload */
+    .file-upload-zone {
+        padding: var(--space-6);
+    }
+
+    .file-upload-icon {
+        font-size: 36px;
+    }
+
+    /* Dynamic form items */
+    .dynamic-form-item {
+        padding: var(--space-4);
+    }
+
+    .dynamic-form-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Print Styles
+   ───────────────────────────────────────────────────────────────────── */
+
+@media print {
+
+    .navbar,
+    .dashboard-sidebar,
+    .chatbot-widget,
+    .btn,
+    .modal-backdrop,
+    .toast-container {
+        display: none !important;
+    }
+
+    .dashboard-main {
+        margin-left: 0;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    body {
+        background-color: white;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Reduced Motion
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Dark Mode Support
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg-primary: #1A1A2E;
+        --bg-secondary: #16213E;
+        --bg-tertiary: #0F3460;
+        --neutral-100: #2C3E50;
+        --neutral-200: #34495E;
+        --neutral-300: #4A5568;
+        --neutral-600: #A0AEC0;
+        --neutral-700: #CBD5E0;
+        --neutral-800: #E2E8F0;
+        --neutral-900: #F7FAFC;
+        --border-color: #4A5568;
+        --border-color-light: #2D3748;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   High Contrast Mode
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (prefers-contrast: high) {
+    :root {
+        --primary-500: #006400;
+        --secondary-500: #0000CD;
+        --border-color: #000000;
+    }
+
+    .btn {
+        border-width: 2px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+        border-width: 2px;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Touch Device Optimizations
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (hover: none) and (pointer: coarse) {
+
+    /* Increase tap target sizes */
+    .btn {
+        min-height: 44px;
+    }
+
+    .form-check-input {
+        width: 24px;
+        height: 24px;
+    }
+
+    .nav-link {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .sidebar-menu-item {
+        padding: var(--space-4);
+    }
+
+    /* Disable hover effects */
+    .card:hover {
+        transform: none;
+    }
+
+    .match-card:hover {
+        transform: none;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        transform: none;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Large Desktop (min-width: 1440px)
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .match-grid {
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+
+    .dashboard-grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Ultra Wide (min-width: 1920px)
+   ───────────────────────────────────────────────────────────────────── */
+
+@media (min-width: 1920px) {
+    html {
+        font-size: 18px;
+    }
+
+    .container {
+        max-width: 1600px;
+    }
+
+    :root {
+        --sidebar-width: 320px;
+    }
+}
