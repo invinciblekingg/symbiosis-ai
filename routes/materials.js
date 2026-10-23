@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const supabaseService = require('../supabaseServer');
 
-// In-memory storage for materials/listings
+// In-memory storage for materials/listings (synchronized with Supabase)
 const materials = new Map();
 let listingIdCounter = 1;
 
@@ -29,7 +30,7 @@ router.post('/', async (req, res) => {
             images
         } = req.body;
 
-        const listingId = `listing_${listingIdCounter++}`;
+        const listingId = `listing_${Date.now()}_${listingIdCounter++}`;
 
         const listing = {
             id: listingId,
@@ -56,6 +57,23 @@ router.post('/', async (req, res) => {
         };
 
         materials.set(listingId, listing);
+
+        // Async write to Supabase
+        supabaseService.addMaterial({
+            id: listingId,
+            company_id: companyId || 'demo_user',
+            title: materialType || 'Industrial Material',
+            description,
+            type: type || 'waste',
+            category: materialCategory || 'Manufacturing',
+            material_type: materialType,
+            quantity: parseFloat(quantity) || 0,
+            unit: unit || 'tons',
+            quality,
+            hazardous,
+            pricing,
+            images
+        }).catch(err => console.warn('Supabase sync listing warning:', err.message));
 
         res.status(201).json({
             success: true,

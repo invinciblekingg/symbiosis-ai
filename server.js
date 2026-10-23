@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes
+app.use('/api/supabase', require('./routes/supabaseRoutes'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/companies', require('./routes/companies'));
 app.use('/api/materials', require('./routes/materials'));
